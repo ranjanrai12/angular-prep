@@ -1,0 +1,11 @@
+<h3>List Of Products</h3>
+<div>
+  @for (product of products; track product; let index = $index) {
+  <div>
+    {{ index }}: {{ product.quantity }} {{ product.item }} Price is
+    {{ product.price }}
+  </div>
+  } @empty {
+  <div>No Items Found</div>
+  }
+</div>

@@ -1,0 +1,19 @@
+<h3>With Component</h3>
+<ng-template #templateRef let-book="book" let-writer="writer" let-location>
+  <div>
+    I am from {{ location }} and like to read {{ book }} written by
+    {{ writer }} ji.
+  </div>
+  <!-- Handle with create component method -->
+  <!-- <app-child-container></app-child-container> -->
+</ng-template>
+
+<div #viewContainerRef></div>
+
+<div class="actions">
+  <button (click)="onAdd()">Add ViewContainer Reference</button>
+  <button (click)="onDelete()">Delete ViewContainer Reference</button>
+</div>
+
+<h3>With Directive</h3>
+<app-child-container *vcd></app-child-container>

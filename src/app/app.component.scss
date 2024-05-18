@@ -1,0 +1,27 @@
+.nav-bar {
+  display: flex;
+  background-color: lightgray;
+  ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0px;
+    overflow: hidden;
+    li a {
+      display: block;
+      color: blue;
+      font-size: 20px;
+      text-align: center;
+      padding: 10px 20px;
+      text-decoration: none;
+      &:hover {
+        background-color: orange;
+        color: white;
+      }
+      .active {
+        background-color: gray;
+        color: white;
+      }
+    }
+  }
+}
