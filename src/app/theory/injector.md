@@ -49,7 +49,23 @@ Remove @Injectable() from LoggerService will not result in any error as the Logg
 
 The Components & Directives are already decorated with `@Component` & `@Directive` decorators. These decorators also tell Angular to use `DI`, hence you do not need to add the `@Injectable()`.
 
-The injectable decorator also has the [provideIn.md](./provideIn.md) property using which you can specify how Angular should provide the dependency.
+The injectable decorator also has the [provideIn](./provideIn.md) property using which you can specify how Angular should provide the dependency.
 
-TODO: @INJECTOR TO BE CONTINIUED
-TODO: PROVIDEIN TO BE CONTINIUED
+### What is @Inject
+
+The `@Inject()` is a constructor parameter `decorator`, which tells angular to Inject the parameter with the dependency provided in the given token. It is a manual way of injecting the dependency.
+
+In the previous example, when we removed the `@Injectable` decorator from the `ProductService` we got an error.
+
+We can manually inject the `LoggerService` by using the `@Inject` decorator applied to the parameter `loggerService` as shown below.
+
+The `@Inject` takes the `Injector` token as the parameter. The token is used to locate the dependency in the Providers.
+
+```
+export class ProductService{
+    constructor(@Inject(LoggerService) private loggerService) {
+        this.loggerService.log("Product Service Constructed");
+    }
+}
+
+```

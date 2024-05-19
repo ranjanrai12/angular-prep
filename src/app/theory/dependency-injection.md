@@ -103,11 +103,11 @@ Here, `Angular's DI` system manages the creation and injection of the Engine int
   Example: providers: [ProductService]
 ```
 
-the above example is shorthand proerty of `[{provide: ProductService, useClass: ProductService}]`
+the above example is shorthand proerty of `[{provide: ProductService, useClass(it is provider): ProductService}]`
 
 Now in the above example there are two properties.
 
-`Provide`: The first property is Provide holds the Token or `DI Token`.The Token can be either a type, a string or an instance of `InjectionToken`.
+`Provide`: The first property is Provide holds the `Token` or `DI Token` to uniquely identify a `providers`.The Token can be either a type, a string or an instance of `InjectionToken`.
 let's break it.
 
 - `Type token`: When a token is a type, it refers to a class.
@@ -137,7 +137,7 @@ class MyComponent {
  You can then use the Inject the dependency using the @Inject method
 
  class myComponent {
-   constructor(@Inject('PRODUCTSERVICE') private prdService:myService,
+   constructor(@Inject('PRODUCTSERVICE') private myService:myService,
 @Inject('APIURL') private apiURL:string ) {
 }
 }
@@ -316,7 +316,3 @@ in the above example, we map the `ProductService` to the `NewProductService` tok
 This means that there is only `one instance` of the service created, and all components, directives, and other services that inject the service receive a reference to the same instance.
 
 For Example, consider a service configured in `@ngModule`. Component A asks for the service it will get a new instance of the service. Now if Component B Asks for the same service, the injector does not create a new instance of the service, but it will reuse the already created service.
-
-- `Injection Token (DI Token):`
-
-  TODO: INJECTOR AND INJECT TO BE COVERED
