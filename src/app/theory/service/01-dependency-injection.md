@@ -1,3 +1,7 @@
+### What is an Angular Service
+
+Service is a piece of reusable code and that code we will use in many components across out application.
+
 ### What is Angular `Dependency Injection`(DI) ?
 
 `Dependency Injection (DI)` is a software design pattern where the dependencies of a class are provided from the outside, rather than the class creating them itself.
