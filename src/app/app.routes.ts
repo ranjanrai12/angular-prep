@@ -50,4 +50,11 @@ export const routes: Routes = [
       ),
     title: 'typed-forms',
   },
+  {
+    path: 'content-projection',
+    loadComponent: () =>
+      import('./content-projection/content-projection.component').then(
+        (C) => C.ContentProjectionComponent
+      ),
+  },
 ];

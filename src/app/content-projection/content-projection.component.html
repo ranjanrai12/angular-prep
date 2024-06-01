@@ -1,0 +1,19 @@
+<app-content-card>
+  <!-- <header *ngIf="headerVisibility"><h1 #h1>Shopping Cart</h1></header>
+  <header><h1 #h1>Shopping Cart</h1></header>
+  <section>Jeans</section>
+  <footer>powered by demo</footer>
+  <h3>Without Selector 1</h3>
+  <h4>Without Selector 2</h4> -->
+  <ul #item>
+    <li #item>Item 1</li>
+    <li #item>Item 2</li>
+    <li #item>Item 3</li>
+  </ul>
+</app-content-card>
+
+<button (click)="onClick()">Toggle Header</button>
+
+<div *ngIf="headerVisibility">
+  <p #para>Some text</p>
+</div>
