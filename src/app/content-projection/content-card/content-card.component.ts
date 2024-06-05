@@ -6,8 +6,11 @@ import {
   ContentChild,
   ContentChildren,
   ElementRef,
+  Input,
+  OnChanges,
   QueryList,
   Renderer2,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 
@@ -20,12 +23,15 @@ import {
   styleUrl: './content-card.component.scss',
 })
 export class ContentCardComponent
-  implements AfterContentInit, AfterContentChecked
+  implements AfterContentInit, AfterContentChecked, OnChanges
 {
   constructor(
     private readonly renderer: Renderer2,
     private cdr: ChangeDetectorRef
   ) {}
+  @Input() user: { name: string } = {} as { name: string };
+  @Input() user1: string = '';
+
   // @ContentChild('h1', { static: false }) headerElement: ElementRef | undefined;
   @ContentChildren('item') items: QueryList<ElementRef> | undefined;
   // ngAfterContentInit(): void {
@@ -48,6 +54,10 @@ export class ContentCardComponent
     );
     if (this.items) {
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.user);
   }
 
   increament() {}

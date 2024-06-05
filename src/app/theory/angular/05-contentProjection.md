@@ -101,5 +101,3 @@ Now in the parent component
 ```
 
 `Note`: ng-content without selector catches all
-
-TODO: in appllication existis the lifecycle method of nfAfterCOntentInit & ngAfterViewInit, before that read the theory of that

@@ -20,6 +20,8 @@ export class ContentProjectionComponent implements OnInit, AfterContentInit {
   @ViewChild('para', { static: false }) para: ElementRef | undefined;
   @ViewChild(ContentCardComponent, { static: false })
   contentCardComponent: ContentCardComponent | undefined;
+  user = { name: 'ranjan' };
+  user1 = '';
 
   ngOnInit(): void {
     if (this?.para?.nativeElement.innerHTML) {
@@ -39,6 +41,8 @@ export class ContentProjectionComponent implements OnInit, AfterContentInit {
   }
 
   onClick() {
+    this.user.name = 'shyam';
+    // this.user1 = 'Mohan';
     this.headerVisibility = !this.headerVisibility;
     console.log(this.contentCardComponent);
     setTimeout(() => {
