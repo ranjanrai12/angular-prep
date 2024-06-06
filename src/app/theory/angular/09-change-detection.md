@@ -1,11 +1,12 @@
 ### What is Change Detection ?
 
-It is a process to synchronize the model/state changes to the view.
+It is a process to `synchronize` the model/state changes to the view.
+
 There are Two types of change detection.
 
 - `Default Change detection`: It checks for changes in all components and their templates on every change detection cycle.
 
-  How It Works:
+  `How It Works:`
 
   `Change Detection`
 
@@ -43,3 +44,34 @@ Zone.js is a library that shipped with angular. `Zone` creates a wrapper around 
 This problem can be solved by onPush strategy but the real solution would be solved by `Signal`(introduced in Angular 16).
 
 TODO: // Create the app without zone and hanle the manually change detection
+
+- `onPush change detection strategy`
+
+\* `markForCheck`: It doesn't trigger change detection instatnly, Only it mark the current compoent and it's ancestors component as dirty, and in the next change detection cycle the change detection will run for every dirty component.
+
+```
+setTimeOut(() => {
+this.cdr.markForCheck()
+}, 1000)
+```
+
+In the above component markForCHeck makes the component dirty and after asyc operation change detction runs, in that cycle component will be check
+
+\* `detectChanges`: It is a method used to` manually trigger` change detection for a specific component or view, If we consider above example there will be two change detction, first we manually have trigger via `detectChange` and next is run by zonejs
+
+`Note: There are use case where angular marks the component as Dirty automatically`
+
+- When the state is changed inside the component like with event listener then angular marks the component and it's ancestors as dirty.
+
+- When component of `input` property is changed then in that case angular marks the child component as dirty. Suppose in parent component child component input property got changed then child component marks as dirty.
+
+Note: When angular tries to figure out if the input binding has been changed it compares value by reference
+
+```
+const obj = {}
+const obj2 = obj
+obj.name = 'test' // state is mutated
+obj === obj2 // True because reference still points rhe same object, So angular treats as the same value
+```
+
+- While using `async` pipe, under the hood `async` pipe uses `markForCheck`
