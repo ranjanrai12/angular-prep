@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AppTemplateComponent } from './app-template/app-template.component';
 import { AppService } from './app-service.service';
 
@@ -9,8 +9,13 @@ import { AppService } from './app-service.service';
   imports: [RouterModule, AppTemplateComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  providers: [AppService],
+  providers: [AppService]
 })
 export class AppComponent {
+  constructor(private readonly router: Router) {}
   title = 'angular-preperation';
+
+  sendMessage() {
+    this.router.navigate(['content-projection'], { state: { message: 'Hello From Sender' } });
+  }
 }

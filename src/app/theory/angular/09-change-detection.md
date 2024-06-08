@@ -57,7 +57,7 @@ this.cdr.markForCheck()
 
 In the above component markForCHeck makes the component dirty and after asyc operation change detction runs, in that cycle component will be check
 
-\* `detectChanges`: It is a method used to` manually trigger` change detection for a specific component or view, If we consider above example there will be two change detction, first we manually have trigger via `detectChange` and next is run by zonejs
+\* `detectChanges`: It is a method used to` manually trigger` change detection for a specific component or view.
 
 `Note: There are use case where angular marks the component as Dirty automatically`
 

@@ -1,17 +1,19 @@
 import {
   AfterContentChecked,
   AfterContentInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
   ContentChildren,
+  DoCheck,
   ElementRef,
   Input,
   OnChanges,
   QueryList,
   Renderer2,
   SimpleChanges,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 
 @Component({
@@ -21,14 +23,10 @@ import {
   providers: [{ provide: 'Token', useValue: 'token value' }],
   templateUrl: './content-card.component.html',
   styleUrl: './content-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContentCardComponent
-  implements AfterContentInit, AfterContentChecked, OnChanges
-{
-  constructor(
-    private readonly renderer: Renderer2,
-    private cdr: ChangeDetectorRef
-  ) {}
+export class ContentCardComponent implements AfterContentInit, AfterContentChecked, OnChanges, DoCheck {
+  constructor(private readonly renderer: Renderer2, private cdr: ChangeDetectorRef) {}
   @Input() user: { name: string } = {} as { name: string };
   @Input() user1: string = '';
 
@@ -48,16 +46,18 @@ export class ContentCardComponent
     // console.log('Child Content Init');
     // console.log('ContentChild headerElement:', this.headerElement);
     // this.renderer.setStyle(this.headerElement?.nativeElement, 'color', 'green');
-    console.log('ContentChildren headerELement', this.items);
-    this.items?.forEach((item) =>
-      this.renderer.setStyle(item.nativeElement, 'color', 'green')
-    );
+    // console.log('ContentChildren headerELement', this.items);
+    this.items?.forEach((item) => this.renderer.setStyle(item.nativeElement, 'color', 'green'));
     if (this.items) {
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.user);
+    // console.log(this.user);
+  }
+
+  ngDoCheck() {
+    console.log('Child Change detection');
   }
 
   increament() {}

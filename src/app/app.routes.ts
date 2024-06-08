@@ -7,54 +7,42 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home',
+    redirectTo: 'home'
   },
   {
     path: 'home',
     component: AppTemplateComponent,
-    title: 'home',
+    title: 'home'
   },
   {
     path: 'rxjs',
-    loadComponent: () =>
-      import('./rxjs/rxjs.component').then((m) => m.RxjsComponent),
-    title: 'rxjs',
+    loadComponent: () => import('./rxjs/rxjs.component').then((m) => m.RxjsComponent),
+    title: 'rxjs'
   },
   {
-    path: 'child',
-    loadChildren: () =>
-      import('./child/child.route').then((m) => m.CHILD_ROUTE),
-    title: 'child',
+    path: 'parent',
+    loadChildren: () => import('./parent/parent.route').then((m) => m.CHILD_ROUTE),
+    title: 'parent'
   },
   {
     path: 'view-container',
-    loadComponent: () =>
-      import('./view-container/view-container.component').then(
-        (m) => m.ViewContainerComponent
-      ),
-    title: 'view-container',
+    loadComponent: () => import('./view-container/view-container.component').then((m) => m.ViewContainerComponent),
+    title: 'view-container'
   },
   {
     path: 'dependency-injection',
     loadComponent: () =>
-      import('./dependency-injection/dependency-injection.component').then(
-        (m) => m.DependencyInjectionComponent
-      ),
-    title: 'dependency-injection',
+      import('./dependency-injection/dependency-injection.component').then((m) => m.DependencyInjectionComponent),
+    title: 'dependency-injection'
   },
   {
     path: 'typed-forms',
-    loadComponent: () =>
-      import('./typed-forms/typed-forms.component').then(
-        (m) => m.TypedFormsComponent
-      ),
-    title: 'typed-forms',
+    loadComponent: () => import('./typed-forms/typed-forms.component').then((m) => m.TypedFormsComponent),
+    title: 'typed-forms'
   },
   {
     path: 'content-projection',
     loadComponent: () =>
-      import('./content-projection/content-projection.component').then(
-        (C) => C.ContentProjectionComponent
-      ),
-  },
+      import('./content-projection/content-projection.component').then((C) => C.ContentProjectionComponent)
+  }
 ];
