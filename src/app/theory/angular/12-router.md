@@ -83,3 +83,5 @@ bootstrapApplication(AppComponent, {
 ```
 
 Another benefit of the `provideRouter` API is that it’s tree-shakable! `Bundlers` can remove unused features of the `router` at `build-time`
+
+### multiple router-outlet

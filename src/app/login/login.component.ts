@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppService } from '../app-service.service';
+import { CanComponentDeactivate } from '../guards/unsaved-guard';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +13,11 @@ import { AppService } from '../app-service.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, CanComponentDeactivate, OnDestroy {
   loginForm!: FormGroup<any>;
-  // submitted = false;
+  submitted = false;
+  private readonly subscriptions$: Subscription = new Subscription();
+
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly router: Router,
@@ -28,12 +32,23 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.appService.submitted(false);
-    this.appService.submitted$.subscribe({
-      next: (event) => {
-        if (this.loginForm.valid) this.router.navigate(['home']);
-      }
-    });
+    this.appService.submitted(true);
+    this.subscriptions$.add(
+      this.appService.submitted$.subscribe({
+        next: (event) => {
+          this.submitted = event;
+          if (this.loginForm.valid) this.router.navigate(['home']);
+        }
+      })
+    );
+  }
+
+  canDeactivate() {
+    return this.loginForm.dirty && this.submitted ? false : this.loginForm.dirty;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions$.unsubscribe();
   }
 
   get loginFormControls(): any {

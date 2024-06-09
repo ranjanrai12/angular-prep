@@ -10,12 +10,17 @@ export const PARENT_ROUTE: Route[] = [
   //   },
   {
     path: '',
-    component: ParentComponent
-    // children: [
-    //   {
-    //     path: 'child1',
-    //     component: Child1Component,
-    //   },
-    // ],
+    component: ParentComponent,
+    children: [
+      {
+        path: '',
+        children: [
+          {
+            path: 'child1',
+            component: Child1Component
+          }
+        ]
+      }
+    ]
   }
 ];

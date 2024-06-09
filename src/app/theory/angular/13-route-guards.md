@@ -214,6 +214,32 @@ export class AppRoutingModule {}
 
 ```
 
+Now Let's understand `component less router pattern`:
+
+```
+const routes: Routes = [
+    { path: 'parent', component: ParentComponent,
+        children: [
+            {
+                path: '',
+                canActivateChild: [AuthChildGuard],
+                children: [{
+                    path: 'child', component: ChildComponent,
+                    path: 'child2', component: Child2Component,
+                }]
+            },
+            {
+                path: 'list', component: ListComponent,
+            }
+        ]
+    },
+    { path: 'login', component: LoginComponent },
+    { path: '', redirectTo: '/login', pathMatch: 'full' }
+];
+```
+
+`Note`: in the above example, In the same parent path if want that canActivate guard should be applied for some of the children and some for it should not applied, this scenario we can achive by `component less router guard`.
+
 \*\* `CanMatch`: This guard came in angular 15.
 
 - `canMatch` guard is replacement for `canLoad`.
@@ -223,14 +249,21 @@ export class AppRoutingModule {}
 - `canMatch` guard can be useful when two route path is same and loading component is different
 
 ```
-  {
-    path: 'home',
-    loadComponent: () => import('./app-template/app-template.component').then((c) => c.AppTemplateComponent),
-    canLoad: [canMatchGuard], // Here it will load the component, even if the return value is false and this can be handle via canMatch, so it doesn't allow to move to HomeComponent if return value is false.
+
+{
+path: 'home',
+loadComponent: () => import('./app-template/app-template.component').then((c) => c.AppTemplateComponent),
+canLoad: [canMatchGuard], // Here it will load the component, even if the return value is false and this can be handle via canMatch, so it doesn't allow to move to HomeComponent if return value is false.
 
     title: 'home'
-  },
+
+},
+
 ```
 
 When moving to any router we first need the `target`(example: {path: 'dashboard'(`target`)}) router config, and url is matches with it then it loads the view
 ![alt text](image-2.png)
+
+```
+
+```

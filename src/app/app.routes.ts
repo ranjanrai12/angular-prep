@@ -7,6 +7,7 @@ import { AppService } from './app-service.service';
 import { Observable, map } from 'rxjs';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { unSavedGuard } from './guards/unsaved-guard';
 
 const canMatchGuard = (route: Route, segments: UrlSegment[]): Observable<boolean | UrlTree> => {
   const router = inject(Router);
@@ -27,7 +28,8 @@ export const routes: Routes = [
   {
     path: 'login',
     // component: LoginComponent
-    loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent)
+    loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent),
+    canDeactivate: [unSavedGuard]
   },
   {
     path: 'home',
