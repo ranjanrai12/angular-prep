@@ -5,5 +5,5 @@ import { routes } from './app.routes';
 import { AppService } from './app-service.service';
 
 export const appConfig: ApplicationConfig = {
-  providers: [importProvidersFrom(RouterModule.forRoot(routes)), AppService],
+  providers: [importProvidersFrom(RouterModule.forRoot(routes)), AppService]
 };
