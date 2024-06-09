@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 import { Child1Component } from './child1/child1.component';
 import { ParentComponent } from './parent.component';
 
-export const CHILD_ROUTE: Route[] = [
+export const PARENT_ROUTE: Route[] = [
   //   {
   //     path: '',
   //     pathMatch: 'full',

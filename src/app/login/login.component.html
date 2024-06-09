@@ -1,0 +1,40 @@
+<div class="login-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      {{ appService.submitted$ | async }}
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        class="form-control"
+        [ngClass]="{'is-invalid': (appService.submitted$  | async) && loginFormControls?.['email']?.errors}"
+      />
+      <div *ngIf="(appService.submitted$  | async) && loginFormControls?.['email']?.errors" class="invalid-feedback">
+        <div *ngIf="loginFormControls?.['email']?.errors?.['required']">Email is required</div>
+        <div *ngIf="loginFormControls?.['email']?.errors?.['email']">Email must be a valid email address</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': (appService.submitted$  | async) && loginFormControls?.['password']?.errors }"
+      />
+      <div
+        *ngIf="(appService.submitted$  | async) && loginFormControls?.['password']?.['errors']"
+        class="invalid-feedback"
+      >
+        <div *ngIf="loginFormControls?.['password']?.['errors']?.['required']">Password is required</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+  </form>
+</div>

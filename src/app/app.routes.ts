@@ -1,17 +1,39 @@
-import { Routes } from '@angular/router';
+import { Route, Router, Routes, UrlSegment, UrlTree } from '@angular/router';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { AppComponent } from './app.component';
 import { AppTemplateComponent } from './app-template/app-template.component';
+import { inject } from '@angular/core';
+import { AppService } from './app-service.service';
+import { Observable, map } from 'rxjs';
+import { LoginComponent } from './login/login.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+
+const canMatchGuard = (route: Route, segments: UrlSegment[]): Observable<boolean | UrlTree> => {
+  const router = inject(Router);
+  const appService = inject(AppService);
+  return appService.submitted$.pipe(
+    map((isLogin) => {
+      return isLogin || router.createUrlTree(['']);
+    })
+  );
+};
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home'
+    redirectTo: 'login'
+  },
+  {
+    path: 'login',
+    // component: LoginComponent
+    loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent)
   },
   {
     path: 'home',
-    component: AppTemplateComponent,
+    // component: AppTemplateComponent,
+    loadComponent: () => import('./app-template/app-template.component').then((c) => c.AppTemplateComponent),
+    canLoad: [canMatchGuard],
     title: 'home'
   },
   {
@@ -21,8 +43,9 @@ export const routes: Routes = [
   },
   {
     path: 'parent',
-    loadChildren: () => import('./parent/parent.route').then((m) => m.CHILD_ROUTE),
-    title: 'parent'
+    loadChildren: () => import('./parent/parent.route').then((m) => m.PARENT_ROUTE),
+    title: 'parent',
+    canMatch: [() => true]
   },
   {
     path: 'view-container',
@@ -44,5 +67,9 @@ export const routes: Routes = [
     path: 'content-projection',
     loadComponent: () =>
       import('./content-projection/content-projection.component').then((C) => C.ContentProjectionComponent)
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
   }
 ];
