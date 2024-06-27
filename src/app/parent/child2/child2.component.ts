@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DoCheck, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DoCheck, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-child2',

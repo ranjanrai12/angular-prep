@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-child1',
@@ -6,7 +6,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, Input }
   imports: [],
   templateUrl: './child1.component.html',
   styleUrl: './child1.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.ShadowDom
 })
 export class Child1Component {
   @Input() child1Value: any | undefined;

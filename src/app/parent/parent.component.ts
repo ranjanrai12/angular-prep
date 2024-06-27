@@ -1,4 +1,11 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  ViewEncapsulation
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Child1Component } from './child1/child1.component';
 import { Child2Component } from './child2/child2.component';
