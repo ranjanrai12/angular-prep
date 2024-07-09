@@ -35,3 +35,5 @@ Now, if we look at the application h1 changes will be applied to component1 only
 Emulated will add the css style in the head section of your website(and reference your component's unique id(\_ngcontent) to apply it).
 
 ViewEncapsulation.ShadowDom will add the css style inside the generated DOM of your component.
+
+[For more details](https://vibhas1892.medium.com/what-is-viewencapsulation-in-angular-58d31901901c)
