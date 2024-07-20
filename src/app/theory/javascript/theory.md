@@ -7,15 +7,217 @@ JS is a synchronous, single-threaded language
 
 ### What is Execution Context?
 
+Everything in JS happens inside the execution context. Imagine a sealed-off container inside which JS runs. It is an abstract concept that hold info about the env. within the current code is being executed.
+![alt text](image-4.png)
+
+- In the container the first component is memory component and the 2nd one is code component
+- Memory component has all the variables and functions in key value pairs. It is also called Variable environment.
+- Code component is the place where code is executed one line at a time. It is also called the Thread of Execution.
+- JS is a `synchronous`, `single-threaded` language
+  - Synchronous:- In a specific synchronous order.
+  - Single-threaded:- One command at a time.
+
 ### How JS is executed?
+
+- When a JS program is ran, a **global execution context** is created.
+
+- The execution context is created in two phases.
+
+  - Memory creation phase - JS will allocate memory to variables and functions.
+  - Code execution phase
+
+- Let's consider the below example and its code execution steps:
+
+```js
+var n = 2;
+function square(num) {
+  var ans = num * num;
+  return ans;
+}
+var square2 = square(n);
+var square4 = square(4);
+```
+
+The very **first** thing which JS does is **memory creation phase**, so it goes to line one of above code snippet, and **allocates a memory space** for variable **'n'** and then goes to line two, and **allocates a memory space** for **function 'square'**. When allocating memory **for n it stores 'undefined'**, a special value for 'n'. **For 'square', it stores the whole code of the function inside its memory space.** Then, as square2 and square4 are variables as well, it allocates memory and stores 'undefined' for them, and this is the end of first phase i.e. memory creation phase.
+
+So O/P will look something like
+![alt text](image-5.png)
+
+Now, in 2nd phase i.e. code execution phase, it starts going through the whole code line by line. As it encounters var n = 2, it assigns 2 to 'n'. Until now, the value of 'n' was undefined. For function, there is nothing to execute. As these lines were already dealt with in memory creation phase.
+
+Coming to line 6 i.e. var square2 = square(n), here functions are a bit different than any other language. A new execution context is created altogether. Again in this new execution context, in memory creation phase, we allocate memory to num and ans the two variables. And undefined is placed in them. Now, in code execution phase of this execution context, first 2 is assigned to num. Then var ans = num \* num will store 4 in ans. After that, return ans returns the control of program back to where this function was invoked from.
+
+![alt text](image-6.png)
+
+When return keyword is encountered, It returns the control to the called line and also the function execution context is deleted. Same thing will be repeated for square4 and then after that is finished, the global execution context will be destroyed. So the final diagram before deletion would look something like:
+![alt text](image-7.png)
 
 ### What is Call Stack?
 
+Ans:
+
+- Javascript manages code execution context creation and deletion with the the help of Call Stack.
+- Call Stack is a mechanism to keep track of its place in script that calls multiple function.
+- Call Stack maintains the order of execution of execution contexts. It is also known as Program Stack, Control Stack, Runtime stack, Machine Stack, Execution context stack.
+
 ### What is Hoisting?
+
+```js
+getName(); // Namaste Javascript
+console.log(x); // undefined
+var x = 7;
+function getName() {
+  console.log('Namaste Javascript');
+}
+```
+
+- It should have been an outright error in many other languages, as it is not possible to even access something which is not even created (defined) yet But in JS, We know that in memory creation phase it assigns undefined and puts the content of function to function's memory. And in execution, it then executes whatever is asked. Here, as execution goes line by line and not after compiling, it could only print undefined and nothing else. This phenomenon, is not an error. However, if we remove var x = 7; then it gives error. Uncaught ReferenceError: x is not defined
+
+- Hoisting is a concept which enables us to extract values of variables and functions even before initialising/assigning value without getting error and this is happening due to the 1st phase (memory creation phase) of the Execution Context.
+
+- So in previous lecture, we learnt that execution context gets created in two phase, so even before code execution, memory is created so in case of variable, it will be initialized as undefined while in case of function the whole function code is placed in the memory. Example:
+
+```js
+getName(); // Namaste JavaScript
+console.log(x); // Uncaught Reference: x is not defined.
+console.log(getName); // f getName(){ console.log("Namaste JavaScript); }
+function getName() {
+  console.log('Namaste JavaScript');
+}
+```
+
+- Now let's observe a different example and try to understand the output.
+
+```js
+getName(); // Uncaught TypeError: getName is not a function
+console.log(getName);
+var getName = function () {
+  console.log('Namaste JavaScript');
+};
+// The code won't execute as the first line itself throws an TypeError.
+```
 
 ### What is difference between undefined vs not defined ?
 
+- In first phase (memory allocation) JS assigns each variable a placeholder called **undefined**.
+
+- **undefined** is when memory is allocated for the variable, but no value is assigned yet.
+
+- If an object/variable is not even declared/found in memory allocation phase, and tried to access it then it is **Not defined**
+
+- Not Defined !== Undefined
+
+> When variable is declared but not assigned value, its current value is **undefined**. But when the variable itself is not declared but called in code, then it is **not defined**.
+
+```js
+console.log(x); // undefined
+var x = 25;
+console.log(x); // 25
+console.log(a); // Uncaught ReferenceError: a is not defined
+```
+
+- JS is a **loosely typed / weakly typed** language. It doesn't attach variables to any datatype. We can say _var a = 5_, and then change the value to boolean _a = true_ or string _a = 'hello'_ later on.
+- **Never** assign _undefined_ to a variable manually. Let it happen on it's own accord.
+
 ### What is Scope Chain, Scope & Lexical Environment ?
+
+- Scope in Javascript is directly related to Lexical Environment.
+
+```js
+// CASE 1
+function a() {
+  console.log(b); // 10
+  // Instead of printing undefined it prints 10, So somehow this a function could access the variable b outside the function scope.
+}
+var b = 10;
+a();
+```
+
+```js
+// CASE 2
+function a() {
+  c();
+  function c() {
+    console.log(b); // 10
+  }
+}
+var b = 10;
+a();
+```
+
+```js
+// CASE 3
+function a() {
+  c();
+  function c() {
+    var b = 100;
+    console.log(b); // 100
+  }
+}
+var b = 10;
+a();
+```
+
+```js
+// CASE 4
+function a() {
+  var b = 10;
+  c();
+  function c() {
+    console.log(b); // 10
+  }
+}
+a();
+console.log(b); // Error, Not Defined
+```
+
+- Let's try to understand the output in each of the cases above.
+  - In **case 1**: function a is able to access variable b from Global scope.
+  - In **case 2**: 10 is printed. It means that within nested function too, the global scope variable can be accessed.
+  - In **case 3**: 100 is printed meaning local variable of the same name took precedence over a global variable.
+  - In **case 4**: A function can access a global variable, but the global execution context can't access any local variable.
+    ```
+    To summarize the above points in terms of execution context:
+    call_stack = [GEC, a(), c()]
+    Now lets also assign the memory sections of each execution context in call_stack.
+    c() = [[lexical environment pointer pointing to a()]]
+    a() = [b:10, c:{}, [lexical environment pointer pointing to GEC]]
+    GEC =  [a:{},[lexical_environment pointer pointing to null]]
+    ```
+    ![alt text](image-9.png)
+    ![alt text](image-10.png)
+
+<br>
+
+- So, **Lexical Environment** = local memory + lexical env of its parent. Hence, Lexical Environement is the local memory along with the lexical environment of its parent
+
+- **Lexical**: In hierarchy, In order
+
+- Whenever an Execution Context is created, a Lexical environment(LE) is also created and is referenced in the local Execution Context(in memory space).
+
+- The process of going one by one to parent and checking for values is called scope chain or Lexcial environment chain.
+
+- ```js
+  function a() {
+    function c() {
+      // logic here
+    }
+    c(); // c is lexically inside a
+  } // a is lexically inside global execution
+  ```
+
+- Lexical or Static scope refers to the accessibility of variables, functions and object based on physical location in source code.
+
+  ```js
+  Global {
+      Outer {
+          Inner
+      }
+  }
+  // Inner is surrounded by lexical scope of Outer
+  ```
+
+- **TLDR**; An inner function can access variables which are in outer functions even if inner function is nested deep. In any other case, a function can't access variables not in its scope.
 
 ### What is let & const in JS, Temporal Dead Zone?
 
