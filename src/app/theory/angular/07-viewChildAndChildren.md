@@ -13,7 +13,7 @@ Syntax: `ViewChild(selector: string | Function | Type<any>, opts: { read?: any; 
 
 Let's understand with Example:
 
-```
+```ts
 <button (click)="onClick()">Toggle</button>
 
 <div *ngIf="headerVisibility">
@@ -42,7 +42,7 @@ so here output will be `Some text`, Now if the `static` is `false` then then it 
 
 One of the use cases of ViewChild is to get the reference of the `Child Component` in the `Parent Component` and manipulate its properties.
 
-```
+```ts
 import { Component } from '@angular/core';
 
 @Component({
@@ -83,7 +83,7 @@ decrement() {
 
 In above example child component can be accessible via Template Reference variable
 
-```
+```ts
 <child-component #child></child-component>
 @ViewChild(child, {static:false}) child: ChildComponent;
 ```
@@ -94,13 +94,13 @@ A Single element can be associated with multiple types.
 
 For Example:
 
-```
+```ts
 <input #nameInput [(ngModel)]="name">
 ```
 
 If we want to get the instance of the ngModel, then we use the Read token and ask for the type.
 
-```
+```ts
 @ViewChild('nameInput',{static:false, read: NgModel}) inRef;
 @ViewChild('nameInput',{static:false, read: ElementRef}) elRef;
 @ViewChild('nameInput', {static:false, read: ViewContainerRef }) vcRef;
@@ -110,7 +110,7 @@ Note: The `ViewChild` without `read` token always returns the `component instanc
 
 ### Injecting a Provider from the Child Component
 
-```
+```ts
 import { ViewChild, Component } from '@angular/core';
 
 @Component({
@@ -118,21 +118,18 @@ import { ViewChild, Component } from '@angular/core';
   template: `<h1>Child With Provider</h1>`,
   providers: [{ provide: 'Token', useValue: 'Value' }]
 })
-
-export class ChildComponent{
-}
+export class ChildComponent {}
 ```
 
-```
+```ts
 import { ViewChild, Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  template: `<app-child></app-child>`,
+  template: `<app-child></app-child>`
 })
-
-export class AppComponent{
-    @ViewChild(ChildComponent , { read:'Token', static:false } ) childToken: string;
+export class AppComponent {
+  @ViewChild(ChildComponent, { read: 'Token', static: false }) childToken: string;
 }
 ```
 
@@ -146,7 +143,7 @@ Syantax: `ViewChildren(selector: string | Function | Type<any>, opts: { read?: a
 
 Example:
 
-```
+```ts
 <input name="firstName" [(ngModel)]="firstName">
 <input name="midlleName" [(ngModel)]="middleName">
 <input name="lastName" [(ngModel)]="lastName">

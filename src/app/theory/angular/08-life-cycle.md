@@ -17,7 +17,7 @@ For Example: When a component’s `input property` change, Angular invokes `ngOn
 
 - `ngOnChanges`: The Angular invokes the `ngOnChanges` life cycle hook whenever any data-bound input property of the component or directive changes.
 
-```
+```ts
 Child Component:
 
 @Input() message:string
@@ -26,7 +26,7 @@ ngOnChanges() {
     console.log(this.message)
 }
 
-Parent Component:
+// Parent Component:
 <app-child [message]="message">
 </app-child>
 ```
@@ -35,7 +35,7 @@ The change detector checks if the parent component changes such input properties
 
 - `ngOnInit`: Angular calls `ngOnInit` after component creation, if there is inbound communication between component then it calls after `ngOnChanges`, if it's not there then first order of exection lifecycle is `ngOnInit`.
 
-```
+```ts
 ngOnInit() {
   console.log('Component initialized');
 }
@@ -44,7 +44,7 @@ ngOnInit() {
 
 - `ngDoCheck`: ngDoCheck calls on every change detection cycle.
 
-```
+```js
 ngDoCheck() {
   console.log('ngDoCHeck triggered');
 }
@@ -52,7 +52,7 @@ ngDoCheck() {
 
 - `ngAfterContentInit`:ngAfterContentInit Life cycle hook is called after the Component’s [`projected content`](./05-contentProjection.md) has been fully initialized.Angular also updates the properties decorated with the `ContentChild` and `ContentChildren` before raising this hook. This hook is also raised, even if there is `no content` to project.
 
-```
+```ts
 Child Component:
 
 <h2>Child Component</h2>
@@ -65,13 +65,13 @@ Parent Component:
 
 - `ngAfterContentChecked`: ngAfterContentChecked hook is called after Angular finishes checking of component’s projected content.This event is fired after `ngAfterContentInit` and after that it calls during everly change detection cycle.Angular also updates the properties decorated with the `ContentChild` and `ContentChildren` before raising this hook. Angular calls this hook even if there is no projected content in the component.
 
-```
+```ts
 ngAfterContentChecked() {
   console.log('Content checked');
 }
 ```
 
-- `ngAfterViewInit`: ngAfterViewInit hook is called after the Component’s View & all its child views are fully initialized. Angular also updates the properties decorated with the `ViewChild` & `ViewChildren` properties before raising this hook.
+- `ngAfterViewInit`: ngAfterViewInit hook is called after the `Component’s View & all its child views` are fully initialized. Angular also updates the properties decorated with the `ViewChild` & `ViewChildren` properties before raising this hook.
 
 This hook is called during the `first` change detection cycle, where angular initializes the view for the `first time.`
 
@@ -79,9 +79,9 @@ At this point, all the `lifecycle` hook methods & change detection of all `child
 
 - `ngAfterViewChecked`: The Angular fires this hook after it checks & updates the component’s views and child views. This event is fired after the ngAfterViewInit and after that, during every change detection cycle.
 
-- `ngOnDestroy`: This hook is called just before the Component/Directive instance is destroyed by Angular
+- `ngOnDestroy`: This hook is called just before the `Component/Directive` instance is destroyed by Angular
 
-```
+```ts
 ngOnDestroy() {
   console.log('Component destroyed');
 }

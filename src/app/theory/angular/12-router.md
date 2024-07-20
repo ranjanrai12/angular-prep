@@ -85,3 +85,38 @@ bootstrapApplication(AppComponent, {
 Another benefit of the `provideRouter` API is that it’s tree-shakable! `Bundlers` can remove unused features of the `router` at `build-time`
 
 ### multiple router-outlet
+
+### What is Difference between forRoot and forChild?
+
+Ans: `forRoot` and `forChild` these are primarly used in Routing module to setup routes and services.
+
+- `forRoot`: `forRoot` method is used in root module of the application to configure service, routes and other setting that are shared across the application. it is responsible for providing service and routes globally. This method is called only once in root module.
+
+```ts
+// Root Module (app.module.ts)
+@NgModule({
+  imports: [RouterModule.forRoot(routes)]
+})
+export class AppRoutingModule {}
+```
+
+`Features`:
+
+- Global Configuration: forRoot allows configuration settings to be applied globally across an Angular application.
+- Singleton Services: Services provided with forRoot are instantiated as singletons, ensuring consistency and preventing duplication.
+- Router Initialization: forRoot sets up initial routes and router configurations at the root level of the application.
+- Avoids Multiple Instances: By using forRoot, you prevent the creation of multiple instances of services and configurations throughout the application.
+- Library Module Convention: forRoot provides a convention for configuring and initializing library modules at the root level of an application.
+
+`forChild`:
+The `forChild` method is used in feature modules to configure routes and other settings that are specific to that module. It allows feature modules to contribute their own routes without interfering with the global configuration set up by forRoot.
+
+This method is used in the feature modules or child modules, especially when lazy loading is getting used. It confgures routes and services specific to that particular feature module. This method can be called multiple times in various feature modules.
+
+`Features of forChild Method`
+
+- `Module-specific Configuration`: forChild allows configuring routes and settings specific to feature modules.
+- `Lazy Loading Support`: Enables lazy-loaded feature modules to define their own routes without interfering with the global router configuration.
+- `Multiple Invocations`: Unlike forRoot, forChild can be called multiple times within different modules to configure routes and settings.
+- `Encapsulation`: Helps in encapsulating module-specific functionality and settings, promoting a modular architecture.
+- `Scalability`: Supports scalable application development by allowing feature modules to manage their own routes and settings independently.

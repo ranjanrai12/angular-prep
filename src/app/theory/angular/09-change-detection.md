@@ -37,7 +37,7 @@ There are Two types of change detection.
 
 Zone.js is a library that shipped with angular. `Zone` creates a wrapper around all asynchronous operations in the browser such as user interactions,setTimeOut, setInterval, Promise and any other changes that can cause `changes in state`, If it's find the changes in state then angular run the change detection from top to down view tree.
 
-- But How exactly zonejs notify to angular of async operation completion, So Zone.js use the technique called monkey patching to patch the browser's native APi and bring some additional behaviour to it.
+- But How exactly `zonejs` notify to angular of` async operation completion`, So Zone.js use the technique called `monkey patching` to patch the browser's native APi and bring some additional behaviour to it.
 
 `Note:` Zone js doesn't know that from which component state has changed and only it knows that some state from some component has been changed and it informs to angular to start the change detection, then angular starts checking from whole view tree from top-to-bottom, that the main issue with zonejs.
 
@@ -46,16 +46,17 @@ This problem can be solved by onPush strategy but the real solution would be sol
 TODO: // Create the app without zone and hanle the manually change detection
 
 - `onPush change detection strategy`
+  In onPush angular reduce the number of check by this by this way it can improve the performance optimization
 
 \* `markForCheck`: It doesn't trigger change detection instatnly, Only it mark the current compoent and it's ancestors component as dirty, and in the next change detection cycle the change detection will run for every dirty component.
 
-```
+```js
 setTimeOut(() => {
-this.cdr.markForCheck()
-}, 1000)
+  this.cdr.markForCheck();
+}, 1000);
 ```
 
-In the above component markForCHeck makes the component dirty and after asyc operation change detction runs, in that cycle component will be check
+In the above component markForCheck makes the component dirty and after asyc operation change detction runs, in that cycle component will be check
 
 \* `detectChanges`: It is a method used to` manually trigger` change detection for a specific component or view.
 

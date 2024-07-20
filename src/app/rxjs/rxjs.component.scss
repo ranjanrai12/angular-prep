@@ -1,0 +1,25 @@
+.carousel {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+.carousel-item {
+  flex: 0 0 33.33%; /* Adjust width based on itemsPerPage */
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.prev-btn,
+.next-btn {
+  margin-top: 10px;
+}
+
+.active {
+  background-color: #f0f0f0; /* Highlight color for active items */
+}

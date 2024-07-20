@@ -15,8 +15,8 @@ Route guards are servies that we can use to control navigation to and form route
 
 \*\* `CanActivate`: The `CanActivate` guard is used to check whether a route can be activated(or the component gets rendered).This is commonly used for authentication and authorization checks.
 
-```
-auth.guard.ts
+```ts
+// auth.guard.ts
 
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
@@ -37,12 +37,11 @@ export class AuthGuard implements CanActivate {
     }
   }
 }
-
 ```
 
 app-routing.module.ts:
 
-```
+```ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
@@ -60,16 +59,46 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
-
 ```
 
 \*\* `CanDeactivate`: The `CanDeactivate` guard is used to prevent a user from `accidentally` leaving a route where `unsaved` changes might be lost.
+
+```ts
+export interface CanComponentDeactivate {
+  canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
+}
+
+// handle by functional way not with service implementation
+export const unSavedGuard: CanDeactivateFn<CanComponentDeactivate> = (component: CanComponentDeactivate) => {
+  const appService = inject(AppService);
+  const router = inject(Router);
+
+  console.log('Guard works');
+  //   return component.canDeactivate ? component.canDeactivate() : true;
+  if (component.canDeactivate()) {
+    if (confirm('Are you sure want to navigate ?')) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return true;
+  }
+};
+// At route object
+{
+  path: 'login',
+  // component: LoginComponent
+  loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent),
+  canDeactivate: [unSavedGuard]
+}
+```
 
 \*\* `Resolve`: The Resolve guard is used to `pre-fetch` data `before` navigating to a route.
 
 data-resolver.service.ts:
 
-```
+```ts
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -82,12 +111,11 @@ export class DataResolverService implements Resolve<Observable<string>> {
     return of('Resolved Data');
   }
 }
-
 ```
 
 resolved.component.ts:
 
-```
+```ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -101,17 +129,16 @@ export class ResolvedComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
+    this.route.data.subscribe((data) => {
       this.data = data['resolvedData'];
     });
   }
 }
-
 ```
 
 app-routing.module.ts:
 
-```
+```ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DataResolverService } from './data-resolver.service';
@@ -132,14 +159,13 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
-
 ```
 
 \*\* `CanLoad`: The `CanLoad` guard is used to decide if a module can be loaded. This is typically used to implement lazyloaded module.
 
 auth-load.guard.ts:
 
-```
+```ts
 import { Injectable } from '@angular/core';
 import { CanLoad, Route, Router } from '@angular/router';
 import { AuthService } from './auth.service';
@@ -159,12 +185,11 @@ export class AuthLoadGuard implements CanLoad {
     }
   }
 }
-
 ```
 
 app-routing.module.ts:
 
-```
+```ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthLoadGuard } from './auth-load.guard';
@@ -172,7 +197,7 @@ import { AuthLoadGuard } from './auth-load.guard';
 const routes: Routes = [
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+    loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
     canLoad: [AuthLoadGuard]
   },
   { path: 'login', component: LoginComponent },
@@ -184,14 +209,13 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
-
 ```
 
 `Note`: `canLoad` guard is deprecated in angular `15.1` version, in favor of the `CanMatch` guard.
 
 \*\* `CanActivateChild`: `CanActivateChild` guard determines whether a `child route` can be activated. This guard is very similar to CanActivateGuard. We `apply` this guard to the `parent route`.
 
-```
+```ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthChildGuard } from './auth-child.guard';
@@ -199,9 +223,12 @@ import { ParentComponent } from './parent/parent.component';
 import { ChildComponent } from './child/child.component';
 
 const routes: Routes = [
-  { path: 'parent', component: ParentComponent, canActivateChild: [AuthChildGuard], children: [
-    { path: 'child', component: ChildComponent }
-  ]},
+  {
+    path: 'parent',
+    component: ParentComponent,
+    canActivateChild: [AuthChildGuard],
+    children: [{ path: 'child', component: ChildComponent }]
+  },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
@@ -211,30 +238,36 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
-
 ```
 
 Now Let's understand `component less router pattern`:
 
-```
+```ts
 const routes: Routes = [
-    { path: 'parent', component: ParentComponent,
+  {
+    path: 'parent',
+    component: ParentComponent,
+    children: [
+      {
+        path: '',
+        canActivateChild: [AuthChildGuard],
         children: [
-            {
-                path: '',
-                canActivateChild: [AuthChildGuard],
-                children: [{
-                    path: 'child', component: ChildComponent,
-                    path: 'child2', component: Child2Component,
-                }]
-            },
-            {
-                path: 'list', component: ListComponent,
-            }
+          {
+            path: 'child',
+            component: ChildComponent,
+            path: 'child2',
+            component: Child2Component
+          }
         ]
-    },
-    { path: 'login', component: LoginComponent },
-    { path: '', redirectTo: '/login', pathMatch: 'full' }
+      },
+      {
+        path: 'list',
+        component: ListComponent
+      }
+    ]
+  },
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 ```
 
@@ -248,7 +281,16 @@ const routes: Routes = [
 
 - `canMatch` guard can be useful when two route path is same and loading component is different
 
-```
+```ts
+const canMatchGuard = (route: Route, segments: UrlSegment[]): Observable<boolean | UrlTree> => {
+  const router = inject(Router);
+  const appService = inject(AppService);
+  return appService.submitted$.pipe(
+    map((isLogin) => {
+      return isLogin || router.createUrlTree(['']);
+    })
+  );
+};
 
 {
 path: 'home',
@@ -263,7 +305,3 @@ canLoad: [canMatchGuard], // Here it will load the component, even if the return
 
 When moving to any router we first need the `target`(example: {path: 'dashboard'(`target`)}) router config, and url is matches with it then it loads the view
 ![alt text](image-2.png)
-
-```
-
-```

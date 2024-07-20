@@ -2,9 +2,9 @@
 
 `view encapsulation` refers to mechanism of ensuring that the style defined for a component do not affect the rest of the application.
 
-To understand `ViewEncapsulation` in Angular, first, we should understand the Shadow DOM. Simply put, the Shadow DOM brings Encapsulation to HTML Elements. Using the Shadow DOM, markup, styles, and behaviors are scoped to the element and do not clash with other nodes of the DOM.
+To understand `ViewEncapsulation` in Angular, first, we should understand the `Shadow DOM`. Simply put, the Shadow DOM brings Encapsulation to HTML Elements. Using the Shadow DOM, markup, styles, and behaviors are scoped to the element and do not clash with other nodes of the DOM.
 
-The following three strategies are provided by Angular to determine how styles are applied.
+The following `three` strategies are provided by Angular to determine how styles are applied.
 
 - ViewEncapsulation.None
 - ViewEncapsulation.Emulated(default)

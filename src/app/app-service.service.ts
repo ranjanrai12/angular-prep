@@ -6,6 +6,8 @@ export class AppService {
   private submittedSource = new BehaviorSubject<boolean>(false);
   submitted$ = this.submittedSource.asObservable();
 
+  subject$ = new Subject();
+
   constructor() {}
 
   submitted(event: boolean) {

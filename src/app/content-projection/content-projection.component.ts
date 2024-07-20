@@ -6,7 +6,10 @@ import {
   DoCheck,
   ElementRef,
   OnInit,
-  ViewChild
+  QueryList,
+  Renderer2,
+  ViewChild,
+  ViewChildren
 } from '@angular/core';
 import { ContentCardComponent } from './content-card/content-card.component';
 import { CommonModule } from '@angular/common';
@@ -27,7 +30,8 @@ export class ContentProjectionComponent implements OnInit, AfterContentInit, DoC
   contentCardComponent: ContentCardComponent | undefined;
   user = { name: 'ranjan' };
   user1 = '';
-  constructor(private readonly cdr: ChangeDetectorRef, private router: Router) {
+  @ViewChildren('div') div: QueryList<ElementRef> | undefined;
+  constructor(private readonly cdr: ChangeDetectorRef, private router: Router, private render: Renderer2) {
     const navigation = this.router.getCurrentNavigation();
     console.log(navigation?.extras?.state?.['message']);
   }
@@ -46,6 +50,11 @@ export class ContentProjectionComponent implements OnInit, AfterContentInit, DoC
     if (this?.para?.nativeElement.innerHTML) {
       this.para.nativeElement.innerHTML = 'new text';
     }
+    this.div?.forEach((ele: ElementRef) => {
+      this.render.setStyle(ele.nativeElement, 'color', 'red');
+      // ele.nativeElement.style.color = 'red';
+      console.log(ele);
+    });
   }
 
   ngDoCheck() {

@@ -9,6 +9,7 @@ import {
 import { RouterModule } from '@angular/router';
 import { Child1Component } from './child1/child1.component';
 import { Child2Component } from './child2/child2.component';
+import { AppService } from '../app-service.service';
 
 @Component({
   selector: 'app-parent',
@@ -22,10 +23,16 @@ export class ParentComponent implements DoCheck {
   child1Value = '';
   child2Value = '';
   chil1dObj = {} as { name: string };
-  constructor(private readonly cdr: ChangeDetectorRef) {}
+  constructor(private readonly cdr: ChangeDetectorRef, private readonly appService: AppService) {}
 
   ngOnInit() {
     // this.cdr.detach();
+    this.appService.subject$.subscribe({
+      next: (val) => {
+        console.log('cliked', val, 'rxjsComponent');
+      }
+    });
+    this.appService.subject$.next('test');
   }
   ngDoCheck(): void {
     // console.log('Parent DO check called');

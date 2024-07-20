@@ -26,7 +26,7 @@ custom directive is a way to create reusable functionalities that can be applied
 
 - `Attribute Directives`: Used to change the appearance or behavior of an element.
 
-```
+```ts
 import { Directive, ElementRef, Renderer2, HostListener } from '@angular/core';
 
 @Directive({
@@ -48,13 +48,13 @@ export class HighlightDirective {
   }
 }
 
-<p appHighlight>Hover over this text to see the highlight.</p>
+<p appHighlight>Hover over this text to see the highlight.</p>;
 ```
 
 - `Structural Directives`: Used to change the DOM layout by adding or removing elements.
   `Note`: For understanding of below code Prior knowledge of [viewContainerRef](./ViewContainerRef.md) is required.
 
-```
+```ts
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({
@@ -79,7 +79,7 @@ export class IfDirective {
 
 ```
 
-```
+```ts
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({

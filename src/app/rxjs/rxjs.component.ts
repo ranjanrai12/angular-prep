@@ -1,6 +1,18 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  signal
+} from '@angular/core';
 import { TypedFormsComponent } from '../typed-forms/typed-forms.component';
 import {
+  AsyncSubject,
+  BehaviorSubject,
   Observable,
   Subject,
   Subscription,
@@ -23,11 +35,13 @@ import {
   tap,
   throwError
 } from 'rxjs';
+import { AppService } from '../app-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-rxjs',
   standalone: true,
-  imports: [TypedFormsComponent],
+  imports: [TypedFormsComponent, CommonModule],
   templateUrl: './rxjs.component.html',
   styleUrl: './rxjs.component.scss'
 })
@@ -41,6 +55,8 @@ export class RxjsComponent implements OnInit, OnDestroy, AfterViewInit {
     map((value) => value * 2)
   );
   count = 0;
+  arr = [1, 2, 3];
+  protected name = signal('Angular');
   src = new Observable((observer) => {
     observer.next(1),
       observer.next(2),
@@ -69,8 +85,46 @@ export class RxjsComponent implements OnInit, OnDestroy, AfterViewInit {
       complete: () => {}
     })
   );
-
+  valueChange = Output();
+  carouselItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7'];
+  currentIndex = 0;
+  itemsPerPage = 3;
+  displayItems: string[] = [];
+  obs = new Observable((observer) => {
+    observer.next(Math.floor(Math.random() * 200) + 1);
+    observer.next(Math.floor(Math.random() * 200) + 1);
+  });
+  // behaviourSubject$ = new BehaviorSubject('0');
+  subject$ = new AsyncSubject();
+  constructor(private readonly appService: AppService) {}
   ngOnInit(): void {
+    this.updateDisplayItems();
+
+    // this.appService.subject$.next('test');
+    // this.appService.subject$.next('test');
+    // this.obs.subscribe({
+    //   next: (value) => {
+    //     console.log('cold observable1', value);
+    //   }
+    // });
+    // this.obs.subscribe({
+    //   next: (value) => {
+    //     console.log('cold observable2', value);
+    //   }
+    // });
+    // this.appService.subject$.subscribe({
+    //   next: (val) => {
+    //     console.log('cliked1', val, 'rxjsComponent');
+    //   }
+    // });
+    // this.appService.subject$.subscribe({
+    //   next: (val) => {
+    //     console.log('cliked1', val, 'rxjsComponent');
+    //   }
+    // });
+    // this.appService.subject$.next(Math.floor(Math.random() * 200) + 1);
+    // this.appService.subject$.next('test');
+
     // this.ofObservable.subscribe({
     //   next: (res) => {
     //     console.log('Data Stream value', res);
@@ -90,13 +144,13 @@ export class RxjsComponent implements OnInit, OnDestroy, AfterViewInit {
     //       console.log('takeWhile Value', val);
     //     }
     //   });
-    of(1, 2, 3)
-      .pipe(takeLast(2))
-      .subscribe({
-        next: (val) => {
-          console.log('takeLast Value', val);
-        }
-      });
+    // of(1, 2, 3)
+    //   .pipe(takeLast(2))
+    //   .subscribe({
+    //     next: (val) => {
+    //       console.log('takeLast Value', val);
+    //     }
+    //   });
     /** Take operator */
     // this.srcObservable.pipe(take(5)).subscribe({
     //   next: (value) => {
@@ -127,6 +181,36 @@ export class RxjsComponent implements OnInit, OnDestroy, AfterViewInit {
     //       console.log('Value', value);
     //     }
     //   });
+
+    this.subject$.next('1');
+    this.subject$.next('2');
+    this.subject$.subscribe({
+      next: (val) => {
+        console.log('Sub1 ' + val);
+      },
+      error: (err: any) => console.error('Sub1 ' + err),
+      complete: () => console.log('Sub1 Complete')
+    });
+
+    this.subject$.next('3');
+    this.subject$.next('4');
+
+    this.subject$.subscribe((val) => {
+      console.log('sub2 ' + val);
+    });
+
+    this.subject$.next('5');
+    this.subject$.complete();
+
+    this.subject$.error('err');
+
+    this.subject$.next('6');
+
+    this.subject$.subscribe(
+      (val) => console.log('Sub3 ' + val),
+      (err) => console.error('sub3 ' + err),
+      () => console.log('Sub3 Complete')
+    );
   }
 
   ngAfterViewInit(): void {
@@ -190,9 +274,63 @@ export class RxjsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
   }
+  outer(callback: any) {
+    let count = 0;
+    callback(console.log('Count', ++count));
+  }
+
+  handleClick() {
+    this.name.set('Zoneless Angular');
+    this.outer(() => {});
+  }
 
   ngOnDestroy(): void {
-    this.obs$.unsubscribe();
+    // this.obs$.unsubscribe();
     this.buttonSubscription$.unsubscribe();
+  }
+
+  updateDisplayItems(): void {
+    this.displayItems = this.carouselItems.slice(this.currentIndex, this.currentIndex + this.itemsPerPage);
+  }
+
+  onNext(): void {
+    if (this.currentIndex + 1 <= this.carouselItems.length - this.itemsPerPage) {
+      this.currentIndex++;
+    } else {
+      this.currentIndex = 0; // Wrap around to the beginning
+    }
+    this.updateDisplayItems();
+  }
+
+  onPrevious(): void {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    } else {
+      this.currentIndex = this.carouselItems.length - this.itemsPerPage; // Wrap around to the end
+    }
+    this.updateDisplayItems();
+  }
+
+  onItemClick(index: number): void {
+    // Calculate the absolute index in carouselItems
+    const absoluteIndex = this.currentIndex + index;
+
+    // Check if the item is within bounds of carouselItems
+    if (absoluteIndex < this.carouselItems.length) {
+      // Update currentIndex to show clicked item
+      this.currentIndex = absoluteIndex;
+      this.updateDisplayItems();
+    }
+  }
+
+  isHighlighted(index: number): boolean {
+    // Calculate the absolute index in carouselItems
+    const absoluteIndex = this.currentIndex + index;
+
+    // Ensure absoluteIndex is within carouselItems length
+    const adjustedIndex = absoluteIndex % this.carouselItems.length;
+
+    // Check if the adjusted index matches currentIndex
+    return adjustedIndex === this.currentIndex % this.carouselItems.length;
   }
 }

@@ -4,14 +4,14 @@ The ContentChild & ContentChildren are decorators, which we use to Query and get
 
 Let's understand with example:
 
-```
+```ts
 <!-- Card component -->(child component)
 <div class="card">
       <ng-content select="header"></ng-content>
       <ng-content select="content"></ng-content>
       <ng-content select="footer"></ng-content>
 </div>
-TS file
+// TS file
 @ContentChild("header") cardContentHeader: ElementRef;
 
 ngAfterContentInit() {
@@ -46,7 +46,7 @@ There are `two` type selector
 
 Example:
 
-```
+```ts
 Parent Component
 <input #nameInput [(ngModel)]="name">
 
@@ -64,7 +64,7 @@ it is very much similar to the syntax of contentChild. It does not have the `sta
 
 Example:
 
-```
+```ts
 Direct children:
 <card>
     <header #header><h1 >Angular</h1></header> // Direct Children
