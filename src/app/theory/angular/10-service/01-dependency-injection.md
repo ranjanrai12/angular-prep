@@ -6,40 +6,39 @@ Service is a piece of reusable code and that code we will use in many components
 
 `Dependency Injection (DI)` is a software design pattern where the dependencies of a class are provided from the outside, rather than the class creating them itself.
 
-##### Without DI class tends to be `tightly coupled` meaning that they heavly rely on each other, which makes code difficult to maintain, test, reuse.
+#### Without DI class tends to be `tightly coupled` meaning that they heavly rely on each other, which makes code difficult to maintain, test, reuse.
 
 Let's Create an example
 
-```
+```ts
 class Engine {
-    start() {
-        console.log("Engine Start")
-    }
+  start() {
+    console.log('Engine Start');
+  }
 }
 class Car {
-    private engine: Engine;
-    constructor() {
-        this.engine = new Engine();
-    }
+  private engine: Engine;
+  constructor() {
+    this.engine = new Engine();
+  }
 
-    start() {
-        this.engine.start();
-        console.log("Car Started")
-    }
+  start() {
+    this.engine.start();
+    console.log('Car Started');
+  }
 }
 const car = new Car();
 car.start();
-
 ```
 
 In this above example, the `Car` class creates an instance of `Engine` inside its `constructor`. This means that `Car` is `tightly coupled` to `Engine`. If we want to change or upgrade the engine, we have to modify the Car class directly.
 
 Now, let's say we want to introduce a new type of engine, `ElectricEngine`:
 
-```
+```ts
 class ElectricEngine {
   start() {
-    console.log("Electric engine started");
+    console.log('Electric engine started');
   }
 }
 
@@ -52,7 +51,7 @@ class Car {
 
   start() {
     this.engine.start();
-    console.log("Car started");
+    console.log('Car started');
   }
 }
 
@@ -66,7 +65,7 @@ With `Dependency Injection`, however, the Car class doesn't need to know how to 
 
 #### Now let's break the above example wih DI
 
-```
+```ts
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -74,7 +73,7 @@ import { Injectable } from '@angular/core';
 })
 class Engine {
   start() {
-    console.log("Engine started");
+    console.log('Engine started');
   }
 }
 
@@ -90,7 +89,7 @@ class Car {
 
   start() {
     this.engine.start(); // Car uses the engine to start
-    console.log("Car started");
+    console.log('Car started');
   }
 }
 ```
@@ -101,10 +100,10 @@ Here, `Angular's DI` system manages the creation and injection of the Engine int
 
 - `Consumer:` A consumer is typically a component, directive, or another service that needs to use another object.
 - `Dependency`: A dependency is an object that a consumer needs to perform its function.
-- `provider`: provider is an istruction that describes how an object for a certain token is created. providers is an array of such instraction. Each provider is uniquely identified by token in the providers array.
+- `provider`: provider is an instruction that describes how an object for a certain token is created. providers is an array of such instraction. Each provider is uniquely identified by token in the providers array.
 
-```
-  Example: providers: [ProductService]
+```ts
+Example: providers: [ProductService];
 ```
 
 the above example is shorthand proerty of `[{provide: ProductService, useClass(it is provider): ProductService}]`
@@ -116,7 +115,7 @@ let's break it.
 
 - `Type token`: When a token is a type, it refers to a class.
 
-```
+```ts
 import { MyService } from './my.service';
 
 // Using the MyService class as a token
@@ -132,7 +131,7 @@ class MyComponent {
 
 - `String token`: This is useful in scenarios where the dependency is a value or object etc, which is not represented by a class.
 
-```
+```ts
 // Using a string as a token
  {provide:'PRODUCT_SERVICE', useClass: myService },
  {provide:'USE_FAKE', useValue: true },
@@ -152,7 +151,8 @@ The Problem with the string tokens is that two developers can use the same strin
 
 Let's break into an example:
 
-```// Developer A's Module
+```ts
+// Developer A's Module
 import { NgModule } from '@angular/core';
 import { LoggerService } from './logger.service';
 
@@ -232,7 +232,7 @@ So, when ComponentA tries to call this.logger.log('Message from Component A'), i
 
 - `Instance of InjectionToken`: is is commonly use when the value gets vary, and it ensure that the Unique tokens are created.
 
-```
+```ts
 import { InjectionToken } from '@angular/core';
 
 // Creating an InjectionToken instance
@@ -279,17 +279,16 @@ It is useful in scenarios like, where you want to provide API URL, application-w
 
 We usually use the `useFactory` when we want to return an object based on a certain condition.
 
-```
+```ts
 providers: [
-    { provide: LoggerService, useClass: LoggerService },
-    { provide: 'USE_FAKE', useValue: true },
-    {
-      provide: ProductService,
-      useFactory: (USE_FAKE, LoggerService) =>
-        USE_FAKE ? new FakeProductService() : new ProductService(LoggerService),
-      deps: ['USE_FAKE', LoggerService]
-    }
-  ]
+  { provide: LoggerService, useClass: LoggerService },
+  { provide: 'USE_FAKE', useValue: true },
+  {
+    provide: ProductService,
+    useFactory: (USE_FAKE, LoggerService) => (USE_FAKE ? new FakeProductService() : new ProductService(LoggerService)),
+    deps: ['USE_FAKE', LoggerService]
+  }
+];
 ```
 
 Lets' break the above example
@@ -306,11 +305,11 @@ Lets' break the above example
 
 - `Aliased Provider: useExisting`: when you want to ensure that two tokens resolve to the same instance of a service.
 
-```
- providers: [
-    { provide: ProductService, useExisting: NewProductService },
-    { provide: NewProductService, useClass: NewProductService }
-  ]
+```ts
+providers: [
+  { provide: ProductService, useExisting: NewProductService },
+  { provide: NewProductService, useClass: NewProductService }
+];
 ```
 
 in the above example, we map the `ProductService` to the `NewProductService` token using `useExisting` Provider. This will return the `NewProductService` whenever we use the `ProductService`.

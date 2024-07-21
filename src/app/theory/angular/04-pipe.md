@@ -32,14 +32,14 @@ Example: toDate | date | uppercase (flow from left to right)
 
 - `JsonPipe`:
 
-```
+```ts
 <p>{{ {name: 'Angular', version: 11} | json }}</p> <!-- Output: {"name":"Angular","version":11} -->
 
 ```
 
 - `KeyValuePipe`:
 
-```
+```ts
 <p *ngFor="let item of {a: 1, b: 2, c: 3} | keyvalue">{{ item.key }}: {{ item.value }}</p>
 <!-- Output:
 a: 1
@@ -51,7 +51,7 @@ c: 3
 
 - `AsyncPipe`:
 
-```
+```ts
 data$: Observable<string> = of('Hello, AsyncPipe!');
 
 <p>{{ data$ | async }}</p> <!-- Output: Hello, AsyncPipe! -->
@@ -59,16 +59,16 @@ data$: Observable<string> = of('Hello, AsyncPipe!');
 
 ### How to create custom pipe?
 
-```
+```ts
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'demo'
 })
-export class DemoPipe implements PipeTransform{
-    transform(n: number, extension: string = 'Kilograms') {
-        return (n * 1000).toFixed(2) + extension;
-    }
+export class DemoPipe implements PipeTransform {
+  transform(n: number, extension: string = 'Kilograms') {
+    return (n * 1000).toFixed(2) + extension;
+  }
 }
 ```
 
@@ -76,7 +76,7 @@ export class DemoPipe implements PipeTransform{
 
 When writing a `custom pipe` in Angular we can specify whether we want a pure or an impure pipe
 
-```
+```ts
 @Pipe({
   name: 'demo',
   pure: false/true        <----- here (default is `true`)
@@ -84,9 +84,9 @@ When writing a `custom pipe` in Angular we can specify whether we want a pure or
 export class DemoPipe {}
 ```
 
-- `Pure Pipe`: A pure pipe is only called when Angular detects a change in the value or the parameters passed to a pipe
+- `Pure Pipe`: A pure pipe is `only called when Angular detects a change in the value` or the parameters passed to a pipe.
 
-```
+```ts
 @Pipe({
   name: 'filterPipe',
   pure: true
@@ -94,9 +94,9 @@ export class DemoPipe {}
 export class FilterPipe {}
 ```
 
-- `Impure pipe`:An impure pipe is called for every change detection cycle no matter whether the value or parameter(s) changes.
+- `Impure pipe`:An impure pipe is `called for every change detection` cycle no matter whether the value or parameter(s) changes.
 
-```
+```ts
 @Pipe({
   name: 'filterPipe',
   pure: false
@@ -110,6 +110,6 @@ use `pipes` for data `transformation` and `formatting` within `templates` to enh
 
 `Example` formatting dates, numbers, currencies, or uppercase/lowercase conversions.
 
-Use `directives` for `DOM manipulation`, implementing complex interactions, and reusable behavior
+Use `directives` for `DOM manipulation`, implementing complex interactions, and reusable behavior.
 
 `Examples` include toggling visibility, dynamically adding event listeners, or creating custom behavior.

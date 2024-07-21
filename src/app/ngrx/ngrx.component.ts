@@ -11,20 +11,12 @@ import { CustomForOfDirective } from '../directives/my-ng-for.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomPipe } from '../pipes/custom.pipe';
 
 @Component({
   selector: 'app-ngrx',
   standalone: true,
-  imports: [
-    AsyncPipe,
-    AppHighLightDirective,
-    MyNgIfDirective,
-    CustomForOfDirective,
-    CommonModule
-    // NoopAnimationsModule
-    // BrowserModule
-    // BrowserAnimationsModule
-  ],
+  imports: [AsyncPipe, AppHighLightDirective, CustomPipe, MyNgIfDirective, CustomForOfDirective, CommonModule],
   templateUrl: './ngrx.component.html',
   styleUrl: './ngrx.component.scss'
 })

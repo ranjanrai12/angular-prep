@@ -88,17 +88,27 @@ Benifits:
 
 #### What is directive and how many type of directives are there, create your own custom directive? - `completed`
 
-#### What are new changes in angular?
+#### What are new changes in angular? - `Need to start`
 
-#### What is hostlistener and hostbinding?
+#### What is hostlistener and hostbinding? - `completed`
 
-#### What is pipe and how many type of pipe are there?
+#### What is pipe and how many type of pipe are there, create your own custome pipe? - `completed`
 
-#### What is service ?
+#### Difference between pure pipe and impure pipe ? - `completed`
 
-#### What is dependency injection?
+#### What is difference between pipe and directive ? - `completed`
+
+#### What is viewContainer ? - `completed`
+
+#### What is service ? - `completed`
+
+#### What is dependency injection? - `completed`
 
 #### What is injectable in service?
+
+#### How Angular DI Framework Resolves Dependencies ?
+
+#### What is @Self(), @SkipSelf(), and @Optional() ?
 
 #### What is Observable?
 

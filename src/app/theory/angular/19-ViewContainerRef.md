@@ -4,9 +4,9 @@ ViewContainerRef(VCR) represents a container (DOM element) where one or more vie
 
 #### A view container can contain:
 
-- `host views(component template)`, which are created by instantiating a component with the `createComponent` method
+- `host views(component template)`, which are created by instantiating a component with the `createComponent` method.
 
-- `embedded views(TemplateRef)`, which are created by instantiating a TemplateRef with the `createEmbeddedView` method
+- `embedded views(TemplateRef)`, which are created by instantiating a TemplateRef with the `createEmbeddedView` method.
 
 - `Get ViewContainerRef with dependency injection:`
 

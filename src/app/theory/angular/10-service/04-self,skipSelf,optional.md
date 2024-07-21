@@ -14,14 +14,10 @@
 
 - `@Self()`: The `@Self()` decorator ensures that Angular looks for the dependency only in the local injector (the injector of the component or directive where the dependency is being requested) and not in any ancestor injectors. If the service is not found in the local injector, Angular throws an error.
 
-```
+```ts
 @Component({
-  selector: "my-component",
-  template: `
-    <div class="box">
-      MyComponent => {{ randomNo }}
-    </div>
-  `,
+  selector: 'my-component',
+  template: ` <div class="box">MyComponent => {{ randomNo }}</div> `,
   providers: [RandomService]
 })
 export class MyComponent {
@@ -34,7 +30,7 @@ export class MyComponent {
 
 - `@SkipSelf`: The `@SkipSelf()` decorator tells Angular to skip the local injector and look for the dependency in the parent or ancestor injectors.
 
-```
+```ts
 import { Component, SkipSelf, Optional } from '@angular/core';
 import { ParentService } from './parent.service';
 
@@ -47,14 +43,13 @@ export class SkipSelfExampleComponent {
     // parentService must be provided by a parent injector
   }
 }
-
 ```
 
 In this example, @SkipSelf() ensures that ParentService is not provided by the local injector but by a parent injector. If no parent provides it, Angular will not throw an error because `@Optional()` is also used.
 
 - `@Optional()`: The `@Optional()` decorator tells Angular that the dependency is optional. If the dependency is not found, Angular will inject null instead of throwing an error.
 
-```
+```ts
 import { Component, Optional } from '@angular/core';
 import { OptionalService } from './optional.service';
 
@@ -71,5 +66,4 @@ export class OptionalExampleComponent {
     }
   }
 }
-
 ```

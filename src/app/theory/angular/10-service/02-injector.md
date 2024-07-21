@@ -11,31 +11,30 @@ The `Injectable` is a decorator, which you need to add to the `consumer(componen
 
 Let's understand with example:
 
-```
+```ts
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class LoggerService {
-  log(message:any) {
+  log(message: any) {
     console.log(message);
   }
 }
 ```
 
-```
+```ts
 import { Injectable } from '@angular/core';
-import {LoggerService} from './logger.service'
+import { LoggerService } from './logger.service';
 
 @Injectable()
-export class ProductService{
+export class ProductService {
+  constructor(private loggerService: LoggerService) {
+    this.loggerService.log('Product Service Constructed');
+  }
 
-    constructor(private loggerService: LoggerService) {
-        this.loggerService.log("Product Service Constructed");
-    }
-
-    public  getProducts() {
-        this.loggerService.log("getProducts called");
-    }
+  public getProducts() {
+    this.loggerService.log('getProducts called');
+  }
 }
 ```
 
@@ -61,11 +60,10 @@ We can manually inject the `LoggerService` by using the `@Inject` decorator appl
 
 The `@Inject` takes the `Injector` token as the parameter. The token is used to locate the dependency in the Providers.
 
-```
-export class ProductService{
-    constructor(@Inject(LoggerService) private loggerService) {
-        this.loggerService.log("Product Service Constructed");
-    }
+```ts
+export class ProductService {
+  constructor(@Inject(LoggerService) private loggerService) {
+    this.loggerService.log('Product Service Constructed');
+  }
 }
-
 ```

@@ -3,7 +3,7 @@ Display: {{ count$ | async }}
 <div class="item">
   <button type="button" (click)="increment()" appHighlight>Increment</button>
   <button type="button" (click)="decrement()">Decrement</button>
-  <button type="button" (click)="reset()">Reset</button>
+  <button type="button" (click)="reset()">{{ 'Reset' | custompipe }}</button>
 </div>
 
 <!-- <h1 *myNgIf="true">Hello</h1> -->
