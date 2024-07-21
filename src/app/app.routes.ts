@@ -44,6 +44,11 @@ export const routes: Routes = [
     title: 'rxjs'
   },
   {
+    path: 'ngrx',
+    loadComponent: () => import('./ngrx/ngrx.component').then((m) => m.NgrxComponent),
+    title: 'ngrx'
+  },
+  {
     path: 'parent',
     loadChildren: () => import('./parent/parent.route').then((m) => m.PARENT_ROUTE),
     title: 'parent',

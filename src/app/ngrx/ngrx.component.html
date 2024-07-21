@@ -1,0 +1,65 @@
+Display: {{ count$ | async }}
+
+<div class="item">
+  <button type="button" (click)="increment()" appHighlight>Increment</button>
+  <button type="button" (click)="decrement()">Decrement</button>
+  <button type="button" (click)="reset()">Reset</button>
+</div>
+
+<!-- <h1 *myNgIf="true">Hello</h1> -->
+
+<!-- <h2 *customForOf="let item of arrs">{{ item }}</h2> -->
+<!-- <h2 *customeFor="let item of arrs">{{ item }}</h2> -->
+
+<!-- ngIf changes -->
+@if(visibility) {
+<div>Hello</div>
+} @else {
+<div>No Hello</div>
+}
+<hr />
+@for(item of arrs; track $index) {
+<div>{{ item }}</div>
+} @empty {
+<div>Empty List</div>
+}
+<br />
+@switch(equipment) { @case ('container') {
+<div>Container</div>
+} @case ('chassis') {
+<div>Chasssis</div>
+} @default {
+<div>Default</div>
+} }
+<hr />
+<button type="button" #loadButton>Click Me</button>
+@defer (on interaction(loadButton)) {
+<span>button is clicked</span>
+}@placeholder { <span>Placeholder (click on it!)</span>
+}
+
+<hr />
+@defer(on hover) {
+<span>Hovered</span>
+
+}@placeholder {
+<span>Placeholder (hover it!)</span>
+}
+<hr />
+@defer (on idle) {
+<span>Browser has reached an idle state</span>
+} @placeholder {
+<span>Placeholder</span>
+}
+<hr />
+@defer(on timer(5s)) {
+<span>Visible after 5s</span>
+}@placeholder {
+<span>Placeholder</span>
+}
+<hr />
+@defer (on viewport) {
+<div>ViewPort</div>
+} @placeholder {
+<span>Placeholder</span>
+}

@@ -83,7 +83,7 @@ export class IfDirective {
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[customFor]'
+  selector: '[customForOf]'
 })
 export class CustomForDirective {
   private items: any[] = [];

@@ -1,10 +1,12 @@
 #### What is JS - `completed`
 
-#### What is Execution Context?
+#### What is Execution Context? - `completed`
 
-#### What is Call Stack?
+#### What is Call Stack? - `completed`
 
-#### What is closure and what are it's advantages and disadvantages ?
+#### What is shadowing and illegal shadowing ?
+
+#### What is closure and what are it's advantages and disadvantages ? - `continue`
 
 #### What is Scope Chain, Scope & Lexical Environment ?
 
@@ -12,9 +14,11 @@
 
 #### What is Shadowing?
 
-#### What is hoisting ?
+#### What is hoisting ? - `completed`
 
-#### What is strict mode ?
+#### What is strict mode ? - `completed`
+
+Ans: It enforces stricter parsing and error handling on the code at runtime.
 
 #### What is this ?
 

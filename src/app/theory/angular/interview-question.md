@@ -86,7 +86,7 @@ Benifits:
 
 #### What is forRoot and forChild? - `completed`
 
-#### What is directive and how many type of directives are there, create your own custom directive?
+#### What is directive and how many type of directives are there, create your own custom directive? - `completed`
 
 #### What are new changes in angular?
 
