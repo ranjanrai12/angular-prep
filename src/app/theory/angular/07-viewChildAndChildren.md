@@ -20,7 +20,7 @@ Let's understand with Example:
   <p #para>Some text</p>
 </div>
 
-Ts File:
+// Ts File:
 headerVisibility: boolean = false;
 @ViewChild('para', { static: true }) para: ElementRef | undefined;
 

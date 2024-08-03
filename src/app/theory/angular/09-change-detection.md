@@ -66,13 +66,13 @@ In the above component markForCheck makes the component dirty and after asyc ope
 
 - When component of `input` property is changed then in that case angular marks the child component as dirty. Suppose in parent component child component input property got changed then child component marks as dirty.
 
-Note: When angular tries to figure out if the input binding has been changed it compares value by reference
+`Note:` When angular tries to figure out if the input binding has been changed it compares value by reference
 
-```
-const obj = {}
-const obj2 = obj
-obj.name = 'test' // state is mutated
-obj === obj2 // True because reference still points rhe same object, So angular treats as the same value
+```js
+const obj = {};
+const obj2 = obj;
+obj.name = 'test'; // state is mutated
+obj === obj2; // True because reference still points rhe same object, So angular treats as the same value
 ```
 
 - While using `async` pipe, under the hood `async` pipe uses `markForCheck`

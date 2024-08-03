@@ -10,7 +10,7 @@ The ng-content tag acts as a placeholder for inserting external or dynamic conte
 
 Example:
 
-```
+```ts
 import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -31,14 +31,14 @@ export class FancyBtnComponent {
 Events:
 The events like click, input, etc bubble up. Hence can be captured in the parent.
 
-```
+```html
 <app-fancybtn (click)="btnClicked($event)"><b>Submit</b></app-fancybtn>
 ```
 
 If it has more button then in that case create custom event
 
-```
-<!-- Fancy Button -->
+```ts
+// Fancy Button
 <button (click)="raiseSomeEvent()">
        <ng-content></ng-content>
 </button>
@@ -48,7 +48,7 @@ raiseSomeEvent() {
  this.someEvent.emit(args);
 }
 
-Parent Component
+// Parent Component
 <app-fancybtn (someEvent)=”DoSomething($event)”><b>Submit</b></app-fancybtn>
 ```
 
@@ -58,7 +58,7 @@ In the parent component we can create different contents and each of those conte
 
 Example of ng-content select attribute
 
-```
+```ts
 import { Component } from '@angular/core';
 
 
@@ -86,7 +86,7 @@ import { Component } from '@angular/core';
 export class CardComponent {
 }
 
-Now in the parent component
+// Now in the parent component
 <app-card>
  <header><h1>Angular</h1></header>
  <content>One framework. Mobile & desktop.</content>

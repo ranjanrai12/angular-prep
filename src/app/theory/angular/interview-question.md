@@ -15,11 +15,11 @@ TypeScript is a statically-typed superset of JavaScript developed and maintained
 
 TypeScript is used in Angular because it provides better tooling support, improved type checking, and additional features like decorators, interfaces, etc.
 
+#### What is difference between library and framework ?
+
 #### Why we should use Angular?
 
-#### What are data binding ? - `completed`
-
-Ans: Check in the theory section
+Ans: Because it provides -> Full feature framework, typescript support, two way binding, component based architecture, dependency injection, powerful cli, strong community.
 
 #### What are Single Page Applications ?
 
@@ -50,7 +50,27 @@ Benifits:
 
 #### If i want to deploy my angular project to prod what are the things need to do with the project.
 
+#### What is CORS ? - `completed`
+
+Ans: It's a security feature in browser, It Happen when your website tries to get data from a different domain, and that domain doesn't allow it.
+
 #### If asked to design a new project what are steps need to take. How do we organise the module.
+
+Ans:
+
+- Requirements Gathering
+- Project Planning
+- Set Up the Development Environment
+- Define the Project Structure
+
+  Organizing Modules
+
+  - Core Module
+  - Shared Module
+  - Feature Modules
+  - Routing Module
+
+#### What are data binding ? - `completed`
 
 #### How angular bootstraping works - `completed`
 
@@ -104,28 +124,36 @@ Benifits:
 
 #### What is dependency injection? - `completed`
 
-#### What is injectable in service?
+#### What is injectable in service? - `completed`
 
-#### How Angular DI Framework Resolves Dependencies ?
+#### How Angular DI Framework Resolves Dependencies ? - `completed`
 
-#### What is @Self(), @SkipSelf(), and @Optional() ?
+#### What is @Self(), @SkipSelf(), and @Optional() ? - `completed`
 
-#### What is Observable?
+#### What is HTTP interceptor? - `completed`
 
-#### What are difference between observable and promise?
+#### What is ng-template, ng-container and ngTemplateOutlet? - `completed`
 
-#### What is ng-template, ng-container and ngTemplateOutlet?
+#### What is AOT and JIT ? - `completed`
 
-#### What is AOT and JIT
+#### What is IVY ? - `completed`
 
-#### What is HTTP interceptor?
+#### What is Signal ? - `only definition complted`
 
-#### What is forkjoin, switchmap, mergemap, concatmap?
+#### What is Observable ? - `completed`
 
-#### What is subject, behaviour subject, replay subject, async subject?
+#### What is observable and observer ? - `completed`
 
-#### What is observable and observer ?
+#### What are difference between observable and promise? - `completed`
 
-#### what is pipe, map in rxjs ?
+#### what is pipe, map in rxjs ? - `completed`
 
-#### What is ngRx
+#### What is forkjoin, switchmap, mergemap, concatmap ? - `completed`
+
+#### What is Take, TakeUntil, TakeWhile & TakeLast ? - `completed`
+
+#### What is subject, behaviour subject, replay subject, async subject ? - `completed`
+
+#### What is hot observable and cold observable ? - `completed`
+
+#### What is ngRx ? - `only definition`

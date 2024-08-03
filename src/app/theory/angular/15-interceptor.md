@@ -6,7 +6,7 @@ To Implement the `Interceptor`, we need to create an injectable service, which i
 
 `HttpInterceptor Interface`: The interface contains a single method Intercept with the following signature
 
-```
+```ts
 intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
 
 ```
@@ -19,7 +19,7 @@ The HttpRequest is a immutable class. Which means that we can’t modify the ori
 
 Creation of interceptor:
 
-```
+```ts
 providers: [
     {
         provide: HTTP_INTERCEPTORS,
@@ -30,7 +30,7 @@ providers: [
 
 ```
 
-```
+```ts
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -40,5 +40,4 @@ export class AppHttpInterceptor implements HttpInterceptor {
     return next.handle(request);
   }
 }
-
 ```

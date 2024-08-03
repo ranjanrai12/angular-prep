@@ -5,7 +5,7 @@ The ContentChild & ContentChildren are decorators, which we use to Query and get
 Let's understand with example:
 
 ```ts
-<!-- Card component -->(child component)
+// Card component (child component)
 <div class="card">
       <ng-content select="header"></ng-content>
       <ng-content select="content"></ng-content>
@@ -18,7 +18,7 @@ ngAfterContentInit() {
     this.renderor.setStyle(this.cardContentHeader.nativeElement,"font-size","20px")
 }
 
-<!-- Parent Component -->
+// Parent Component
 <card>
     <header><h1 #header>Angular</h1></header>
     <content>One framework. Mobile & desktop.</content>

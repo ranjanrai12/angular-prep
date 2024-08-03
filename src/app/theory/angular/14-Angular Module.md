@@ -4,7 +4,7 @@ The Angular Modules help us to organize our code into manageable parts, it helps
 
 Syntax:
 
-```
+```ts
 @NgModule({
   declarations: [  ],
   imports:      [  ],

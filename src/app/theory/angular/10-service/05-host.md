@@ -8,9 +8,9 @@
 
 `let's break into example`
 
-```
+```ts
 @Component({
-  selector: "my-child",
+  selector: 'my-child',
   providers: [],
   viewProviders: [],
   template: `
@@ -26,12 +26,12 @@ export class ChildComponent {}
 
 Now, go to the `GrandChildComponent` and add the `@Host decorator` on the `randomService`
 
-```
+```ts
 export class GrandChildComponent {
-randomNo;
-    constructor(@Host() private randomService: RandomService) {
-        this.randomNo = randomService?.RandomNo;
-    }
+  randomNo;
+  constructor(@Host() private randomService: RandomService) {
+    this.randomNo = randomService?.RandomNo;
+  }
 }
 ```
 

@@ -17,7 +17,7 @@ ngOninit() {
 `Note:`
 
 - Subject is multicast, means that every subscriber of subject will receive the same value which subject sends
-- Subject is hot observable
+- Subject is `hot observable`
 
 `Cold observable`: The cold observable does not activate `producer` untill there is a subscriber. This is the usually the case when Observable it self produces the data.
 
@@ -58,8 +58,8 @@ The producer produces the value only when a subscriber subscribes to it.
 
 Difference between Multicast and unicast
 
-- `multicast` -> It create a single instance with producer so that every subscriber will get the same value
-- `unicast` -> It creates the separate instance with producer so every subscriber will get the different value
+- `multicast` -> It create a single instance with producer so that every subscriber will get the same value.
+- `unicast` -> It creates the separate instance with producer so every subscriber will get the different value.
 
 #### What is BehaviourSubject
 

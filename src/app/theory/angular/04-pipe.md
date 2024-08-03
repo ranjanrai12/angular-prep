@@ -79,7 +79,7 @@ When writing a `custom pipe` in Angular we can specify whether we want a pure or
 ```ts
 @Pipe({
   name: 'demo',
-  pure: false/true        <----- here (default is `true`)
+  pure: false / true // here (default is `true`)
 })
 export class DemoPipe {}
 ```

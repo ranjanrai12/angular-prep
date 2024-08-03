@@ -47,7 +47,7 @@ export class SkipSelfExampleComponent {
 
 In this example, @SkipSelf() ensures that ParentService is not provided by the local injector but by a parent injector. If no parent provides it, Angular will not throw an error because `@Optional()` is also used.
 
-- `@Optional()`: The `@Optional()` decorator tells Angular that the dependency is optional. If the dependency is not found, Angular will inject null instead of throwing an error.
+- `@Optional()`: The `@Optional()` decorator tells Angular that the dependency is optional. If the dependency is not found, Angular will inject `null` instead of throwing an error.
 
 ```ts
 import { Component, Optional } from '@angular/core';

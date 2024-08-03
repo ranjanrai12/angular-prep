@@ -18,12 +18,10 @@ Components are responsible for displaying data, handling user input, and communi
 
 example:
 
-```
-export class AppComponent
-{
-    title : string ="app"
+```js
+export class AppComponent {
+  title: string = 'app';
 }
-
 ```
 
 `Metadata` metadata in a component is used to define the characteristics and behavior of the component. We use the `@Component` decorator to provide the Metadata to the Component.

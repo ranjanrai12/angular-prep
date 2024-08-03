@@ -1,33 +1,35 @@
-#### What is HTML ?
+#### What is HTML ? - `completed`
 
-#### What is localstorage and session storage ?
+#### What is meta tag ? - `completed`
 
-#### What is cache ?
+#### What is utf-8 ? - `completed`
 
-#### What is cookies ?
+#### What are new feature of HTML5? - `completed`
 
-#### What is SEO ?
+#### What is localstorage and session storage and what are there size ? - `completed`
 
-#### What Head and body ?
+#### What is cache ? - `completed`
 
-#### What is an element and tag in HTML?
+#### What is cookies ? - `completed`
 
-#### What is iframe ?
+#### What is SEO ? - `completed`
 
-#### How do you add CSS styling in HTML?
+#### What Head and body ? - `completed`
 
-#### What hierarchy do the style sheets follow?
+#### What is an element and tag in HTML? - `completed`
 
-#### How do you add JavaScript to an HTML webpage?
+#### What is iframe ? - `completed`
+
+#### What is canvas ? - `completed`
+
+#### What is schementic element ? - `completed`
+
+#### How do you add CSS styling in HTML? - `completed`
+
+#### What hierarchy do the style sheets follow? - `completed`
 
 #### What is the difference between HTML and XHTML?
 
-#### What are new feature of HTML5?
+#### What is the difference between “display: none” and “visibility: hidden” when used as attributes to the HTML element? - `completed`
 
-#### What is the difference between “display: none” and “visibility: hidden” when used as attributes to the HTML element?
-
-#### When to use scripts in the head and when to use scripts in the body?
-
-#### What is canvas ?
-
-#### What is schementic element ?
+#### When to use scripts in the head and when to use scripts in the body? - `completed`

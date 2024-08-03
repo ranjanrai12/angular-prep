@@ -31,16 +31,16 @@ Before `angular 14` angular `Reactive Form` was not fully type safe, meaning tha
 Now from `angular` 14 and moving forward angular has added full built-in type safety to `Reactive Forms`, meaning that you can get useful error messages and auto-completion when working with form values, when patching form values, and in many other situations.
 Example:
 
-```
+```ts
 form = this.fb.group({
-    email: [
-      '',
-      {
-        validators: [Validators.required, Validators.email],
-      },
-    ],
-    password: ['', [Validators.required, Validators.minLength(8)]],
-  });
+  email: [
+    '',
+    {
+      validators: [Validators.required, Validators.email]
+    }
+  ],
+  password: ['', [Validators.required, Validators.minLength(8)]]
+});
 ```
 
 ![alt text](image-1.png)
@@ -54,7 +54,7 @@ For more details of typed form [click here](https://blog.angular-university.io/a
 
 we can add the router title without any additional import on the page. Refer to the following code example.
 
-```
+```ts
 const routes: Routes = [{
   path: 'home',
   component: HomeComponent
@@ -94,13 +94,13 @@ Angular 14 also includes support for the latest TypeScript 4.7 release and now t
 
 Now we can bind `protected` component members directly from the template. Refer to the following code example.
 
-```
+```ts
 @Component({
-    selector: 'app-root',
-    template: '{{ title }}',  // Now compiles!
+  selector: 'app-root',
+  template: '{{ title }}' // Now compiles!
 })
 export class SampleComponent {
-    protected title: string = 'Angular 14';
+  protected title: string = 'Angular 14';
 }
 ```
 

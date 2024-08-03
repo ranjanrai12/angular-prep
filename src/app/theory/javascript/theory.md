@@ -784,6 +784,17 @@ console.log(areaCalculation);
 console.log(diameterCalculation);
 ```
 
+#### What is pure function ?
+
+Ans: A Pure Function is a function (a block of code) that always returns the same result if the same arguments are passed. It does not depend on any state or data change during a program’s execution. Rather, it only depends on its input arguments.
+
+```js
+unction calculateGST(productPrice) {
+    return productPrice * 0.05;
+}
+console.log(calculateGST(15))
+```
+
 #### map, filter & reduce
 
 - `map`: It is basically used to transform a array. The map() method creates a new array with the results of calling a function for every array element.
@@ -1413,6 +1424,8 @@ PrintName.sayHi.apply(nameObj, [42]); // Tony age is 42
 
 `bind()`: The `bind()` method does not call the function immediately but instead returns a new function that can be called later and new function with a specified `this` value and any arguments that are passed to it..
 
+Syntax: `func.bind(thisArgs, arg1, ...., argN)`
+
 ```js
 let nameObj = {
   name: 'Tony'
@@ -1432,8 +1445,65 @@ HiFun(); // Tony
 
 #### Write yor own polyfill of call, apply and bind method.
 
+\*\* polyfill of call
+
 ```js
-// TODO: Need to Coomplete
+// call
+Function.prototype.myCall = function (context, ...rest) {
+  if (typeof this !== 'function') {
+    throw new Error('Please provide the function');
+  }
+  context.func = this;
+  context.func(...rest); // spread operator which converts arr into indivial arguments
+};
+function greet(name, country) {
+  console.log(`Hello my name is ${name} and your age is ${this.name} and you are from ${country} `);
+}
+var user = {
+  name: 'jon'
+};
+greet.myCall(user, 'ranjan', 'US');
+// output
+Hello my name is ranjan and your age is jon and you are from US
+```
+
+\*\* polyfill of apply method
+
+```js
+Function.prototype.myApply = function (context, rest) {
+  if (typeof this !== 'function') {
+    throw new Error('Please provide the function');
+  }
+  if (!Array.isArray(res)) throw new Error('Please provide other arguments in array form');
+  context.func = this;
+  context.func(...rest); // spread operator which converts arr into indivial arguments
+};
+function greet(name, country) {
+  console.log(`Hello my name is ${name} and your age is ${this.name} and you are from ${country} `);
+}
+var user = {
+  name: 'jon'
+};
+greet.myApply(user, ['ranjan', 'US']);
+```
+
+\*\* polyfill of bind method
+
+```js
+Function.prototype.myBind = function (context, ...args) {
+  context.func = this;
+  return function (...nextArgs) {
+    const arr = [...args, ...nextArgs];
+    context.func(...arr);
+  };
+};
+function greet(name, country) {
+  console.log(`Hello my name is ${name} and your name is ${this.name} and you are from ${country} `);
+}
+var user = {
+  name: 'jon'
+};
+greet.myBind(user, 'ranjan', 'US')();
 ```
 
 #### What is Debouncing ?
@@ -1452,11 +1522,11 @@ function fun() {
 
 function debounce(fn, d) {
   let timer = null;
-  return function () {
+  return function (...args) {
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
       let context = this;
-      fn.apply(context);
+      fn.apply(context, args);
     }, d);
   };
 }
@@ -1475,9 +1545,10 @@ function expencive() {
 }
 function throttle(fn, d) {
   let flag = true;
-  return function (args) {
+  return function (...args) {
     if (flag) {
-      fn();
+      let context = this;
+      fn.apply(context, args);
       flag = false;
       setTimeout(() => {
         flag = true;
@@ -1559,7 +1630,6 @@ Syntax:
 ```js
 <element>.addEventListener(<eventName>,
     <callbackFunction>, {capture : boolean});
-
 ```
 
 \*`Note`: capture false means `event bubbling`, if it's true then `event capturing`, by default is `false` means `event bubbling`.
@@ -1619,11 +1689,366 @@ Ans: `Event delegation` is a technique in JavaScript where you add a `single eve
 
 Ans: Accessing the properties and method of another object that is called prototype. prototye is an object which is attached to whatever we create the function, object, array etc.
 
-https://www.keka.com/javascript-coding-interview-questions-and-answers
+#### What is Memoization ?
 
+Ans: Memoization is a technique used in programming to optimize functions by caching the results of expensive function calls and returning the cached result when the same inputs occur again. This can significantly improve performance for functions that are repeatedly called with the same arguments.
+
+#### What is class in JS ?
+
+Ans: Class is type of function, and it is a type of syntactical sugar introduced in (ES6) to simplify the creation of `constructor` functions and prototype-based inheritance.
+
+```js
+function Details(name, from) {
+  this.name = name;
+  this.from = from;
+}
+Details.prototype.greet = function () {
+  console.log(`${this.name} ${this.age}`);
+};
+
+new Details('John', 'US');
+![alt text](image-11.png)
 ```
 
+Now transform above function with class
+
+```js
+class Details {
+  constructor(name, from) {
+    this.name = name;
+    this.from = from;
+  }
+  greet() {
+    console.log(`${this.name} ${this.age}`);
+  }
+}
+new Details('John', 'US');
 ```
+
+![alt text](image-12.png)
+
+- Extending a class
+
+Function arroach
+
+```js
+function Details(name, from) {
+  this.name = name;
+  this.from = from;
+}
+function MoreInfo(name, from, age) {
+  Details.call(this, name, age);
+  this.age = age;
+}
+MoreInfo.prototype.greet = function () {
+  console.log(this.name, this.from, this.age);
+};
+new MoreInfo('john', 'US', 32);
+```
+
+![alt text](image-13.png)
+
+Now use by Class
+
+```js
+class Details {
+  constructor(name, from) {
+    this.name = name;
+    this.from = from;
+  }
+}
+class MoreInfo extends Details {
+  constructor(name, from, age) {
+    super(name, from);
+    this.age = age;
+  }
+  greet() {
+    console.log(this.name, this.from, this.age);
+  }
+}
+new MoreInfo('john', 'US', 32);
+```
+
+![alt text](image-14.png)
+
+#### What is abstract class ?
+
+Ans: An abstract class is a class that cannot be instantiated.
+
+```js
+abstract class Shape {
+  name: string;
+  constructor(name: string) {
+     this.name = name;
+  }
+}
+
+class Circle extends Shape {
+  radius: number;
+  constructor(name: string, radius:number){
+     super(name);
+     this.radius = radius;
+  }
+
+}
+
+const myShape = new Shape('My shape'); // This will throw an Error
+const shortCircle = new Circle("Short Circle", 0.5); // This will work fine.
+```
+
+Reference: https://medium.com/@rheedhar/abstract-classes-in-javascript-d6510afac958#:~:text=An%20abstract%20class%20is%20a,to%20directly%20build%20a%20house.
+
+#### What is Method overloading and Method overriding ?
+
+Ans:
+
+- `Method overriding`: It is a concept tied with inheritance, when a child class inherits some method from the parent class but redefines it on its on context then it is known as method overriding. Let us see an example:
+
+Example:
+
+![alt text](image-15.png)
+
+- `Method overloading`: Method overloading is used to describe when two methods bears the same name but differs in type or the no. of arguments that are passed into the methods.
+
+While some languages like Java, supports method overloading, JavaScript does not allow method overloading. In the following example, when we try to overload the method, we will run into some issues.
+
+Example:
+
+![alt text](image-16.png)
+
+Reference: https://medium.com/@ashok997/method-overriding-and-overloading-469e6616c9c0
+
+#### What is static method ?
+
+A static method in JavaScript is a function that belongs to a class, but not to any particular instance of that class.It can be useful for creating utility function , math calculation.
+
+Example:
+
+```js
+class Utils {
+  static isValidEmail(email) {
+    // regular expression for email validation
+    const emailRegex = /^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$/;
+    return emailRegex.test(email);
+  }
+}
+
+Utils.isValidEmail('test@example.com'); // returns true
+```
+
+#### What are es6 feature ?
+
+Ans:
+
+- Arrow function
+- let, const
+- Destructuring
+- string literals
+- spread operator
+- rest parameter
+- default parameter
+- promise
+- for of
+- class
+- import export
+
+#### What is null and undefined
+
+Ans: undefined means a variable has been declared but has not yet been assigned a value, whereas null is an assignment value, meaning that a variable has been declared and given the value of null .
+
+#### What is coersion in javascript and what difference between == and === ?
+
+Ans: Reference : https://www.geeksforgeeks.org/what-is-type-coercion-in-javascript/
+
+#### Difference between map and forEach
+
+Ans:
+
+- `Return Value:`
+  - map: Returns a new array
+  - forEach: it returns undefined
+- `Use Cases:`
+  - map: if need to trasform each item of the array and create the new array
+  - forEach: if need to perform each item of the array without creating new array
+- `Chaining:`
+  - map: can be chained with other methods like filter, reduce as it return new array.
+  - forEach: cannot be chained because it does not return anything.
+
+#### How many way we can create the object in javascript ?
+
+Ans:
+
+- `Using object literal`:
+
+```js
+const person = {
+  name: 'John',
+  age: 20,
+  hobbies: ['reading', 'games', 'coding'],
+  greet: function () {
+    console.log('Hello everyone.');
+  },
+  score: {
+    maths: 90,
+    science: 80
+  }
+};
+```
+
+- `Using instance of Object`
+
+```js
+const person = new Object({
+  name: 'John',
+  age: 20,
+  hobbies: ['reading', 'games', 'coding'],
+  greet: function () {
+    console.log('Hello everyone.');
+  },
+  score: {
+    maths: 90,
+    science: 80
+  }
+});
+```
+
+- `Using Function constructor function`:
+
+```js
+function Person() {
+  this.name = 'John';
+  this.age = 20;
+  this.hobbies = ['reading', 'games', 'coding'];
+  this.greet = function () {
+    console.log('Hello everyone.');
+  };
+  this.score = {
+    maths: 90,
+    science: 80
+  };
+}
+```
+
+- `Using Object.create`: The `Object.create()` method creates a new object, using an existing object as the prototype of the newly created object.
+
+```js
+const personPrototype = {
+  name: 'xyz'
+};
+
+const person = Object.create(personPrototype);
+console.log(person);
+```
+
+![alt text](image-17.png)
+
+- `Using class`:
+
+```js
+class Person {
+  score = {
+    maths: 90,
+    science: 80
+  };
+  constructor(name, age, hobbies) {
+    this.name = name;
+    this.age = age;
+    this.hobbies = hobbies;
+  }
+  greet() {
+    console.log('Hello everyone.');
+  }
+}
+```
+
+#### Create your own map, reduce, filter
+
+- `map`:
+
+```js
+Array.prototype.myMap = function (fn) {
+  let arr = [];
+  for (let i = 0; i < this.length; i++) {
+    arr.push(fn.call(this, this[i], i));
+  }
+  return arr;
+};
+const arr = [1, 2];
+
+arr.myMap((e) => e * 2); // [2, 4]
+```
+
+- `filter`:
+
+```js
+Array.prototype.myFilter = function (cb) {
+  let context = this;
+  const arr = [];
+
+  for (let i = 0; i < context.length; i++) {
+    if (cb.call(this, context[i], i)) {
+      arr.push(context[i]);
+    }
+  }
+  return arr;
+};
+const arr = [12, 345, 12];
+arr.myFilter((item) => item === 12); // [12,12]
+```
+
+- `reduce`:
+
+```js
+Array.prototype.myReduce = function (cb, initialValue) {
+  const context = this; // array
+  let acc = initialValue;
+  for (let i = 0; i < context.length; i++) {
+    if (acc !== undefined) {
+      acc = cb(acc, context[i]);
+    } else {
+      acc = context[i];
+    }
+  }
+  return acc;
+};
+const arr = [12, 345, 12];
+arr.myReduce((acc, curr) => {
+  acc = acc + curr;
+  return acc;
+}, 0); // 369
+```
+
+#### What is memoize ?
+
+Ans: memoize is a function which is use for performance optimization, by storing the previous result and reusing it next time.
+
+#### What is decorator ?
+
+Ans: decorator is a function which change the behaviour of class and their member ?
+
+```ts
+function first() {
+  console.log("first(): factory evaluated");
+  return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    console.log("first() called")
+  }
+}
+
+function second() {
+    console.log("second(): factory evaluated");
+  return function(taget: any, property: string, descriptor: PropertyDescriptor){
+    console.log("second() called")
+  }
+}
+class ExampleClass {
+  @first()
+  @second()
+}
+```
+
+#### How would you dynamically import a module in JavaScript?
+
+Ans: https://medium.com/@vincent.bocquet/dynamic-import-in-javascript-a-simple-guide-a808cff86458
 
 ```
 

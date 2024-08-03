@@ -1,4 +1,4 @@
-### What is a data stream?
+### What is a data stream ?
 
 A `data stream` is the data that arrives over some time. The stream of data can be anything. Like variables, user inputs, properties, caches, data structures, and even failures, etc
 
@@ -37,7 +37,7 @@ The observer must subscribe to the observable to receive the value from the obse
 
 The observable invokes the `next()` callback whenever the `value arrives` in the stream. It passes the value as the argument to the next callback. If the error occurs, then the `error()` callback is invoked. It invokes the `complete()` callback when the stream completes.
 
-```
+```ts
  src = new Observable((observer) => {
     observer.next(1),
       observer.next(2),
@@ -71,7 +71,7 @@ The observable invokes the `next()` callback whenever the `value arrives` in the
 
 ![alt text](image.png)
 
-```
+```ts
 ngOnInit() {
   const array=[1,2,3,4,5,6,7]
   const obsof1=of(array);
@@ -93,12 +93,12 @@ Data Stream value [1, 2, 3, 4, 5, 6, 7]
 Observable Completed
 ```
 
-- `From Operator`: From Operator takes only one argument that can be iterated and converts it into an observable.
+- `From Operator`: `From` Operator takes only one argument that can be iterated and converts it into an observable.
 
-```
+```ts
 ngOnInit() {
   const array=[1,2,3,4,5,6,7]
-  const obsfrom2=of(array);
+  const obsfrom2=from(array);
   obsfrom2.subscribe({
       next: (res) => {
         console.log('Data Stream value', res);
@@ -136,7 +136,7 @@ FromEvent method to create an `observable` from `DOM events directly`.
 
 Syntax:
 
-```
+```ts
 fromEvent<T>(target: FromEventTarget<T>,
              eventName: string,
              options: EventListenerOptions,
@@ -149,7 +149,7 @@ eventName is the second argument, which is a type of event we want to listen to.
 
 Options are the additional argument that we want to pass to , when registering the event handler i.e `addEventListener`
 
-```
+```ts
 <button #btn>Button</button>
 
 @ViewChild('btn', { static: true }) button: ElementRef;
@@ -175,7 +175,7 @@ There are two ways we can use the pipe.
 
 `As an instance of observable`:
 
-```
+```ts
 src = new Observable((observer) => {
     observer.next(1),
       observer.next(2),
@@ -212,15 +212,15 @@ ngOnInit(): void {
 
 `As standalone method`:
 
-```
- customOperator = pipe(
-    // tap((item: any) => console.log(item)),
-    filter((data: any) => data > 2),
-    map((value) => value * 2)
-  );
+```ts
+customOperator = pipe(
+  // tap((item: any) => console.log(item)),
+  filter((data: any) => data > 2),
+  map((value) => value * 2)
+);
 
 src = new Observable((observer) => {
-observer.next(1),
+  observer.next(1),
     observer.next(2),
     observer.next(3),
     observer.next(4),
@@ -232,13 +232,13 @@ observer.next(1),
 
 ### Map Operator
 
-Map operator takes an observable source as input. It applies a project function to each of the values emitted by the source observable and transforms them into a new value.
+Map operator takes an observable source as input. It applies a `project function` to each of the values emitted by the source observable and transforms them into a new value.
 
 Syantax:
 
 map<T, R>(project: (value: T, index: number) => R, thisArg?: any): OperatorFunction<T, R>
 
-```
+```ts
 srcArray = from([1, 2, 3, 4]);
 
  multiplyBy2() {
@@ -262,7 +262,7 @@ Syntax:
 
 filter<T>(predicate: (value: T, index: number) => boolean, thisArg?: any): MonoTypeOperatorFunction<T>
 
-```
+```ts
 ngOnInit() {
 of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     .pipe(
@@ -284,13 +284,13 @@ of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
 ### tap operator
 
-tap operator returns an observable identical to the source. It does not modify the stream.The tap operator is useful for logging the value,
+tap operator returns an observable identical to the source. It does not modify the stream.The tap operator is useful for logging the value.
 
 Syntax:
 
 tap(nextOrObserver: function, error: function, complete: function): Observable
 
-```
+```ts
 fromObservable = from([1, 2, 3]).pipe(
     tap({
       next: (value) => console.log('before', value),
@@ -318,11 +318,11 @@ fromObservable = from([1, 2, 3]).pipe(
 
 ### SwitchMap
 
-The SwitchMap maps each value from the source observable into an inner observable, subscribes to it, and then starts emitting the values from it. It creates a new inner observable for every value it receives from the Source. Whenever it creates a new inner observable it unsubscribes from all the previously created inner observables.
+The SwitchMap maps each value from the source observable into an inner observable, subscribes to it, and then starts emitting the values from it. It creates a new inner observable for every value it receives from the Source. `Whenever it creates a new inner observable it unsubscribes from all the previously created inner observables`.
 
 `Syntax`:
 
-```
+```ts
 switchMap(project: (value: T, index: number) => O): OperatorFunction<T, ObservedValueOf<O>>
 
 ```
@@ -333,28 +333,32 @@ Note: `The project function must return an observable`.
 
 `Example1:`
 
-```
+```ts
 srcObservable = of(1, 2, 3, 4);
 innerObservable = of('A', 'B', 'C', 'D');
 
 this.srcObservable
-    .pipe(
+  .pipe(
     switchMap((value) => {
-        console.log('Src Value', value);
-        console.log('new observable start');
-        return this.innerObservable;
+      console.log('Src Value', value);
+      console.log('new observable start');
+      return this.innerObservable;
     })
-    )
-    .subscribe({
+  )
+  .subscribe({
     next: (innerValue) => {
-        console.log(innerValue);
+      console.log(innerValue);
+      // A
+      // B
+      // C
+      // D
     }
-});
+  });
 ```
 
 `Example2:`
 
-```
+```ts
  fromEventHandler() {
     this.buttonSubscription$ = fromEvent(this.button.nativeElement, 'click')
       .pipe(
@@ -373,7 +377,7 @@ this.srcObservable
 
 ### MergeMap
 
-The MergeMap maps each value from the source observable into an inner observable, subscribes to it, and then starts emitting the values from it replacing the original value. It creates a new inner observable for every value it receives from the Source.
+The MergeMap maps each value from the source observable into an inner observable, subscribes to it, and then starts emitting the values from it replacing the original value. It creates a new inner observable` for every value` it receives from the Source.
 
 Unlike SwitchMap, MergeMap does not cancel any of its inner observables. It merges the values from all of its inner observables and emits the values back into the stream.
 
@@ -383,22 +387,22 @@ Unlike SwitchMap, MergeMap does not cancel any of its inner observables. It merg
 
 Example 1:
 
-```
-of("hound", "mastiff", "retriever")        //outer observable
+```ts
+of('hound', 'mastiff', 'retriever') //outer observable
   .pipe(
-    mergeMap(breed => {
+    mergeMap((breed) => {
       const url = 'https://dog.ceo/api/breed/' + breed + '/list';
-      return this.http.get<any>(url)       //inner observable
+      return this.http.get<any>(url); //inner observable
     })
   )
-  .subscribe(data => {
-    console.log(data)
-  })
+  .subscribe((data) => {
+    console.log(data);
+  });
 ```
 
 Example 2:
 
-```
+```ts
  delayedObs(count: number) {
     return new Observable((observer) => {
       setTimeout(() => {
@@ -443,7 +447,7 @@ The MergeMap create a one inner observable for each value of outer observable. T
 
 Example:
 
-```
+```ts
 function fetchShipmentData(shipmentId: number): Observable<any> {
   return ShipmentService.getShipmentDetails(shipmentId).pipe(
     mergeMap((shipmentDetails: any) => {
@@ -471,7 +475,7 @@ concatMap(project: (value: T, index: number) => O): OperatorFunction<T, Observed
 
 Example
 
-```
+```ts
  delayedObs(count: number) {
     return new Observable((observer) => {
       setTimeout(() => {
@@ -514,7 +518,7 @@ Example
 
 The Angular ExhaustMap maps each value from the source observable into an inner observable, subscribes to it. It then starts emitting the values from it replacing the original value. It then waits for the inner observable to finish. If it receives any new values before the completion of the inner observable it ignores it.
 
-```
+```ts
  delayedObs(count: number) {
     return new Observable((observer) => {
       setTimeout(() => {
@@ -557,7 +561,7 @@ The Angular ExhaustMap maps each value from the source observable into an inner 
 - If the source emits more than n values, then take emits only n values and completes.
 - If the source emits less than n number of values, then take emits all of them before completing.
 
-```
+```ts
   obs = of(1, 2, 3, 4, 5).pipe(take(2));
 
   ngOnInit() {
@@ -578,7 +582,7 @@ The Angular ExhaustMap maps each value from the source observable into an inner 
 - When the notifier emits a value, the TakeUntil completes the Source observable.
 - If the notifier completes without emitting any value, then the TakeUntil keeps emitting values from the source and completes when the source completes.
 
-```
+```ts
 <button (click)="stopObs()">Stop</button>
 
 notifier = new Subject();
@@ -606,7 +610,7 @@ TakeWhile operator will keep emitting the value from the source observable as lo
 
 Syntax:
 
-```
+```ts
 takeWhile(predicate: function(value, index): boolean,
 inclusive?: boolean): Observable
 ```
@@ -614,7 +618,7 @@ inclusive?: boolean): Observable
 - `predicate` is the condition.
 - If `inclusive` is true, then the emits the value, which does not pass the condition before terminating the observable.
 
-```
+```ts
 of(1, 2, 3, 4, 3, 2, 5)
   .pipe(takeWhile((val) => val < 3, true))
   .subscribe({
@@ -643,8 +647,7 @@ TakeLast operator emits the last n number of values from the source observable.
 
 - if the source emits less than the n number of values then it emits all of them
 
-```
-of(1, 2, 3)
+```ts
   .pipe(takeLast(2))
   .subscribe({
     next: (val) => {
@@ -656,3 +659,26 @@ of(1, 2, 3)
   2
   3
 ```
+
+#### What are difference between observable and promise ?
+
+Ans:
+1:
+
+- Promise is use to handle the asynchronous call
+- observable is used to handle both synchronous and asynchronous call
+
+2:
+
+- promise cann't be cancelled once it's started
+- observable can be cancel at any time by using unsubscribe
+
+3:
+
+- promise can settled(either pass/fail) the data only one time
+- where observable can emit data multiple times
+
+4:
+
+- promise error can handle in cath block
+- where observale comes under erro block

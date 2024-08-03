@@ -34,7 +34,7 @@ Every Route consists of a path and a component it is mapped to.
 Example:
 Rgistering route prior ng 15 version
 
-```
+```ts
 export const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'contact', component: ContactComponent },
@@ -47,11 +47,11 @@ export const appRoutes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
 ```
 
-```
-App.module.ts
+```ts
+// App.module.ts
 
 imports: [
     BrowserModule,
@@ -63,7 +63,7 @@ After ng 15 version:
 
 `Register the Routes` with non-modular structure
 
-```
+```ts
 export const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'contact', component: ContactComponent },
@@ -72,14 +72,10 @@ export const appRoutes: Routes = [
   { path: '**', component: ErrorComponent } // wild card route
 ];
 
-
-Main.ts
+Main.ts;
 bootstrapApplication(AppComponent, {
-  providers: [
-    provideRouter(appRoutes)
-  ]
+  providers: [provideRouter(appRoutes)]
 });
-
 ```
 
 Another benefit of the `provideRouter` API is that it’s tree-shakable! `Bundlers` can remove unused features of the `router` at `build-time`

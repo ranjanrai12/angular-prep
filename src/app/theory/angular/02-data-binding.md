@@ -17,7 +17,7 @@ In one way binding data flows from one direction. Either from view to component 
 
   `synatax:`
 
-  ```
+  ```html
   <h1>{{ title }}</h1>
   ```
 
@@ -35,10 +35,8 @@ In one way binding data flows from one direction. Either from view to component 
 
   - `style binding:` With this can set the inline style of a HTML element using `style binding`.
 
-  ```
-  <p [ngStyle]="{'color': 'purple','font-size': '20px','font-weight': 'bold'}">
-      Multiple styles
-  </p>
+  ```html
+  <p [ngStyle]="{'color': 'purple','font-size': '20px','font-weight': 'bold'}">Multiple styles</p>
   ```
 
 - #### `From Component to View `
@@ -47,7 +45,7 @@ In one way binding data flows from one direction. Either from view to component 
 
     `Example`:
 
-    ```
+    ```html
     <button (click)="onSave()">Save</button>
     ```
 

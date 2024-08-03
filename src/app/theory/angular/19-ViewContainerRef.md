@@ -10,7 +10,7 @@ ViewContainerRef(VCR) represents a container (DOM element) where one or more vie
 
 - `Get ViewContainerRef with dependency injection:`
 
-```
+```ts
     <ng-template #tpl1>
         <h1>ViewContainerRef</h1>
     </ng-template>
