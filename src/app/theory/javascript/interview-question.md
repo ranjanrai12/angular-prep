@@ -14,8 +14,6 @@
 
 #### What are type of Errors? - `completed`
 
-#### What is Shadowing ? - `completed`
-
 #### What is hoisting ? - `completed`
 
 #### What is strict mode ? - `completed`
@@ -26,7 +24,15 @@ Ans: It enforces stricter parsing and error handling on the code at runtime.
 
 #### What is call, apply, bind ? - `completed`
 
-#### write your own polyfill of call, apply, bind? - `completed`
+#### write your own polyfill of call, apply, bind ? - `completed`
+
+#### write the polyfill of Object.create - `completed`
+
+#### Write the polyfill of Promise ? - `completed`
+
+#### Create a polyfill of JSON.stringify ? - `completed`
+
+#### create a function which does deep copy ? - `completed`
 
 #### What is Map, reduce and filter, try to create your own ? - `completed`
 
@@ -40,7 +46,7 @@ Ans: It enforces stricter parsing and error handling on the code at runtime.
 
 #### What is arrow function ? - `completed`
 
-#### What is memoize ? - `only theory completed`
+#### What is memoize ? - `completed`
 
 #### What is decorator ? - `completed`
 
@@ -60,7 +66,7 @@ Ans: It enforces stricter parsing and error handling on the code at runtime.
 
 #### What is array & Object destructuring ? - `completed`
 
-#### What is spread operator and rest parameter ? - `completed `
+#### What is spread operator and rest parameter ? - `completed`
 
 #### What is async and deffer attribute in javascript ? - `completed`
 
@@ -90,7 +96,7 @@ Ans: It enforces stricter parsing and error handling on the code at runtime.
 
 #### What is callbackQue and macroqueue ? - `completed`
 
-#### What is deep copy and shallow copy ? -
+#### What is deep copy and shallow copy ? - `completed`
 
 #### Difference between map and forEach ? - `completed`
 
@@ -98,12 +104,34 @@ Ans: It enforces stricter parsing and error handling on the code at runtime.
 
 #### Difference between Object.create and Object.asssign ? - `completed`
 
+#### How can you prevent a function being called multiple times ?
+
+#### What are generator function ?
+
+Ans:
+
+#### What Map and WeakMap and what is differnce between them ?
+
+#### What is Set in javascript ?
+
+#### How does garbage collector works ?
+
+#### What is difference between `prototype` and `__proto__` ?
+
+Ans: https://medium.com/@eamonocallaghan/prototype-vs-proto-vs-prototype-in-javascript-6758cadcbae8
+
+#### What is proxy object ?
+
+#### What is difference between default and named export ?
+
+Ans: https://www.freecodecamp.org/news/difference-between-default-and-named-exports-in-javascript/
+
 #### What is ecmascript ?
 
-#### How would you implement the Singleton pattern in JavaScript? What are its use cases?
+#### How would you implement the Singleton pattern in JavaScript? What are its use cases? - `completed`
 
 #### Explain the Observer pattern and implement it in JavaScript. Where would you use this pattern?
 
-#### How would you dynamically import a module in JavaScript?
+#### How would you dynamically import a module in JavaScript ?
 
 #### How does JavaScript manage memory? What are the common causes of memory leaks?

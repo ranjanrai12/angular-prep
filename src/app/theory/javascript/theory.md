@@ -176,7 +176,7 @@ console.log(b); // Error, Not Defined
   - In **case 2**: 10 is printed. It means that within nested function too, the global scope variable can be accessed.
   - In **case 3**: 100 is printed meaning local variable of the same name took precedence over a global variable.
   - In **case 4**: A function can access a global variable, but the global execution context can't access any local variable.
-    ```
+    ```js
     To summarize the above points in terms of execution context:
     call_stack = [GEC, a(), c()]
     Now lets also assign the memory sections of each execution context in call_stack.
@@ -287,10 +287,10 @@ Block also known as `compound statement` is used to group JS statements together
   // Here let and const are hoisted in Block scope,
   // While, var is hoisted in Global scope.
 }
-```
 
 console.log(a); // 10 because a is stored inside a GLOBAL scope.
 console.log(b); // Uncaught ReferenceError: b is not defined (let and const are BLOCK SCOPED)
+```
 
 #### What is Shadowing?
 
@@ -1321,6 +1321,8 @@ const obj = {
   }
 };
 obj.x(); // value of `this` is referring to current object i.e. `obj`
+let func = obj.x;
+function() // value of this will refer to window object
 ```
 
 `this inside arrow function`: Arrow function doesn't have their own `this` value, they take the value from `enclosing lexical context`.
@@ -1616,6 +1618,14 @@ case `defer`:
 When Html parsing is going and parelly loading of script is also going, after comletion of html parsing then it executes script execution.
 ![alt text](image-3.png)
 
+Syntax:
+
+```js
+<script src="demo_defer.js" async></script>
+
+<script src="demo_defer.js" defer></script>
+```
+
 #### What is Event Bubbling and Event Capturing in javsscirpt?
 
 Ans: Event bubbling and capturing are way to event happen in DOM tree.
@@ -1692,6 +1702,39 @@ Ans: Accessing the properties and method of another object that is called protot
 #### What is Memoization ?
 
 Ans: Memoization is a technique used in programming to optimize functions by caching the results of expensive function calls and returning the cached result when the same inputs occur again. This can significantly improve performance for functions that are repeatedly called with the same arguments.
+
+```js
+function memoize(fn) {
+  const cache = {}; // Create a cache object to store results
+
+  return function (...args) {
+    const key = JSON.stringify(args); // Create a unique key for the arguments
+
+    if (cache[key]) {
+      console.log('Fetching from cache:', key);
+      return cache[key]; // Return the cached result if it exists
+    }
+
+    console.log('Computing result for:', key);
+    const result = fn(...args); // Call the original function
+    cache[key] = result; // Cache the result for future calls
+
+    return result;
+  };
+}
+
+// Example: Memoizing a function to compute the square of a number
+function square(n) {
+  return n * n;
+}
+
+const memoizedSquare = memoize(square);
+
+console.log(memoizedSquare(4)); // Computing result for: [4], Output: 16
+console.log(memoizedSquare(4)); // Fetching from cache: [4], Output: 16
+console.log(memoizedSquare(5)); // Computing result for: [5], Output: 25
+console.log(memoizedSquare(5)); // Fetching from cache: [5], Output: 25
+```
 
 #### What is class in JS ?
 
@@ -2022,6 +2065,114 @@ arr.myReduce((acc, curr) => {
 
 Ans: memoize is a function which is use for performance optimization, by storing the previous result and reusing it next time.
 
+#### What are design pattern ?
+
+https://dev.to/alexmercedcoder/oop-design-patterns-in-javascript-3i98
+
+Ans: - `singelton pattern`: it is a creation design pattern that ensure that class has only one instance and provide point of access to that instance.
+
+```js
+// Singleton instance
+let instance = null;
+
+class Singleton {
+  constructor() {
+    if (!instance) {
+      instance = this;
+      // Your initialization code here
+    } else {
+      return instance;
+    }
+  }
+  // Your methods and properties here
+}
+
+// Usage
+const singletonA = new Singleton();
+const singletonB = new Singleton();
+
+console.log(singletonA === singletonB); // Output: true (both variables reference the same instance)
+```
+
+- `factory pattern`: it is a creational pattern that provides interface for creating objects but allow subclasses to change the type of objects.
+
+```js
+// Product class
+class Product {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+// Factory for creating products
+class ProductFactory {
+  createProduct(name) {
+    return new Product(name);
+  }
+}
+// Usage
+const factory = new ProductFactory();
+const productA = factory.createProduct('Product A');
+const productB = factory.createProduct('Product B');
+
+console.log(productA.name); // Output: 'Product A'
+console.log(productB.name); // Output: 'Product B'
+```
+
+- `composition  pattern` - `composition` pattern is a strucutural design pattern which compose multiple object into a tree structure format.The Composite Pattern is particularly useful when you need to work with complex structures made up of smaller, related objects while maintaining a `consistent interface`.
+
+https://jsmanifest.com/the-composite-pattern-in-javascript/
+
+```js
+// Component interface
+class Graphic {
+  draw() {}
+}
+
+// Leaf class (represents simple shapes)
+class Circle extends Graphic {
+  constructor() {
+    super();
+    // Circle-specific properties and methods
+  }
+
+  draw() {
+    // Draw a circle
+  }
+}
+
+// Composite class (represents groups of shapes)
+class Group extends Graphic {
+  constructor() {
+    super();
+    this.graphics = [];
+  }
+
+  add(graphic) {
+    this.graphics.push(graphic);
+  }
+
+  draw() {
+    // Draw each graphic in the group
+    this.graphics.forEach((graphic) => graphic.draw());
+  }
+}
+
+// Usage
+const circle1 = new Circle();
+const circle2 = new Circle();
+const group = new Group();
+
+group.add(circle1);
+group.add(circle2);
+
+group.draw();
+```
+
+- `observer pattern`: it is behavioural design pattern that eastablist one to many dependency between the objects. it allow one object to notify multiple listener of their changes.
+
+- `Decorator pattern`: The Decorator Pattern is a structural design pattern that allows you to add new behaviors or responsibilities to objects dynamically without changing their existing code.
+
 #### What is decorator ?
 
 Ans: decorator is a function which change the behaviour of class and their member ?
@@ -2046,10 +2197,309 @@ class ExampleClass {
 }
 ```
 
-#### How would you dynamically import a module in JavaScript?
+#### write the polyfill of Object.create
+
+Ans:
+
+```js
+Object.prototype.myCreate = function (obj) {
+  const F = function () {};
+  F.prototype = obj;
+  return new F();
+};
+const ob1 = Object.myCreate({ name: 'john' });
+console.log(ob1);
+```
+
+#### Write the polyfill of Promise ?
+
+Ans:
+
+```js
+function customPromise(executor) {
+  let onResolve = () => {}; // Default to a no-op function
+  let onReject = () => {}; // Default to a no-op function
+  let isResolved = false;
+  let isRejected = false;
+  let resolveValue;
+  let rejectValue;
+
+  // Then function for handling successful promise execution
+  this.then = function (resolveCallback) {
+    if (isResolved) {
+      resolveCallback(resolveValue);
+    } else {
+      onResolve = resolveCallback;
+    }
+
+    // Returning this to enable chaining of then
+    return this;
+  };
+
+  // Catch function for handling errors in promise execution
+  this.catch = function (rejectCallback) {
+    if (isRejected) {
+      rejectCallback(rejectValue);
+    } else {
+      onReject = rejectCallback;
+    }
+
+    // Returning this to enable chaining of catch
+    return this;
+  };
+
+  // Resolver function
+  function resolver(data) {
+    if (!isResolved && !isRejected) {
+      isResolved = true;
+      resolveValue = data;
+      onResolve(data);
+    }
+  }
+
+  // Rejecter function
+  function rejecter(error) {
+    if (!isResolved && !isRejected) {
+      isRejected = true;
+      rejectValue = error;
+      onReject(error);
+    }
+  }
+
+  // Calling the executor function with resolver and rejecter
+  try {
+    executor(resolver, rejecter);
+  } catch (error) {
+    rejecter(error);
+  }
+}
+
+// Example usage
+var p1 = new customPromise((resolve, reject) => {
+  resolve('Hello');
+});
+
+p1.then((res) => {
+  console.log(res); // Output: Hello
+});
+```
+
+#### How would you dynamically import a module in JavaScript ?
 
 Ans: https://medium.com/@vincent.bocquet/dynamic-import-in-javascript-a-simple-guide-a808cff86458
 
 ```
 
 ```
+
+#### polyfill of JSON.stringify
+
+```js
+const JSONStringify = (obj) => {
+  const isArray = (value) => {
+    return Array.isArray(value) && typeof value === 'object';
+  };
+
+  const isObject = (value) => {
+    return typeof value === 'object' && value !== null && !Array.isArray(value);
+  };
+
+  const isString = (value) => {
+    return typeof value === 'string';
+  };
+
+  const isBoolean = (value) => {
+    return typeof value === 'boolean';
+  };
+
+  const isNumber = (value) => {
+    return typeof value === 'number';
+  };
+
+  // Common check for number, string and boolean value
+  const restOfDataTypes = (value) => {
+    return isNumber(value) || isString(value) || isBoolean(value);
+  };
+
+  // Boolean and Number behave in a same way and String we need to add extra qoutes
+  if (restOfDataTypes(obj)) {
+    const passQuotes = isString(obj) ? `"` : '';
+    return `${passQuotes}${obj}${passQuotes}`;
+  }
+
+  // This function will be used to remove extra comma from the arrays and object
+  const removeComma = (str) => {
+    const tempArr = str.split('');
+    tempArr.pop();
+    return tempArr.join('');
+  };
+
+  // Recursive function call for Arrays to handle nested arrays
+  if (isArray(obj)) {
+    let arrStr = '';
+    obj.forEach((eachValue) => {
+      arrStr += JSONStringify(eachValue);
+      arrStr += ',';
+    });
+
+    return `[` + removeComma(arrStr) + `]`;
+  }
+
+  // Recursive function call for Object to handle nested Object
+  if (isObject(obj)) {
+    let objStr = '';
+
+    const objKeys = Object.keys(obj);
+
+    objKeys.forEach((eachKey) => {
+      const eachValue = obj[eachKey];
+      objStr += `"${eachKey}":${JSONStringify(eachValue)},`;
+    });
+    return `{` + removeComma(objStr) + `}`;
+  }
+};
+
+const sampleObj = {
+  name: 'Sid',
+  age: 29,
+  engineer: true,
+  expertise: ['html', 'css', 'react'],
+  address: {
+    city: 'New york',
+    state: 'NY'
+  }
+};
+console.log(JSON.stringify(sampleObj) === JSONStringify(sampleObj) ? 'Test case Passed' : 'Test Case Failed');
+// Expected Output -> Test case Passed
+```
+
+#### create a function which does deep copy
+
+```ts
+function Deep(obj: any) {
+  const isNumber = function (value: any) {
+    return typeof value === 'number';
+  };
+  const isString = function (value: any) {
+    return typeof value === 'string';
+  };
+  const isBoolean = function (value: any) {
+    return typeof value === 'boolean';
+  };
+  const isArray = function (value: any) {
+    return Array.isArray(value) && typeof value === 'object';
+  };
+
+  const isObject = function (value: boolean) {
+    return typeof value === 'object' && !Array.isArray(value) && value !== null;
+  };
+
+  function restOfDataType(value: any) {
+    return isNumber(value) || isString(value) || isString(value);
+  }
+
+  if (restOfDataType(obj)) {
+    return obj;
+  }
+
+  function removeComma(item: any) {
+    const cloneRes = item.split(',');
+    cloneRes.pop();
+    return cloneRes.join('');
+  }
+
+  if (isArray(obj)) {
+    const cloneArr: any[] = [];
+    obj.forEach((item) => {
+      cloneArr.push(item);
+    });
+    return cloneArr;
+  }
+
+  if (isObject(obj)) {
+    const keys = Object.keys(obj);
+    const cloneObj = {} as any;
+    keys.forEach((key) => {
+      cloneObj[key] = Deep(obj[key]);
+    });
+    return cloneObj;
+  }
+}
+
+var obj = { name: 'ranjan' };
+var result = Deep(obj);
+result.name = 'shyam';
+console.log(result);
+console.log(obj);
+
+var arr = [12, 23];
+var newArr = Deep(arr);
+newArr[0] = 65;
+console.log('old array', arr);
+console.log('new array', newArr);
+```
+
+#### What is `Map` and `Set` ?
+
+Ans: `Map` is a collection of keyed data items, just like an Object. But the main difference is that Map allows keys of any type.
+
+- `new Map()` – creates the map.
+- `map.set(key, value)` – stores the value by the key.
+- `map.get(key)` – returns the value by the key, undefined if key doesn’t exist in map.
+- `map.has(key)` – returns true if the key exists, false otherwise.
+- `map.delete(key)` – removes the element (the key/value pair) by the key.
+- `map.clear()` – removes everything from the map.
+- `map.size` – returns the current element count.
+
+```js
+let map = new Map();
+
+map.set('1', 'str1'); // a string key
+map.set(1, 'num1'); // a numeric key
+map.set(true, 'bool1'); // a boolean key
+
+// remember the regular Object? it would convert keys to string
+// Map keeps the type, so these two are different:
+alert(map.get(1)); // 'num1'
+alert(map.get('1')); // 'str1'
+
+alert(map.size); // 3
+```
+
+`Set`: set is a collection of uniq values.
+
+```js
+let set = new Set();
+
+let john = { name: 'John' };
+let pete = { name: 'Pete' };
+let mary = { name: 'Mary' };
+
+// visits, some users come multiple times
+set.add(john);
+set.add(pete);
+set.add(mary);
+set.add(john);
+set.add(mary);
+
+// set keeps only unique values
+alert(set.size); // 3
+
+for (let user of set) {
+  alert(user.name); // John (then Pete and Mary)
+}
+```
+
+#### Difference between Map and WeakMap ?
+
+Ans:
+1:`Map`: In map key can be of any data types
+`WeakMap `: In WeakMap every key can be only be object.
+2:`Map`: Maps are iterable
+`WeakMap`: WeakMap is not iterable.
+3:`Map:` Maps will keep everything even if you don't use them.
+`WeakMap:` WeakMaps holds the reference to the key, not the key itself.
+4:`Map:` The garbage collector doesn’t remove a key pointer from “Map” and also doesn’t remove the key from memory.
+`WeakMap`: The garbage collector goes ahead and removes the key pointer from “WeakMap” and also removes the key from memory.
+5:`Map`: create a new map by using a new Map().
+`WeakMap`: create a new WeakMap by using a new WeakMap().

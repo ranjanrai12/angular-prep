@@ -243,7 +243,7 @@ providers: [{ provide: API_BASE_URL, useValue: 'https://api.example.com' }]
 
 It is then injected using the @Inject in the constructor of the service/component.
 
-constructor(@Inject(API_URL) private apiURL: string) {
+constructor(@Inject(API_BASE_URL) private apiURL: string) {
 }
 
 ```

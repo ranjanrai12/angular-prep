@@ -9,9 +9,8 @@ describe('NgrxComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [NgrxComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(NgrxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

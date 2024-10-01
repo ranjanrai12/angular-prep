@@ -114,6 +114,20 @@ palindrome('aba'); // true
 palindrome('abaa'); // false
 ```
 
+#### Wite a javscript function to check given string is anagram or not
+
+```js
+function anagram(str1, str2) {
+  if (str1.length !== str2.length) {
+    return false;
+  }
+  const sortStr1 = str1.split('').sort().join('');
+  const sortStr2 = str2.split('').sort().join('');
+
+  return sortStr1 === sortStr2;
+}
+```
+
 #### Write a JavaScript function that takes an array of numbers and returns a new array with only the even numbers.
 
 ```js
@@ -158,21 +172,23 @@ console.log(factorial(5)); // 120
 Ans: Prime numbers are numbers greater than 1 and prime number is only divisible by 1 and itself.
 
 ```js
-function findPrime(number) {
-  let iPrime = true;
-  if (number === 1) {
-    iPrime = false;
-  } else {
-    for (let i = 2; i < number; i++) {
-      if (number % i === 0) {
-        iPrime = false;
-        break;
-      }
+function isPrime(number) {
+  let flag = true;
+  if (number <= 1) {
+    flag = false;
+  }
+  for (let i = 2; i < number; i++) {
+    if (number % i === 0) {
+      flag = false;
+      break;
     }
   }
-  return iPrime;
+  return flag;
 }
-findPrime(4);
+isPrime(4); // false
+isPrime(1); // false
+isPrime(2); // true
+isPrime(5); // true
 ```
 
 #### Pair with given Sum (Two Sum) ?
@@ -180,12 +196,10 @@ findPrime(4);
 ```js
 const arr = [1, 2, 3, 4];
 function findAdd(arr, sum) {
-  for (let i = 0; i < arr.length; i++) {
-    for (let i = 0; i < arr.length - 1; i++) {
-      for (let j = i + 1; j <= arr.length - 1; j++) {
-        if (arr[i] + arr[j] === sum) {
-          return true;
-        }
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[i] + arr[j] === sum) {
+        return true;
       }
     }
   }
@@ -334,11 +348,12 @@ function compare(obj1, obj2) {
   let flag = true;
   if (Object.keys(obj1).length !== Object.keys(obj2).length) {
     flag = false;
-  }
-  for (let key in obj1) {
-    if (obj1[key] !== obj2[key]) {
-      flag = false;
-      break;
+  } else {
+    for (let key in obj1) {
+      if (obj1[key] !== obj2[key]) {
+        flag = false;
+        break;
+      }
     }
   }
   return flag;

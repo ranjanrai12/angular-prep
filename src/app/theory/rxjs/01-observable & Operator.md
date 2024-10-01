@@ -348,12 +348,34 @@ this.srcObservable
   .subscribe({
     next: (innerValue) => {
       console.log(innerValue);
-      // A
-      // B
-      // C
-      // D
     }
   });
+/*Output
+  Source value 1
+  starting new observable
+  Recd A
+  Recd B
+  Recd C
+  Recd D
+  Source value 2
+  starting new observable
+  Recd A
+  Recd B
+  Recd C
+  Recd D
+  Source value 3
+  starting new observable
+  Recd A
+  Recd B
+  Recd C
+  Recd D
+  Source value 4
+  starting new observable
+  Recd A
+  Recd B
+  Recd C
+  Recd D
+*/
 ```
 
 `Example2:`
@@ -514,9 +536,37 @@ Example
     3 C
 ```
 
-### ExhaustMap
+Example 2:
+
+```ts
+import { from } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
+
+const ids = [1, 2, 3]; // Array of IDs to fetch data for
+
+from(ids)
+  .pipe(
+    concatMap((id) => {
+      // For each ID, you make an HTTP call, but the next call will wait for the previous one to finish
+      return this.http.get(`https://api.example.com/data/${id}`);
+    })
+  )
+  .subscribe(
+    (response) => {
+      console.log(response); // Each response is logged after the previous one completes
+    },
+    (error) => {
+      console.error(error); // Handle errors
+    }
+  );
+```
+
+#### ExhaustMap
 
 The Angular ExhaustMap maps each value from the source observable into an inner observable, subscribes to it. It then starts emitting the values from it replacing the original value. It then waits for the inner observable to finish. If it receives any new values before the completion of the inner observable it ignores it.
+
+or in simple term
+`exhaustMap` ignores new emissions from the source Observable while an inner Observable is being processed. Once the inner Observable completes, exhaustMap will handle any new emissions from the source Observable.
 
 ```ts
  delayedObs(count: number) {
@@ -551,7 +601,35 @@ The Angular ExhaustMap maps each value from the source observable into an inner 
   1 C
 ```
 
-### Take, TakeUntil, TakeWhile & TakeLast
+#### What is shareReplay ?
+
+Ans: shareReplay is used to share same result to many subscriber.it also `caches` its values and replays them to each new subscriber.
+
+```ts
+const source = of(1, 2, 3).pipe(
+  tap(val => console.log(`Source emitted ${val}`)),
+  shareReplay(1)
+);
+
+source.subscribe(val => console.log(`Subscriber 1 received ${val}`));
+
+// We delay second observable
+setTimeout(() => {
+  source.subscribe(val => console.log(`Subscriber 2 received ${val}`));
+}, 1000);
+
+// Results
+Source emitted '1'
+'Subscriber 1' received '1'
+Source emitted '2'
+'Subscriber 1' received '2'
+Source emitted '3'
+'Subscriber 1' received '3'
+
+'Subscriber 2' received '3'
+```
+
+#### Take, TakeUntil, TakeWhile & TakeLast
 
 - `Take`: The take operator in RxJS is used to limit the number of emissions from an observable stream. It emits only the first n values emitted by the source observable and then completes, ignoring any subsequent values.
 
@@ -682,3 +760,61 @@ Ans:
 
 - promise error can handle in cath block
 - where observale comes under erro block
+
+#### What is `catchError` ?
+
+Ans: `catchError` is used to intercept an error that occurs in the observable stream and handle it. This prevents the error from propagating further down the stream.
+
+```ts
+  getData(): Observable<any> {
+    return this.http.get<any>(this.apiUrl).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    // Customize your error handling logic here
+    console.error('An error occurred:', error.message);
+    // Return an observable with a user-facing error message
+    return throwError('Something went wrong; please try again later.');
+  }
+```
+
+#### What is `finalize` ?
+
+Ans: `finalize` is an operator used to execute a specified function when the observable completes or errors out. it's kind of `finally` statement in try/catch.
+
+```ts
+getData(): Observable<any> {
+    this.loading = true; // Start loading
+
+    return this.http.get<any>(this.apiUrl).pipe(
+      finalize(() => {
+        this.loading = false; // Stop loading when request completes or errors
+        console.log('Request completed or errored');
+      })
+    );
+  }
+```
+
+#### What is combinelatest ?
+
+Ans: it waits for all observables to emit first and then emits every time any combined observables emit.
+
+```ts
+import { combineLatest, interval } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+const obs1 = interval(1000).pipe(map((val) => `Obs1: ${val}`)); // Emits every 1 second
+const obs2 = interval(2000).pipe(map((val) => `Obs2: ${val}`)); // Emits every 2 seconds
+
+combineLatest([obs1, obs2]).subscribe(([val1, val2]) => {
+  console.log(val1, val2);
+});
+// output
+Obs1: 1 Obs2: 0  // Obs1 emits again after 1 second
+Obs1: 2 Obs2: 1  // Obs2 emits again after 2 seconds
+Obs1: 3 Obs2: 1  // Obs1 emits
+...
+
+```

@@ -17,7 +17,7 @@ TypeScript is used in Angular because it provides better tooling support, improv
 
 #### What is difference between library and framework ?
 
-#### Why we should use Angular?
+#### Why we should use Angular ?
 
 Ans: Because it provides -> Full feature framework, typescript support, two way binding, component based architecture, dependency injection, powerful cli, strong community.
 
@@ -49,6 +49,11 @@ Benifits:
 - better support for user with slow internet connection
 
 #### If i want to deploy my angular project to prod what are the things need to do with the project.
+
+- code review and cleanup
+- ng build --prod (tree shaking, minification, uglification)
+- Use https in api call
+- Authentication and authorization
 
 #### What is CORS ? - `completed`
 
@@ -94,23 +99,27 @@ Ans:
 
 #### What is Tree Shaking ? - `completed`
 
-#### What is ViewEncapsulation - `completed`
+#### What is ViewEncapsulation ? - `completed`
 
-#### What is change detection? - `completed`
+Ans: for more details - https://eisenbergeffect.medium.com/using-global-styles-in-shadow-dom-5b80e802e89d#:~:text=This%20is%20simply%20not%20true.&text=Shadow%20DOM%2C%20by%20design%2C%20provides,out%20will%20affect%20external%20DOM.
 
-#### What is zone.js? - `completed`
+#### What is change detection ? - `completed`
 
-#### How error handling will do in angular? - `completed`
+#### What is zone.js ? - `completed`
+
+#### How error handling will do in angular ? - `completed`
 
 #### What are router guards? - `completed`
 
 #### What is forRoot and forChild? - `completed`
 
+https://medium.com/@hish.abdelshafouk/forroot-vs-forchild-angular-68ad5d39a481
+
 #### What is directive and how many type of directives are there, create your own custom directive? - `completed`
 
-#### What are new changes in angular? - `Need to start`
+#### What are new changes in angular ? - `completed`
 
-#### What is hostlistener and hostbinding? - `completed`
+#### What is hostlistener and hostbinding ? - `completed`
 
 #### What is pipe and how many type of pipe are there, create your own custome pipe? - `completed`
 
@@ -122,17 +131,19 @@ Ans:
 
 #### What is service ? - `completed`
 
-#### What is dependency injection? - `completed`
+#### What is dependency injection ? - `completed`
 
-#### What is injectable in service? - `completed`
+#### What is injectable in service ? - `completed`
 
 #### How Angular DI Framework Resolves Dependencies ? - `completed`
 
 #### What is @Self(), @SkipSelf(), and @Optional() ? - `completed`
 
-#### What is HTTP interceptor? - `completed`
+#### What is viewProviders ? - `completed`
 
-#### What is ng-template, ng-container and ngTemplateOutlet? - `completed`
+#### What is HTTP interceptor ? - `completed`
+
+#### What is ng-template, ng-container and ngTemplateOutlet ? - `completed`
 
 #### What is AOT and JIT ? - `completed`
 
@@ -140,15 +151,19 @@ Ans:
 
 #### What is Signal ? - `only definition complted`
 
+#### What is composition pattern ? - `completed`
+
 #### What is Observable ? - `completed`
 
 #### What is observable and observer ? - `completed`
 
-#### What are difference between observable and promise? - `completed`
+#### What are difference between observable and promise ? - `completed`
 
 #### what is pipe, map in rxjs ? - `completed`
 
-#### What is forkjoin, switchmap, mergemap, concatmap ? - `completed`
+#### What is switchmap, mergemap, concatmap, exhaustmap ? - `completed`
+
+#### What is sharereplay ? - `completed`
 
 #### What is Take, TakeUntil, TakeWhile & TakeLast ? - `completed`
 
@@ -156,4 +171,78 @@ Ans:
 
 #### What is hot observable and cold observable ? - `completed`
 
+#### Whats is forkjoin and combineLatest ? - `completed`
+
+#### How many way we can unsubscribe the observable ? - `completed`
+
+#### Difference between Subject and BehaviourSubject ? - `completed`
+
 #### What is ngRx ? - `only definition`
+
+#### What is CDK(component development kit) ?
+
+#### What is control value accessor ?
+
+Ans: it allow us to create custom form controls that can interact with angular reactive forms or template driven form, it allows us to make the bidge between custom component and angular forms.
+
+`Key Methods in ControlValueAccessor`
+
+- `writeValue(obj: any): void:`
+  - This method writes a new value to the component.
+  - Angular calls this method when the form control's value is updated in the model.
+- `registerOnChange(fn: any): void:`
+  - This method registers a function that Angular will call whenever the component’s value changes.
+  - You typically store the function reference and call it when the component's value changes.
+- `registerOnTouched(fn: any): void:`
+- `setDisabledState(isDisabled: boolean): void:`
+
+#### What is forwardRef ?
+
+Ans: `forwardRef` is a utility function provided by Angular that allows you to refer to references that are not yet defined or initialized.
+
+#### How to handle web security in angular
+
+Ans: `authentication`, `authoriazarion in route`, `avoid direct access to DOM`
+https://medium.com/@rakesh.mr.0341/understanding-security-in-angular-applications-best-practices-and-implementation-edc773863d8a
+
+#### How to handle authentication and authorization in angular ?
+
+#### can we read jwt token ?
+
+Ans: yes we can with the secret key
+
+#### What is angular schematics ?
+
+Ans: Angular schematic is way to automate the code generation ot updating code to fix the breaking changes.
+https://blog.angular.dev/schematics-an-introduction-dc1dfbc2a2b2
+
+#### What is webcomponent ?
+
+Ans: It is way to create custom HTML elements with their own functionality and styles, so that it can be reusable across different projects.
+
+#### How to publish a library
+
+Ans: https://medium.com/angular-in-depth/step-by-step-guide-to-creating-your-first-library-in-angular-6827276bfc9f
+
+#### Dynamic way to load stylesheet in angular
+
+Ans:
+
+```ts
+<button (click)="onChange()">Change Style</button>
+<button (click)="revertStyle()">Revert Style</button>
+
+onChange() {
+  const link = this.render.createElement('link');
+  link.href = 'assets/style1.scss'; // path of scss
+  link.rel = 'stylesheet';
+  this.render.appendChild(document.head, link);
+  this.dynamicLink = link;
+}
+revertStyle() {
+  if (this.dynamicLink) {
+    this.render.removeChild(document.head, this.dynamicLink);
+    this.dynamicLink = null;
+  }
+}
+```

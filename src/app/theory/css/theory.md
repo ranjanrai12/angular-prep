@@ -39,7 +39,7 @@ Ans: The universal selector `(*)` selects all HTML elements on the page.
 Ans: It defines the stack of the element.
 `Note:` z-index only works on positioned elements (position: absolute, position: relative, position: fixed, or position: sticky) and flex items.
 
-#### What is a CSS Preprocessor?
+#### What is a CSS Preprocessor ?
 
 Ans: A CSS preprocessor is a scripting language that extends CSS and is compiled into regular CSS syntax.
 
@@ -70,4 +70,16 @@ This property has three values scroll, fixed, and local. Its default value is sc
 Example:
 https://www.w3schools.com/cssref/tryit.php?filename=trycss_background-attachment
 
-####
+#### What is specificity ?
+
+Ans: It defines which styles on the same element have highest priority
+
+Inline styles - Example: <h1 style="color: pink;">
+IDs - Example: #navbar
+Classes, pseudo-classes, attribute selectors - Example: .test, :hover, [href]
+Elements and pseudo-elements - Example: h1, ::before
+
+#### What is mixin and placeholder ?
+
+Ans: mixins and placeholders both allow you to write reusable chunks of styles.
+![alt text](image-1.png)
