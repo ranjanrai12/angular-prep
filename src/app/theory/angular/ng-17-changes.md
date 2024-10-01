@@ -141,4 +141,4 @@ equipment = 'container'
 }
 ```
 
-- `signal stability`: Signal was released as a developer preview with Angular 16. With Angular 17, Signal is stable and can be used.
+- []`signal stability`: Signal was released as a developer preview with Angular 16. With Angular 17, Signal is stable and can be used.
