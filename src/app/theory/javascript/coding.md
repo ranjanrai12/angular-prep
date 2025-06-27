@@ -4,11 +4,23 @@ string: welcome to coding round!
 Output: '! d n u o r g n i d o c o t e m o c l e w'
 
 ```js
-function reversedString(string) {
-  return string.split('').reverse().join(' ');
+// This apprach keeps the space between words
+function reversedString(str) {
+    let finalOutput = '';
+    for (var i = str.length-1; i > 0; i--) {
+        if(str[i] === ' ') {
+            finalOutput += ''
+        } else {
+            finalOutput += str[i] + ' '
+        }
+        
+    }
+    return finalOutput+str[0]
 }
+reversedString('welcome to the coding round!')
 reversedString('welcome to coding round!');
 ```
+
 
 #### Reverse the string and position should be same
 
