@@ -30,6 +30,7 @@ outout: 'emoclew ot gnidoc !dnuor'
 ```js
 function reversedString(string) {
   var reversedArr = [];
+  var textArr = string.split(' ');
   for (var i = 0; i < textArr.length; i++) {
     reversedArr.push(textArr[i].split('').reverse().join(''));
   }
