@@ -423,13 +423,67 @@ function outer() {
 outer()(); // 10 // over here first `()` will return inner function and then using second `()` to call inner function
 ```
 
-\*\* use of closure
+**use of closure**
+- **Data Privacy** (Encapsulation): Create private variables that can't be accessed directly from outside:
+  ```js
+  function createBankAccount(initialBalance) {
+  let balance = initialBalance; // Private variable
+  
+  return {
+    deposit: (amount) => balance += amount,
+    withdraw: (amount) => balance -= amount,
+    getBalance: () => balance
+  };
+}
+const account = createBankAccount(1000);
+account.deposit(500);
+console.log(account.getBalance()); // 1500
+console.log(account.balance); // undefined (can't access directly)```
 
-- module design pattern
-- Currying
-- Function loke once
-- memoize
-- maintaining the state in async world
+- **Function Factories**: Create specialized functions with preset parameters
+  ```js
+  function createMultiplier(multiplier) {
+  return function(num) {
+    return num * multiplier;
+  };
+}
+
+const double = createMultiplier(2);
+const triple = createMultiplier(3);
+
+console.log(double(5)); // 10
+console.log(triple(5)); // 15```
+
+ - **Memoization (Performance Optimization)**
+```js
+function memoize(fn) {
+  const cache = {};
+  return function(...args) {
+    const key = JSON.stringify(args);
+    if (cache[key]) return cache[key];
+    return cache[key] = fn(...args);
+  };
+}
+const slowCalc = (num) => { /* Complex calculation */ };
+const fastCalc = memoize(slowCalc);
+```
+- **module design pattern**
+  ```js
+  const counterModule = (() => {
+  let count = 0;
+  
+  return {
+    increment: () => ++count,
+    reset: () => count = 0,
+    getCount: () => count
+  };
+})();
+
+counterModule.increment();
+console.log(counterModule.getCount()); // 1```
+
+- **Throttling/Debouncing Events**
+- **Currying**
 - settimeout
 - Iterator
 
