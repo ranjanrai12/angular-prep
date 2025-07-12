@@ -79,10 +79,13 @@ cook(); // Starts the process
 #### What Happens in the Call Stack?
 1: **cook()** is called → Added to stack.
 - Stack: [cook]
+  
 2: **cook()** calls **eat()** → **eat()** is added on top.
 - Stack: [cook, eat]
+  
 3: **eat()** finishes → Removed from stack.
 - Stack: [cook]
+  
 4: **cook()** finishes → Stack is now empty.
 - Stack: []
 
