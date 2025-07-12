@@ -60,6 +60,32 @@ Ans:
 - Call Stack is a mechanism to keep track of its place in script that calls multiple function.
 - Call Stack maintains the order of execution of execution contexts. It is also known as Program Stack, Control Stack, Runtime stack, Machine Stack, Execution context stack.
 
+** In Layman's Explanation**
+Imagine the call stack as a to-do list for JavaScript. It keeps track of which function is currently running and what needs to run next.
+#### How Does It Work?
+**When you call a function**, it gets added (pushed) to the top of the stack.
+**When the function finishes**, it’s removed (popped) from the stack.
+**JavaScript can only do one thing at a time** (single-threaded), so the call stack ensures functions run in order.
+```js
+function eat() {
+  console.log("Eating pizza 🍕");
+}
+function cook() {
+  console.log("Cooking...");
+  eat(); // Calls eat()
+}
+cook(); // Starts the process
+```
+#### What Happens in the Call Stack?
+1: **cook()** is called → Added to stack.
+- Stack: [cook]
+2: **cook()** calls **eat()** → **eat()** is added on top.
+- Stack: [cook, eat]
+3: **eat()** finishes → Removed from stack.
+- Stack: [cook]
+4: **cook()** finishes → Stack is now empty.
+- Stack: []
+
 ### What is Hoisting?
 
 ```js
