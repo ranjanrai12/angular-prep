@@ -60,33 +60,42 @@ Ans:
 - Call Stack is a mechanism to keep track of its place in script that calls multiple function.
 - Call Stack maintains the order of execution of execution contexts. It is also known as Program Stack, Control Stack, Runtime stack, Machine Stack, Execution context stack.
 
-** In Layman's Explanation**
+**In Layman's Explanation**
 Imagine the call stack as a to-do list for JavaScript. It keeps track of which function is currently running and what needs to run next.
+
 #### How Does It Work?
+
 **When you call a function**, it gets added (pushed) to the top of the stack.
 **When the function finishes**, it’s removed (popped) from the stack.
 **JavaScript can only do one thing at a time** (single-threaded), so the call stack ensures functions run in order.
+
 ```js
 function eat() {
-  console.log("Eating pizza 🍕");
+  console.log('Eating pizza 🍕');
 }
 function cook() {
-  console.log("Cooking...");
+  console.log('Cooking...');
   eat(); // Calls eat()
 }
 cook(); // Starts the process
 ```
+
 #### What Happens in the Call Stack?
+
 1: **cook()** is called → Added to stack.
+
 - Stack: [cook]
-  
+
 2: **cook()** calls **eat()** → **eat()** is added on top.
+
 - Stack: [cook, eat]
-  
+
 3: **eat()** finishes → Removed from stack.
+
 - Stack: [cook]
-  
+
 4: **cook()** finishes → Stack is now empty.
+
 - Stack: []
 
 ### What is Hoisting?
@@ -424,15 +433,16 @@ outer()(); // 10 // over here first `()` will return inner function and then usi
 ```
 
 **use of closure**
+
 - **Data Privacy** (Encapsulation): Create private variables that can't be accessed directly from outside:
 
 ```js
-  function createBankAccount(initialBalance) {
+function createBankAccount(initialBalance) {
   let balance = initialBalance; // Private variable
-  
+
   return {
-    deposit: (amount) => balance += amount,
-    withdraw: (amount) => balance -= amount,
+    deposit: (amount) => (balance += amount),
+    withdraw: (amount) => (balance -= amount),
     getBalance: () => balance
   };
 }
@@ -443,9 +453,10 @@ console.log(account.balance); // undefined (can't access directly)
 ```
 
 - **Function Factories**: Create specialized functions with preset parameters
+
 ```js
-  function createMultiplier(multiplier) {
-  return function(num) {
+function createMultiplier(multiplier) {
+  return function (num) {
     return num * multiplier;
   };
 }
@@ -457,29 +468,32 @@ console.log(double(5)); // 10
 console.log(triple(5)); // 15
 ```
 
- - **Memoization (Performance Optimization)**
+- **Memoization (Performance Optimization)**
 
 ```js
 function memoize(fn) {
   const cache = {};
-  return function(...args) {
+  return function (...args) {
     const key = JSON.stringify(args);
     if (cache[key]) return cache[key];
-    return cache[key] = fn(...args);
+    return (cache[key] = fn(...args));
   };
 }
-const slowCalc = (num) => { /* Complex calculation */ };
+const slowCalc = (num) => {
+  /* Complex calculation */
+};
 const fastCalc = memoize(slowCalc);
 ```
+
 - **module design pattern**
 
 ```js
-  const counterModule = (() => {
+const counterModule = (() => {
   let count = 0;
-  
+
   return {
     increment: () => ++count,
-    reset: () => count = 0,
+    reset: () => (count = 0),
     getCount: () => count
   };
 })();
