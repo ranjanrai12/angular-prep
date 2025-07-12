@@ -425,7 +425,8 @@ outer()(); // 10 // over here first `()` will return inner function and then usi
 
 **use of closure**
 - **Data Privacy** (Encapsulation): Create private variables that can't be accessed directly from outside:
-  ```js
+
+```js
   function createBankAccount(initialBalance) {
   let balance = initialBalance; // Private variable
   
@@ -438,10 +439,11 @@ outer()(); // 10 // over here first `()` will return inner function and then usi
 const account = createBankAccount(1000);
 account.deposit(500);
 console.log(account.getBalance()); // 1500
-console.log(account.balance); // undefined (can't access directly)```
+console.log(account.balance); // undefined (can't access directly)
+```
 
 - **Function Factories**: Create specialized functions with preset parameters
-  ```js
+```js
   function createMultiplier(multiplier) {
   return function(num) {
     return num * multiplier;
@@ -452,9 +454,11 @@ const double = createMultiplier(2);
 const triple = createMultiplier(3);
 
 console.log(double(5)); // 10
-console.log(triple(5)); // 15```
+console.log(triple(5)); // 15
+```
 
  - **Memoization (Performance Optimization)**
+
 ```js
 function memoize(fn) {
   const cache = {};
@@ -468,7 +472,8 @@ const slowCalc = (num) => { /* Complex calculation */ };
 const fastCalc = memoize(slowCalc);
 ```
 - **module design pattern**
-  ```js
+
+```js
   const counterModule = (() => {
   let count = 0;
   
@@ -480,7 +485,8 @@ const fastCalc = memoize(slowCalc);
 })();
 
 counterModule.increment();
-console.log(counterModule.getCount()); // 1```
+console.log(counterModule.getCount()); // 1
+```
 
 - **Throttling/Debouncing Events**
 - **Currying**
