@@ -818,13 +818,23 @@ Code Explaination:
 * See below Image for more understanding
 ```
 
-#### What enters the Microtask Queue ?
+#### What enters into the Microtask Queue and Callback Queue ?
 
 - All the callback functions that come through promises go in microtask Queue.
 - Mutation Observer : Keeps on checking whether there is mutation in DOM tree or not, and if there, then it execeutes some callback function.
 
 - All the rest goes inside Callback Queue aka. Task Queue.
 
+#### What is Starvation ?
+
+Starvation occurs when **high-priority microtasks (like Promises) continuously prevent callback Queue (like setTimeout or I/O callbacks) from executing**, causing delays in critical operations.
+```js
+function starve() {
+  Promise.resolve().then(starve); // Infinite microtasks
+}
+starve();
+setTimeout(() => console.log("This may never run!"), 1000);
+```
 #### JS Engine Exposed, Google's V8 Architecture
 
 - JS runs literally everywhere from smart watch to robots to browsers because of Javascript Runtime Environment (JRE).
