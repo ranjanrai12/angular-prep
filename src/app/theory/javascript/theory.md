@@ -1568,6 +1568,7 @@ Function.prototype.myCall = function (context, ...rest) {
   if (typeof this !== 'function') {
     throw new Error('Please provide the function');
   }
+  // In JavaScript, when a method is called, this refers to the object before the dot (greet in this case).
   context.func = this;
   context.func(...rest); // spread operator which converts arr into indivial arguments
 };
