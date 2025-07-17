@@ -828,13 +828,15 @@ Code Explaination:
 #### What is Starvation ?
 
 Starvation occurs when **high-priority microtasks (like Promises) continuously prevent callback Queue (like setTimeout or I/O callbacks) from executing**, causing delays in critical operations.
+
 ```js
 function starve() {
   Promise.resolve().then(starve); // Infinite microtasks
 }
 starve();
-setTimeout(() => console.log("This may never run!"), 1000);
+setTimeout(() => console.log('This may never run!'), 1000);
 ```
+
 #### JS Engine Exposed, Google's V8 Architecture
 
 - JS runs literally everywhere from smart watch to robots to browsers because of Javascript Runtime Environment (JRE).
@@ -2179,122 +2181,6 @@ arr.myReduce((acc, curr) => {
 
 Ans: memoize is a function which is use for performance optimization, by storing the previous result and reusing it next time.
 
-#### What are design pattern ?
-
-https://dev.to/alexmercedcoder/oop-design-patterns-in-javascript-3i98
-
-Ans: 
-Design Patterns are divided into three main categories:
-- **Creational Patterns**
-  - **Singelton Pattenr**: Ensures that a class has **only one instance** and provides a global point of access to that instance.
-    ```js
-    class Singleton {
-  private static instance: Singleton;
-  // Private constructor prevents direct instantiation
-  private constructor() {
-    // Initialization code here
-  }
-  // Public static method to get the instance
-  public static getInstance(): Singleton {
-    if (!Singleton.instance) {
-      Singleton.instance = new Singleton();
-    }
-    return Singleton.instance;
-  }
-  // Your methods and properties here
-  public someMethod(): void {
-    console.log("Singleton method called");
-  }
-}
-// Usage
-const singletonA = Singleton.getInstance();
-const singletonB = Singleton.getInstance();
-
-console.log(singletonA === singletonB); // true
-singletonA.someMethod();
-    ```
-- **Structural Patterns**:
-- **Behavioral Patterns**
-
-- `factory pattern`: it is a creational pattern that provides interface for creating objects but allow subclasses to change the type of objects.
-
-```js
-// Product class
-class Product {
-  constructor(name) {
-    this.name = name;
-  }
-}
-
-// Factory for creating products
-class ProductFactory {
-  createProduct(name) {
-    return new Product(name);
-  }
-}
-// Usage
-const factory = new ProductFactory();
-const productA = factory.createProduct('Product A');
-const productB = factory.createProduct('Product B');
-
-console.log(productA.name); // Output: 'Product A'
-console.log(productB.name); // Output: 'Product B'
-```
-
-- `composition  pattern` - `composition` pattern is a strucutural design pattern which compose multiple object into a tree structure format.The Composite Pattern is particularly useful when you need to work with complex structures made up of smaller, related objects while maintaining a `consistent interface`.
-
-https://jsmanifest.com/the-composite-pattern-in-javascript/
-
-```js
-// Component interface
-class Graphic {
-  draw() {}
-}
-
-// Leaf class (represents simple shapes)
-class Circle extends Graphic {
-  constructor() {
-    super();
-    // Circle-specific properties and methods
-  }
-
-  draw() {
-    // Draw a circle
-  }
-}
-
-// Composite class (represents groups of shapes)
-class Group extends Graphic {
-  constructor() {
-    super();
-    this.graphics = [];
-  }
-
-  add(graphic) {
-    this.graphics.push(graphic);
-  }
-
-  draw() {
-    // Draw each graphic in the group
-    this.graphics.forEach((graphic) => graphic.draw());
-  }
-}
-
-// Usage
-const circle1 = new Circle();
-const circle2 = new Circle();
-const group = new Group();
-
-group.add(circle1);
-group.add(circle2);
-
-group.draw();
-```
-
-- `observer pattern`: it is behavioural design pattern that eastablist one to many dependency between the objects. it allow one object to notify multiple listener of their changes.
-
-- `Decorator pattern`: The Decorator Pattern is a structural design pattern that allows you to add new behaviors or responsibilities to objects dynamically without changing their existing code.
-
 #### What is decorator ?
 
 Ans: decorator is a function which change the behaviour of class and their member ?
@@ -2625,3 +2511,320 @@ Ans:
 `WeakMap`: The garbage collector goes ahead and removes the key pointer from “WeakMap” and also removes the key from memory.
 5:`Map`: create a new map by using a new Map().
 `WeakMap`: create a new WeakMap by using a new WeakMap().
+
+#### What are design pattern ?
+
+https://dev.to/alexmercedcoder/oop-design-patterns-in-javascript-3i98
+
+Ans:
+Design Patterns are divided into three main categories:
+
+- **Creational Patterns**
+
+  - **Singelton Pattern**: Ensures that a class has **only one instance** and provides a global point of access to that instance.
+
+    ```ts
+    class Singleton {
+      private static instance: Singleton;
+
+      // Private constructor prevents direct instantiation
+      private constructor() {
+        // Initialization code here
+      }
+
+      // Public static method to get the instance
+      public static getInstance(): Singleton {
+        if (!Singleton.instance) {
+          Singleton.instance = new Singleton();
+        }
+        return Singleton.instance;
+      }
+
+      // Your methods and properties here
+      public someMethod(): void {
+        console.log('Singleton method called');
+      }
+    }
+
+    // Usage
+    const singletonA = Singleton.getInstance();
+    const singletonB = Singleton.getInstance();
+
+    console.log(singletonA === singletonB); // true
+    singletonA.someMethod();
+    ```
+
+  - **Factory Pattern**: The Factory Pattern provides a way to create objects without exposing the creation logic.
+
+    ```ts
+    // Product Interface
+    interface Vehicle {
+      drive(): void;
+    }
+
+    // Concrete Products
+    class Car implements Vehicle {
+      drive() {
+        console.log('Driving a car...');
+      }
+    }
+
+    class Truck implements Vehicle {
+      drive() {
+        console.log('Driving a truck...');
+      }
+    }
+
+    class Motorcycle implements Vehicle {
+      drive() {
+        console.log('Riding a motorcycle...');
+      }
+    }
+
+    // Factory
+    class VehicleFactory {
+      public createVehicle(type: string): Vehicle {
+        switch (type.toLowerCase()) {
+          case 'car':
+            return new Car();
+          case 'truck':
+            return new Truck();
+          case 'motorcycle':
+            return new Motorcycle();
+          default:
+            throw new Error('Invalid vehicle type');
+        }
+      }
+    }
+
+    // Usage
+    const factory = new VehicleFactory();
+    const myCar = factory.createVehicle('car');
+    const myTruck = factory.createVehicle('truck');
+
+    myCar.drive(); // Output: Driving a car...
+    myTruck.drive(); // Output: Driving a truck...
+    ```
+
+- **Builder Pattern**: The Builder Pattern is a creational design pattern that lets you construct complex objects step by step.
+  `Real-World Analogy`: Think of ordering a pizza - you don't just say "I want a pizza", you specify: Crust type, Sauce, Cheese amount, Toppings, Size
+
+  The pizza builder lets you specify each attribute separately rather than having one massive constructor with all possible parameters.
+
+  ```ts
+  class Pizza {
+    constructor(
+      public size: string,
+      public hasCheese: boolean,
+      public hasPepperoni: boolean,
+      public hasMushrooms: boolean,
+      public hasPineapple: boolean // Controversial!
+    ) {}
+  }
+
+  class PizzaBuilder {
+    private size: string = 'medium';
+    private hasCheese: boolean = true;
+    private hasPepperoni: boolean = false;
+    private hasMushrooms: boolean = false;
+    private hasPineapple: boolean = false;
+
+    setSize(size: string): PizzaBuilder {
+      this.size = size;
+      return this;
+    }
+
+    addCheese(): PizzaBuilder {
+      this.hasCheese = true;
+      return this;
+    }
+
+    addPepperoni(): PizzaBuilder {
+      this.hasPepperoni = true;
+      return this;
+    }
+
+    addMushrooms(): PizzaBuilder {
+      this.hasMushrooms = true;
+      return this;
+    }
+
+    addPineapple(): PizzaBuilder {
+      this.hasPineapple = true;
+      return this;
+    }
+
+    build(): Pizza {
+      return new Pizza(this.size, this.hasCheese, this.hasPepperoni, this.hasMushrooms, this.hasPineapple);
+    }
+  }
+
+  // Usage
+  const myPizza = new PizzaBuilder().set;
+
+  Size('large').addCheese().addPepperoni().addMushrooms().build();
+
+  console.log(myPizza);
+  ```
+
+- **Prototype Pattern**: The Prototype Pattern is a creational design pattern that lets you create new objects by copying existing ones (prototypes) rather than creating new instances from scratch.
+
+  ```ts
+  interface Prototype {
+    clone(): Prototype;
+    toString(): string;
+  }
+
+  class ConcretePrototype implements Prototype {
+    private property: string;
+
+    constructor(property: string) {
+      this.property = property;
+      // Imagine expensive initialization here
+      console.log(`Expensive operation to create object with property: ${property}`);
+    }
+
+    clone(): Prototype {
+      // Create a new object with the same property
+      return new ConcretePrototype(this.property);
+
+      // Alternatively for shallow copies:
+      // return Object.create(this);
+    }
+
+    toString(): string {
+      return `Property: ${this.property}`;
+    }
+
+    setProperty(property: string): void {
+      this.property = property;
+    }
+  }
+
+  // Usage
+  const original = new ConcretePrototype('Initial Value');
+  console.log(original.toString()); // Property: Initial Value
+
+  const clone = original.clone();
+  console.log(clone.toString()); // Property: Initial Value
+
+  clone.setProperty('Modified Value');
+  console.log(clone.toString()); // Property: Modified Value
+  console.log(original.toString()); // Property: Initial Value (unchanged)
+  ```
+
+- **Object Pool Pattern** - The Object Pool Pattern is a creational design pattern that maintains a pool of reusable objects ready to be borrowed by clients, rather than creating and destroying them on demand. This improves performance by avoiding expensive object initialization and garbage collection.
+- **Adapter Pattern**: It acts as a bridge between two incompatible interfaces, making them compatible without changing their source code.
+
+```ts
+// Modern API expects this format
+interface NewUser {
+  fullName: string;
+  email: string;
+  age: number;
+}
+
+// Legacy system provides this format
+interface OldUser {
+  name: string;
+  surname: string;
+  emailAddress: string;
+  yearsOld: number;
+}
+
+// Adapter to convert old format to new
+class UserAdapter implements NewUser {
+  constructor(private oldUser: OldUser) {}
+
+  get fullName(): string {
+    return `${this.oldUser.name} ${this.oldUser.surname}`;
+  }
+
+  get email(): string {
+    return this.oldUser.emailAddress;
+  }
+
+  get age(): number {
+    return this.oldUser.yearsOld;
+  }
+}
+
+// Modern system that expects NewUser
+class UserProfile {
+  display(user: NewUser) {
+    console.log(`Name: ${user.fullName}`);
+    console.log(`Email: ${user.email}`);
+    console.log(`Age: ${user.age}`);
+  }
+}
+
+// Usage
+const legacyUser: OldUser = {
+  name: 'John',
+  surname: 'Doe',
+  emailAddress: 'john@example.com',
+  yearsOld: 30
+};
+
+const adapter = new UserAdapter(legacyUser);
+const profile = new UserProfile();
+
+profile.display(adapter);
+```
+
+- **Structural Patterns**:
+- **Behavioral Patterns**
+
+- `composition  pattern` - `composition` pattern is a strucutural design pattern which compose multiple object into a tree structure format.The Composite Pattern is particularly useful when you need to work with complex structures made up of smaller, related objects while maintaining a `consistent interface`.
+
+https://jsmanifest.com/the-composite-pattern-in-javascript/
+
+```js
+// Component interface
+class Graphic {
+  draw() {}
+}
+
+// Leaf class (represents simple shapes)
+class Circle extends Graphic {
+  constructor() {
+    super();
+    // Circle-specific properties and methods
+  }
+
+  draw() {
+    // Draw a circle
+  }
+}
+
+// Composite class (represents groups of shapes)
+class Group extends Graphic {
+  constructor() {
+    super();
+    this.graphics = [];
+  }
+
+  add(graphic) {
+    this.graphics.push(graphic);
+  }
+
+  draw() {
+    // Draw each graphic in the group
+    this.graphics.forEach((graphic) => graphic.draw());
+  }
+}
+
+// Usage
+const circle1 = new Circle();
+const circle2 = new Circle();
+const group = new Group();
+
+group.add(circle1);
+group.add(circle2);
+
+group.draw();
+```
+
+- `observer pattern`: it is behavioural design pattern that eastablist one to many dependency between the objects. it allow one object to notify multiple listener of their changes.
+
+- `Decorator pattern`: The Decorator Pattern is a structural design pattern that allows you to add new behaviors or responsibilities to objects dynamically without changing their existing code.
