@@ -2183,30 +2183,38 @@ Ans: memoize is a function which is use for performance optimization, by storing
 
 https://dev.to/alexmercedcoder/oop-design-patterns-in-javascript-3i98
 
-Ans: - `singelton pattern`: it is a creation design pattern that ensure that class has only one instance and provide point of access to that instance.
-
-```js
-// Singleton instance
-let instance = null;
-
-class Singleton {
-  constructor() {
-    if (!instance) {
-      instance = this;
-      // Your initialization code here
-    } else {
-      return instance;
+Ans: 
+Design Patterns are divided into three main categories:
+- **Creational Patterns**
+  - **Singelton Pattenr**: Ensures that a class has **only one instance** and provides a global point of access to that instance.
+    ```js
+    class Singleton {
+  private static instance: Singleton;
+  // Private constructor prevents direct instantiation
+  private constructor() {
+    // Initialization code here
+  }
+  // Public static method to get the instance
+  public static getInstance(): Singleton {
+    if (!Singleton.instance) {
+      Singleton.instance = new Singleton();
     }
+    return Singleton.instance;
   }
   // Your methods and properties here
+  public someMethod(): void {
+    console.log("Singleton method called");
+  }
 }
-
 // Usage
-const singletonA = new Singleton();
-const singletonB = new Singleton();
+const singletonA = Singleton.getInstance();
+const singletonB = Singleton.getInstance();
 
-console.log(singletonA === singletonB); // Output: true (both variables reference the same instance)
-```
+console.log(singletonA === singletonB); // true
+singletonA.someMethod();
+    ```
+- **Structural Patterns**:
+- **Behavioral Patterns**
 
 - `factory pattern`: it is a creational pattern that provides interface for creating objects but allow subclasses to change the type of objects.
 
