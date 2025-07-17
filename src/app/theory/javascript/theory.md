@@ -2429,68 +2429,68 @@ Design Patterns are divided into three main categories:
     myTruck.drive(); // Output: Driving a truck...
     ```
 
-- **Builder Pattern**: The Builder Pattern is a creational design pattern that lets you construct complex objects step by step.
-  `Real-World Analogy`: Think of ordering a pizza - you don't just say "I want a pizza", you specify: Crust type, Sauce, Cheese amount, Toppings, Size
+  - **Builder Pattern**: The Builder Pattern is a creational design pattern that lets you construct complex objects step by step.
+    `Real-World Analogy`: Think of ordering a pizza - you don't just say "I want a pizza", you specify: Crust type, Sauce, Cheese amount, Toppings, Size
 
-  The pizza builder lets you specify each attribute separately rather than having one massive constructor with all possible parameters.
+    The pizza builder lets you specify each attribute separately rather than having one massive constructor with all possible parameters.
 
-  ```ts
-  class Pizza {
-    constructor(
-      public size: string,
-      public hasCheese: boolean,
-      public hasPepperoni: boolean,
-      public hasMushrooms: boolean,
-      public hasPineapple: boolean // Controversial!
-    ) {}
-  }
-
-  class PizzaBuilder {
-    private size: string = 'medium';
-    private hasCheese: boolean = true;
-    private hasPepperoni: boolean = false;
-    private hasMushrooms: boolean = false;
-    private hasPineapple: boolean = false;
-
-    setSize(size: string): PizzaBuilder {
-      this.size = size;
-      return this;
+    ```ts
+    class Pizza {
+      constructor(
+        public size: string,
+        public hasCheese: boolean,
+        public hasPepperoni: boolean,
+        public hasMushrooms: boolean,
+        public hasPineapple: boolean // Controversial!
+      ) {}
     }
 
-    addCheese(): PizzaBuilder {
-      this.hasCheese = true;
-      return this;
+    class PizzaBuilder {
+      private size: string = 'medium';
+      private hasCheese: boolean = true;
+      private hasPepperoni: boolean = false;
+      private hasMushrooms: boolean = false;
+      private hasPineapple: boolean = false;
+
+      setSize(size: string): PizzaBuilder {
+        this.size = size;
+        return this;
+      }
+
+      addCheese(): PizzaBuilder {
+        this.hasCheese = true;
+        return this;
+      }
+
+      addPepperoni(): PizzaBuilder {
+        this.hasPepperoni = true;
+        return this;
+      }
+
+      addMushrooms(): PizzaBuilder {
+        this.hasMushrooms = true;
+        return this;
+      }
+
+      addPineapple(): PizzaBuilder {
+        this.hasPineapple = true;
+        return this;
+      }
+
+      build(): Pizza {
+        return new Pizza(this.size, this.hasCheese, this.hasPepperoni, this.hasMushrooms, this.hasPineapple);
+      }
     }
 
-    addPepperoni(): PizzaBuilder {
-      this.hasPepperoni = true;
-      return this;
-    }
+    // Usage
+    const myPizza = new PizzaBuilder().set;
 
-    addMushrooms(): PizzaBuilder {
-      this.hasMushrooms = true;
-      return this;
-    }
+    Size('large').addCheese().addPepperoni().addMushrooms().build();
 
-    addPineapple(): PizzaBuilder {
-      this.hasPineapple = true;
-      return this;
-    }
+    console.log(myPizza);
+    ```
 
-    build(): Pizza {
-      return new Pizza(this.size, this.hasCheese, this.hasPepperoni, this.hasMushrooms, this.hasPineapple);
-    }
-  }
-
-  // Usage
-  const myPizza = new PizzaBuilder().set;
-
-  Size('large').addCheese().addPepperoni().addMushrooms().build();
-
-  console.log(myPizza);
-  ```
-
-- **Prototype Pattern**: The Prototype Pattern is a creational design pattern that lets you create new objects by copying existing ones (prototypes) rather than creating new instances from scratch.
+  - **Prototype Pattern**: The Prototype Pattern is a creational design pattern that lets you create new objects by copying existing ones (prototypes) rather than creating new instances from scratch.
 
   ```ts
   interface Prototype {
@@ -2536,64 +2536,64 @@ Design Patterns are divided into three main categories:
   console.log(original.toString()); // Property: Initial Value (unchanged)
   ```
 
-- **Object Pool Pattern** - The Object Pool Pattern is a creational design pattern that maintains a pool of reusable objects ready to be borrowed by clients, rather than creating and destroying them on demand. This improves performance by avoiding expensive object initialization and garbage collection.
-- **Adapter Pattern**: It acts as a bridge between two incompatible interfaces, making them compatible without changing their source code.
+  - **Object Pool Pattern** - The Object Pool Pattern is a creational design pattern that maintains a pool of reusable objects ready to be borrowed by clients, rather than creating and destroying them on demand. This improves performance by avoiding expensive object initialization and garbage collection.
+  - **Adapter Pattern**: It acts as a bridge between two incompatible interfaces, making them compatible without changing their source code.
 
-```ts
-// Modern API expects this format
-interface NewUser {
-  fullName: string;
-  email: string;
-  age: number;
-}
-
-// Legacy system provides this format
-interface OldUser {
-  name: string;
-  surname: string;
-  emailAddress: string;
-  yearsOld: number;
-}
-
-// Adapter to convert old format to new
-class UserAdapter implements NewUser {
-  constructor(private oldUser: OldUser) {}
-
-  get fullName(): string {
-    return `${this.oldUser.name} ${this.oldUser.surname}`;
+  ```ts
+  // Modern API expects this format
+  interface NewUser {
+    fullName: string;
+    email: string;
+    age: number;
   }
 
-  get email(): string {
-    return this.oldUser.emailAddress;
+  // Legacy system provides this format
+  interface OldUser {
+    name: string;
+    surname: string;
+    emailAddress: string;
+    yearsOld: number;
   }
 
-  get age(): number {
-    return this.oldUser.yearsOld;
+  // Adapter to convert old format to new
+  class UserAdapter implements NewUser {
+    constructor(private oldUser: OldUser) {}
+
+    get fullName(): string {
+      return `${this.oldUser.name} ${this.oldUser.surname}`;
+    }
+
+    get email(): string {
+      return this.oldUser.emailAddress;
+    }
+
+    get age(): number {
+      return this.oldUser.yearsOld;
+    }
   }
-}
 
-// Modern system that expects NewUser
-class UserProfile {
-  display(user: NewUser) {
-    console.log(`Name: ${user.fullName}`);
-    console.log(`Email: ${user.email}`);
-    console.log(`Age: ${user.age}`);
+  // Modern system that expects NewUser
+  class UserProfile {
+    display(user: NewUser) {
+      console.log(`Name: ${user.fullName}`);
+      console.log(`Email: ${user.email}`);
+      console.log(`Age: ${user.age}`);
+    }
   }
-}
 
-// Usage
-const legacyUser: OldUser = {
-  name: 'John',
-  surname: 'Doe',
-  emailAddress: 'john@example.com',
-  yearsOld: 30
-};
+  // Usage
+  const legacyUser: OldUser = {
+    name: 'John',
+    surname: 'Doe',
+    emailAddress: 'john@example.com',
+    yearsOld: 30
+  };
 
-const adapter = new UserAdapter(legacyUser);
-const profile = new UserProfile();
+  const adapter = new UserAdapter(legacyUser);
+  const profile = new UserProfile();
 
-profile.display(adapter);
-```
+  profile.display(adapter);
+  ```
 
 - **Structural Patterns**:
 - **Behavioral Patterns**
