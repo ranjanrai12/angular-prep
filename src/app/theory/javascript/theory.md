@@ -2492,108 +2492,108 @@ Design Patterns are divided into three main categories:
 
   - **Prototype Pattern**: The Prototype Pattern is a creational design pattern that lets you create new objects by copying existing ones (prototypes) rather than creating new instances from scratch.
 
-  ```ts
-  interface Prototype {
-    clone(): Prototype;
-    toString(): string;
-  }
-
-  class ConcretePrototype implements Prototype {
-    private property: string;
-
-    constructor(property: string) {
-      this.property = property;
-      // Imagine expensive initialization here
-      console.log(`Expensive operation to create object with property: ${property}`);
+    ```ts
+    interface Prototype {
+      clone(): Prototype;
+      toString(): string;
     }
 
-    clone(): Prototype {
-      // Create a new object with the same property
-      return new ConcretePrototype(this.property);
+    class ConcretePrototype implements Prototype {
+      private property: string;
 
-      // Alternatively for shallow copies:
-      // return Object.create(this);
+      constructor(property: string) {
+        this.property = property;
+        // Imagine expensive initialization here
+        console.log(`Expensive operation to create object with property: ${property}`);
+      }
+
+      clone(): Prototype {
+        // Create a new object with the same property
+        return new ConcretePrototype(this.property);
+
+        // Alternatively for shallow copies:
+        // return Object.create(this);
+      }
+
+      toString(): string {
+        return `Property: ${this.property}`;
+      }
+
+      setProperty(property: string): void {
+        this.property = property;
+      }
     }
 
-    toString(): string {
-      return `Property: ${this.property}`;
-    }
+    // Usage
+    const original = new ConcretePrototype('Initial Value');
+    console.log(original.toString()); // Property: Initial Value
 
-    setProperty(property: string): void {
-      this.property = property;
-    }
-  }
+    const clone = original.clone();
+    console.log(clone.toString()); // Property: Initial Value
 
-  // Usage
-  const original = new ConcretePrototype('Initial Value');
-  console.log(original.toString()); // Property: Initial Value
-
-  const clone = original.clone();
-  console.log(clone.toString()); // Property: Initial Value
-
-  clone.setProperty('Modified Value');
-  console.log(clone.toString()); // Property: Modified Value
-  console.log(original.toString()); // Property: Initial Value (unchanged)
-  ```
+    clone.setProperty('Modified Value');
+    console.log(clone.toString()); // Property: Modified Value
+    console.log(original.toString()); // Property: Initial Value (unchanged)
+    ```
 
   - **Object Pool Pattern** - The Object Pool Pattern is a creational design pattern that maintains a pool of reusable objects ready to be borrowed by clients, rather than creating and destroying them on demand. This improves performance by avoiding expensive object initialization and garbage collection.
   - **Adapter Pattern**: It acts as a bridge between two incompatible interfaces, making them compatible without changing their source code.
 
-  ```ts
-  // Modern API expects this format
-  interface NewUser {
-    fullName: string;
-    email: string;
-    age: number;
-  }
-
-  // Legacy system provides this format
-  interface OldUser {
-    name: string;
-    surname: string;
-    emailAddress: string;
-    yearsOld: number;
-  }
-
-  // Adapter to convert old format to new
-  class UserAdapter implements NewUser {
-    constructor(private oldUser: OldUser) {}
-
-    get fullName(): string {
-      return `${this.oldUser.name} ${this.oldUser.surname}`;
+    ```ts
+    // Modern API expects this format
+    interface NewUser {
+      fullName: string;
+      email: string;
+      age: number;
     }
 
-    get email(): string {
-      return this.oldUser.emailAddress;
+    // Legacy system provides this format
+    interface OldUser {
+      name: string;
+      surname: string;
+      emailAddress: string;
+      yearsOld: number;
     }
 
-    get age(): number {
-      return this.oldUser.yearsOld;
+    // Adapter to convert old format to new
+    class UserAdapter implements NewUser {
+      constructor(private oldUser: OldUser) {}
+
+      get fullName(): string {
+        return `${this.oldUser.name} ${this.oldUser.surname}`;
+      }
+
+      get email(): string {
+        return this.oldUser.emailAddress;
+      }
+
+      get age(): number {
+        return this.oldUser.yearsOld;
+      }
     }
-  }
 
-  // Modern system that expects NewUser
-  class UserProfile {
-    display(user: NewUser) {
-      console.log(`Name: ${user.fullName}`);
-      console.log(`Email: ${user.email}`);
-      console.log(`Age: ${user.age}`);
+    // Modern system that expects NewUser
+    class UserProfile {
+      display(user: NewUser) {
+        console.log(`Name: ${user.fullName}`);
+        console.log(`Email: ${user.email}`);
+        console.log(`Age: ${user.age}`);
+      }
     }
-  }
 
-  // Usage
-  const legacyUser: OldUser = {
-    name: 'John',
-    surname: 'Doe',
-    emailAddress: 'john@example.com',
-    yearsOld: 30
-  };
+    // Usage
+    const legacyUser: OldUser = {
+      name: 'John',
+      surname: 'Doe',
+      emailAddress: 'john@example.com',
+      yearsOld: 30
+    };
 
-  const adapter = new UserAdapter(legacyUser);
-  const profile = new UserProfile();
+    const adapter = new UserAdapter(legacyUser);
+    const profile = new UserProfile();
 
-  profile.display(adapter);
-  ```
+    profile.display(adapter);
+    ```
 
 - **Structural Patterns**:
 - **Behavioral Patterns**
