@@ -2277,16 +2277,63 @@ for (let user of set) {
 #### Difference between Map and WeakMap ?
 
 Ans:
-1:`Map`: In map key can be of any data types
-`WeakMap `: In WeakMap every key can be only be object.
-2:`Map`: Maps are iterable
-`WeakMap`: WeakMap is not iterable.
-3:`Map:` Maps will keep everything even if you don't use them.
-`WeakMap:` WeakMaps holds the reference to the key, not the key itself.
-4:`Map:` The garbage collector doesn’t remove a key pointer from “Map” and also doesn’t remove the key from memory.
-`WeakMap`: The garbage collector goes ahead and removes the key pointer from “WeakMap” and also removes the key from memory.
-5:`Map`: create a new map by using a new Map().
-`WeakMap`: create a new WeakMap by using a new WeakMap().
+
+| Feature                | Map                                        | WeakMap                           |
+| ---------------------- | ------------------------------------------ | --------------------------------- |
+| **Key Types**          | Any value (objects, primitives)            | Only **objects** (no primitives)  |
+| **Garbage Collection** | Keeps keys in memory (prevents GC)         | Allows garbage collection of keys |
+| **Iterability**        | Yes (`.keys()`, `.values()`, `.entries()`) | **No iteration methods**          |
+| **Size Property**      | Yes (`.size`)                              | No size tracking                  |
+| **Performance**        | Slightly slower                            | More memory-efficient             |
+| **Use Case**           | General key-value storage                  | Private/auxiliary object data     |
+
+- **Key Types**:
+
+```ts
+// Map - Accepts any key type
+const map = new Map();
+map.set('name', 'Alice'); // ✅ Primitive key
+map.set({ id: 1 }, 'Object'); // ✅ Object key
+
+// WeakMap - Only accepts objects
+const weakMap = new WeakMap();
+weakMap.set({ id: 1 }, 'data'); // ✅
+weakMap.set('name', 'Alice'); // ❌ TypeError
+```
+
+- **Garbage Collection**:
+
+```js
+let obj = { id: 1 };
+
+// Map - Keeps object reference
+const map = new Map();
+map.set(obj, 'data');
+obj = null; // Object still exists in Map
+
+// WeakMap - Allows garbage collection
+const weakMap = new WeakMap();
+weakMap.set(obj, 'data');
+obj = null; // Object can be garbage-collected
+```
+
+- **Iteration & Size**:
+
+```js
+const map = new Map([
+  [1, 'A'],
+  [2, 'B']
+]);
+console.log(map.size); // 2
+for (let [key, val] of map) {
+  /*...*/
+}
+
+const weakMap = new WeakMap();
+weakMap.set({}, 'private');
+console.log(weakMap.size); // undefined
+// No forEach/keys/values/entries methods
+```
 
 #### What are design pattern ?
 
