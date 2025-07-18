@@ -39,7 +39,7 @@ In one way binding data flows from one direction. Either from view to component 
   <p [ngStyle]="{'color': 'purple','font-size': '20px','font-weight': 'bold'}">Multiple styles</p>
   ```
 
-- #### `From Component to View `
+- #### `From View to Component`
 
   - `Event Binding`: Event binding allows us to bind events such as keystrokes, clicks, hover, touch, etc to a method in component. It is one way from view to component.
 
