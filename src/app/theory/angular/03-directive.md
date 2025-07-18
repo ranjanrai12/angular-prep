@@ -113,3 +113,86 @@ export class CustomForDirective {
   <li *customFor="let item of items">{{ item }}</li>
 </ul>
 ```
+
+### What are all custom directive you have created in your project
+
+Ans:
+1: **AutoFocus Directive**
+
+```ts
+@Directive({ selector: '[appAutoFocus]' })
+export class AutoFocusDirective implements AfterViewInit {
+  constructor(private el: ElementRef) {}
+
+  ngAfterViewInit() {
+    this.el.nativeElement.focus();
+  }
+}
+// use
+<input appAutoFocus>
+```
+
+2: **Password Strength Meter**
+
+```ts
+@Directive({ selector: '[appPasswordStrength]' })
+export class PasswordStrengthDirective {
+  @HostListener('input', ['$event.target.value'])
+  onInput(value: string) {
+    const strength = this.calculateStrength(value);
+    this.renderer.setStyle(this.el.nativeElement, 'border-color', this.getColor(strength));
+  }
+
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
+}
+
+// Usage:
+ <input type="password" appPasswordStrength>
+
+```
+
+3: **Tooltip Directive**
+
+```ts
+@Directive({ selector: '[appTooltip]' })
+export class TooltipDirective {
+  @Input() appTooltip = '';
+  private tooltipEl: HTMLElement;
+
+  @HostListener('mouseenter') onMouseEnter() {
+    this.showTooltip();
+  }
+
+  @HostListener('mouseleave') onMouseLeave() {
+    this.hideTooltip();
+  }
+
+  // usages
+  <button appTooltip="Delete item">Delete</button>
+}
+```
+
+4: **Permission Directive**
+
+```ts
+@Directive({ selector: '[appIfAdmin]' })
+export class IfAdminDirective {
+  constructor(
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef,
+    private auth: AuthService
+  ) {}
+
+  @Input() set appIfAdmin(condition: boolean) {
+    if (condition && this.auth.isAdmin()) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    } else {
+      this.viewContainer.clear();
+    }
+  }
+}
+// usages
+<div *appIfAdmin>Admin-only content</div>
+```
+
+TODO: Need to create more need to practice
