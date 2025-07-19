@@ -113,3 +113,5 @@ use `pipes` for data `transformation` and `formatting` within `templates` to enh
 Use `directives` for `DOM manipulation`, implementing complex interactions, and reusable behavior.
 
 `Examples` include toggling visibility, dynamically adding event listeners, or creating custom behavior.
+
+### In your project how may pipes you have created ?

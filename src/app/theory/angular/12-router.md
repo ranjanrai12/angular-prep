@@ -116,3 +116,13 @@ This method is used in the feature modules or child modules, especially when laz
 - `Multiple Invocations`: Unlike forRoot, forChild can be called multiple times within different modules to configure routes and settings.
 - `Encapsulation`: Helps in encapsulating module-specific functionality and settings, promoting a modular architecture.
 - `Scalability`: Supports scalable application development by allowing feature modules to manage their own routes and settings independently.
+
+# forRoot() vs forChild() in Angular
+
+| Feature              | forRoot()                     | forChild()                          |
+| -------------------- | ----------------------------- | ----------------------------------- |
+| **Purpose**          | Configures global services    | Configures feature modules          |
+| **Services**         | Creates new service instances | Reuses existing services            |
+| **Usage Location**   | AppModule/root module         | Feature modules                     |
+| **Typical Use Case** | RouterModule, StoreModule     | RouterModule in lazy-loaded modules |
+| **Initialization**   | Runs once at app startup      | Runs for each feature module        |
