@@ -1,9 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 
 @Component({
   selector: 'app-signals',
   standalone: true,
   templateUrl: './signals.component.html',
-  styleUrl: './signals.component.scss'
+  styleUrls: ['./signals.component.scss']
 })
-export class SignalsComponent {}
+export class SignalsComponent implements OnInit {
+  count = signal(0);
+
+  user = signal({ name: 'Ranjan' });
+
+  ngOnInit() {
+    this.count.set(5);
+  }
+
+  incrementCount() {
+    this.count.update((value) => value + 1);
+  }
+
+  updateUser() {}
+}

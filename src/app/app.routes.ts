@@ -76,6 +76,11 @@ export const routes: Routes = [
       import('./content-projection/content-projection.component').then((C) => C.ContentProjectionComponent)
   },
   {
+    path: 'signals',
+    loadComponent: () => import('./signals/signals.component').then((m) => m.SignalsComponent),
+    title: 'signals'
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }

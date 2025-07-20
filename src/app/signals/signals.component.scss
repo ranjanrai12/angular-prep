@@ -1,0 +1,67 @@
+.signals-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  color: #333;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    background-color: #e0e0e0;
+  }
+  .signal-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+  }
+  .signal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    .signal-item {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+      &:last-child {
+        border-bottom: none;
+      }
+      .signal-name {
+        font-weight: bold;
+        color: #007bff;
+      }
+      .signal-value {
+        color: #555;
+      }
+    }
+  }
+  .action-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}

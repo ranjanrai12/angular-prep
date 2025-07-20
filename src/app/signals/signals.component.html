@@ -1,0 +1,21 @@
+<div class="signals-component">
+  <h1 class="signal-header">Number Count</h1>
+  <div class="signal-content">
+    Count: {{count()}}
+  </div>
+</div>
+<div class="signals-component">
+  <h1 class="signal-header">User Info</h1>
+  <div class="signal-content">
+    User Name: {{user().name}}
+  </div>
+</div>
+<div class="signals-component">
+  <h1 class="signal-header">Actions</h1>
+  <div class="signal-content">
+    <div class="signal-item">
+      <button class="action-btn" (click)="incrementCount()">Increment Count</button> <br />
+      <button class="action-btn" (click)="updateUser()">Update User</button>
+    </div>
+  </div>
+</div>
