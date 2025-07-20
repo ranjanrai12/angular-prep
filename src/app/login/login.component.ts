@@ -5,10 +5,12 @@ import { Router } from '@angular/router';
 import { AppService } from '../app-service.service';
 import { CanComponentDeactivate } from '../guards/unsaved-guard';
 import { Subscription } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   standalone: true,
+  providers: [AppService],
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

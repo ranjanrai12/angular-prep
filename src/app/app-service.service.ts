@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AppService {
+  private readonly http = inject(HttpClient);
   private submittedSource = new BehaviorSubject<boolean>(false);
 
   submitted$ = this.submittedSource.asObservable();
@@ -13,5 +15,14 @@ export class AppService {
 
   submitted(event: boolean) {
     this.submittedSource.next(event);
+  }
+
+  searchUser(user: string): Observable<any> {
+    return this.http.get(`https://api.github.com/users/${user}`, {
+      headers: {
+        Accept: 'application/vnd.github.v3+json',
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    });
   }
 }

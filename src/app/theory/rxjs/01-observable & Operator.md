@@ -318,13 +318,31 @@ fromObservable = from([1, 2, 3]).pipe(
 
 ### SwitchMap
 
-The SwitchMap maps each value from the source observable into an inner observable, subscribes to it, and then starts emitting the values from it. It creates a new inner observable for every value it receives from the Source. `Whenever it creates a new inner observable it unsubscribes from all the previously created inner observables`.
+**Behavior:** Cancels previous inner Observable when new outer value arrives.
 
-`Syntax`:
+**Use Case:** Search inputs, autocomplete (where only latest matters)
+
+**Syntax**:
 
 ```ts
 switchMap(project: (value: T, index: number) => O): OperatorFunction<T, ObservedValueOf<O>>
 
+```
+
+```ts
+import { fromEvent, interval } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+// Example: Search functionality
+searchInput.valueChanges.pipe(switchMap((searchTerm) => this.api.search(searchTerm))).subscribe((results) => {
+  // Only shows results from latest search
+});
+
+// Visual example:
+// Outer: 1-----2-----3-----4
+// Inner: -a-b- -c-d-e- -f- -g-h-i
+// Result: -a-b---c-d-e---f---g-h-i
+// (Cancels previous inner when new outer arrives)
 ```
 
 `project`: is a function that we use to manipulate the values emitted by the source observable.The project can accept two arguments. one is value i.e. the value emitted by the source observable. The second argument is index number.
@@ -399,11 +417,13 @@ this.srcObservable
 
 ### MergeMap
 
-The MergeMap maps each value from the source observable into an inner observable, subscribes to it, and then starts emitting the values from it replacing the original value. It creates a new inner observable` for every value` it receives from the Source.
+**Behavior:** Runs all inner Observables concurrently.
 
-Unlike SwitchMap, MergeMap does not cancel any of its inner observables. It merges the values from all of its inner observables and emits the values back into the stream.
+**Use Case:** When order doesn't matter and you want parallel execution.
 
-`Syantax`: mergeMap(project: (value: T, index: number) => O): OperatorFunction<T, ObservedValueOf<O>>
+Unlike SwitchMap, MergeMap does not cancel any of its inner observables.
+
+**Syantax**: mergeMap(project: (value: T, index: number) => O): OperatorFunction<T, ObservedValueOf<O>>
 
 `useCase`: Consider a scenario where to receive data from an observable (outer observable). For each of those values, we want to call another observable (inner observable) to get more data. The scenario like this is an ideal use case for MergeMap
 
@@ -486,7 +506,9 @@ function fetchShipmentData(shipmentId: number): Observable<any> {
 
 ### ConcatMap
 
-The ConcatMap maps each value from the source observable into an inner observable, subscribes to it, and then starts emitting the values from it replacing the original value. It creates a new inner observable for every value it receives from the Source.
+**Behavior:** Runs inner Observables sequentially (queues them)
+
+**Use Case:** When order matters (e.g., sequential saves)
 
 It merges the values from all of its inner observables `in the order in which they are subscribed` and emits the values back into the stream.
 
@@ -563,10 +585,11 @@ from(ids)
 
 #### ExhaustMap
 
-The Angular ExhaustMap maps each value from the source observable into an inner observable, subscribes to it. It then starts emitting the values from it replacing the original value. It then waits for the inner observable to finish. If it receives any new values before the completion of the inner observable it ignores it.
+**use case**: It waits for the inner observable to finish. If it receives any new values from outer observable before the completion of the inner observable then it ignores it.
 
-or in simple term
-`exhaustMap` ignores new emissions from the source Observable while an inner Observable is being processed. Once the inner Observable completes, exhaustMap will handle any new emissions from the source Observable.
+**Use Case:** Prevent duplicate submissions (e.g., payment buttons)
+
+Example 1:
 
 ```ts
  delayedObs(count: number) {
@@ -599,6 +622,26 @@ or in simple term
   1 A
   1 B
   1 C
+```
+
+Example 2:
+
+```ts
+import { fromEvent } from 'rxjs';
+import { exhaustMap } from 'rxjs/operators';
+
+// Example: Payment button
+fromEvent(paymentButton, 'click')
+  .pipe(exhaustMap(() => this.api.processPayment()))
+  .subscribe((result) => {
+    // Subsequent clicks during processing are ignored
+  });
+
+// Visual example:
+// Outer: 1-----2-----3-----4
+// Inner: -a-b- -c-d-
+// Result: -a-b-----c-d-
+// (2 is ignored because processing 1 was ongoing)
 ```
 
 #### What is shareReplay ?
@@ -799,22 +842,87 @@ getData(): Observable<any> {
 
 #### What is combinelatest ?
 
-Ans: it waits for all observables to emit first and then emits every time any combined observables emit.
+Ans: It waits until all **input Observables** have emitted at least one value and then emits a new value whenever any of the input Observables emit.
 
 ```ts
-import { combineLatest, interval } from 'rxjs';
-import { map } from 'rxjs/operators';
+combineLatestObs() {
+    const ob1 = new Observable((observer) => {
+      setTimeout(() => {
+        observer.next('1');
+      }, 3000);
+      setTimeout(() => {
+        observer.next('11');
+      }, 6000);
+    });
+    const ob2 = new Observable((observer) => {
+      observer.next('2');
+    });
+    combineLatest([ob1, ob2]).subscribe({
+      next: ([v1, v2]) => {
+        console.log('v1', v1);
+        console.log('v2', v2);
+      }
+    });
+  }
+  // output
+  /**
+   * v1 1
+   * v2 2
+   * v1 11
+   * v2 2
+   */
+```
 
-const obs1 = interval(1000).pipe(map((val) => `Obs1: ${val}`)); // Emits every 1 second
-const obs2 = interval(2000).pipe(map((val) => `Obs2: ${val}`)); // Emits every 2 seconds
+**Common Use Case**
 
-combineLatest([obs1, obs2]).subscribe(([val1, val2]) => {
-  console.log(val1, val2);
+```ts
+combineLatest([this.form.get('email').valueChanges, this.form.get('password').valueChanges]).subscribe(
+  ([email, password]) => {
+    this.isValid = email.includes('@') && password.length >= 8;
+  }
+);
+```
+
+#### What is Zip ?
+
+**Behavior:** Combines Observables in strict sequence, emitting only when all sources have emitted a corresponding value.
+
+**Emits every time all input Observables have a new corresponding value**
+
+Note: Only it emits the value when all the source observable emitted the value else it will not emit.
+
+```ts
+import { zip, of } from 'rxjs';
+
+const age$ = of(27, 25, 29); // Emits 3 values
+const name$ = of('John', 'Doe'); // Emits 2 values
+
+zip(age$, name$).subscribe(console.log);
+// Output:
+// [27, 'John']
+// [25, 'Doe']
+// (Never emits the 29 because name$ doesn't have a 3rd value)
+```
+
+#### forkJoin
+
+Waits for all input Observables to complete, Returns only the **last** values from each Observable in array
+
+```ts
+import { forkJoin, of } from 'rxjs';
+
+const user$ = this.http.get('/api/user/1');
+const posts$ = this.http.get('/api/posts?userId=1');
+const comments$ = this.http.get('/api/comments?userId=1');
+
+forkJoin([user$, posts$, comments$]).subscribe(([user, posts, comments]) => {
+  console.log('User:', user);
+  console.log('Posts:', posts.length);
+  console.log('Comments:', comments.length);
 });
-// output
-Obs1: 1 Obs2: 0  // Obs1 emits again after 1 second
-Obs1: 2 Obs2: 1  // Obs2 emits again after 2 seconds
-Obs1: 3 Obs2: 1  // Obs1 emits
-...
 
+// Output (when all requests complete):
+// User: {id: 1, name: "John"}
+// Posts: 5
+// Comments: 12
 ```

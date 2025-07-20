@@ -12,15 +12,17 @@
 
 <div class="carousel">
   <div class="carousel-inner">
-    <div
-      class="carousel-item"
-      *ngFor="let item of displayItems; let i = index"
-      [ngClass]="{ active: isHighlighted(i) }"
-      (click)="onItemClick(i)"
-    >
+    <div class="carousel-item" *ngFor="let item of displayItems; let i = index" [ngClass]="{ active: isHighlighted(i) }"
+      (click)="onItemClick(i)">
       {{ item }}
     </div>
   </div>
   <button class="prev-btn" (click)="onPrevious()">Previous</button>
   <button class="next-btn" (click)="onNext()">Next</button>
 </div>
+<br />
+<br />
+<br />
+<br />
+<input type="text" placeholder="Search User" [formControl]="userName" />
+<div>Check the network call</div>

@@ -16,6 +16,7 @@ import {
   Observable,
   Subject,
   Subscription,
+  combineLatest,
   concatMap,
   debounceTime,
   exhaustMap,
@@ -33,19 +34,23 @@ import {
   takeUntil,
   takeWhile,
   tap,
-  throwError
+  throwError,
+  zip
 } from 'rxjs';
 import { AppService } from '../app-service.service';
 import { CommonModule } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-rxjs',
   standalone: true,
-  imports: [TypedFormsComponent, CommonModule],
+  imports: [TypedFormsComponent, CommonModule, ReactiveFormsModule],
   templateUrl: './rxjs.component.html',
   styleUrl: './rxjs.component.scss'
 })
 export class RxjsComponent implements OnInit, OnDestroy, AfterViewInit {
+  userName = new FormControl<any>('');
+
   @ViewChild('button', { static: true }) button!: ElementRef;
   buttonSubscription$!: Subscription;
   notifier = new Subject();
@@ -99,6 +104,9 @@ export class RxjsComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private readonly appService: AppService) {}
   ngOnInit(): void {
     this.updateDisplayItems();
+    this.listenToUserNameChange();
+    this.combineLatestObs();
+    this.zipObs();
 
     // this.appService.subject$.next('test');
     // this.appService.subject$.next('test');
@@ -332,5 +340,50 @@ export class RxjsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Check if the adjusted index matches currentIndex
     return adjustedIndex === this.currentIndex % this.carouselItems.length;
+  }
+
+  listenToUserNameChange(): void {
+    this.userName.valueChanges
+      .pipe(
+        switchMap((user: string) => {
+          return this.appService.searchUser(user);
+        })
+      )
+      .subscribe();
+  }
+
+  onSubmit() {
+    this.appService.submitted(true);
+  }
+
+  combineLatestObs() {
+    const ob1 = new Observable((observer) => {
+      setTimeout(() => {
+        observer.next('1');
+      }, 3000);
+      setTimeout(() => {
+        observer.next('11');
+      }, 6000);
+    });
+    const ob2 = new Observable((observer) => {
+      observer.next('2');
+    });
+    combineLatest([ob1, ob2]).subscribe({
+      next: ([v1, v2]) => {
+        console.log('v1', v1);
+        console.log('v2', v2);
+      }
+    });
+  }
+
+  zipObs() {
+    const age$ = of(27, 25, 29); // Emits 3 values
+    const name$ = of('John', 'Doe'); // Emits 2 values
+
+    zip(age$, name$).subscribe(console.log);
+    // Output:
+    // [27, 'John']
+    // [25, 'Doe']
+    // (Never emits the 29 because name$ doesn't have a 3rd value)
   }
 }

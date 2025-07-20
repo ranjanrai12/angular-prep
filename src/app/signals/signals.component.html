@@ -1,21 +1,98 @@
-<div class="signals-component">
-  <h1 class="signal-header">Number Count</h1>
-  <div class="signal-content">
-    Count: {{count()}}
-  </div>
-</div>
-<div class="signals-component">
-  <h1 class="signal-header">User Info</h1>
-  <div class="signal-content">
-    User Name: {{user().name}}
-  </div>
-</div>
-<div class="signals-component">
-  <h1 class="signal-header">Actions</h1>
-  <div class="signal-content">
-    <div class="signal-item">
-      <button class="action-btn" (click)="incrementCount()">Increment Count</button> <br />
-      <button class="action-btn" (click)="updateUser()">Update User</button>
+<div class="signals-dashboard">
+  <!-- Writable Signals Section -->
+  <section class="signal-section">
+    <h2 class="section-title">
+      <i class="icon icon-edit"></i>
+      Writable Signals
+    </h2>
+
+    <div class="signal-card">
+      <div class="signal-header">
+        <h3>Counter</h3>
+        <div class="signal-badge">Writable</div>
+      </div>
+      <div class="signal-body">
+        <div class="signal-value-display">
+          <span class="value">{{count()}}</span>
+          <span class="value-label">Current Count</span>
+        </div>
+        <div class="signal-actions">
+          <button class="btn btn-primary" (click)="incrementCount()">
+            <i class="icon icon-plus"></i> Increment
+          </button>
+          <button class="btn btn-outline" (click)="decrementCount()">
+            <i class="icon icon-minus"></i> Decrement
+          </button>
+          <button class="btn btn-outline" (click)="resetCount()">
+            <i class="icon icon-refresh"></i> Reset
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
+
+    <div class="signal-card">
+      <div class="signal-header">
+        <h3>User Profile</h3>
+        <div class="signal-badge">Writable</div>
+      </div>
+      <div class="signal-body">
+        <div class="signal-value-display">
+          <span class="value">{{user().name}}</span>
+          <span class="value-label">User Name</span>
+        </div>
+        <div class="user-update-form">
+          <div class="form-group">
+            <label for="userName">New Name</label>
+            <!-- <input type="text" id="userName" [(ngModel)]="newUserName" placeholder="Enter new name"> -->
+          </div>
+          <button class="btn btn-secondary" (click)="updateUser()">
+            <i class="icon icon-check"></i> Update User
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Computed Signals Section -->
+  <section class="signal-section">
+    <h2 class="section-title">
+      <i class="icon icon-calculator"></i>
+      Computed Signals
+    </h2>
+
+    <div class="signal-card highlight">
+      <div class="signal-header">
+        <h3>Double Counter</h3>
+        <div class="signal-badge signal-badge-computed">Computed</div>
+      </div>
+      <div class="signal-body">
+        <div class="signal-value-display">
+          <span class="value">{{doubleCount()}}</span>
+          <span class="value-label">(Double of {{count()}})</span>
+        </div>
+        <div class="dependency-indicator">
+          <i class="icon icon-link"></i> Depends on: Counter
+        </div>
+      </div>
+    </div>
+
+    <div class="signal-card highlight">
+      <div class="signal-header">
+        <h3>User Name Length</h3>
+        <div class="signal-badge signal-badge-computed">Computed</div>
+      </div>
+      <div class="signal-body">
+        <div class="signal-value-display">
+          <span class="value">{{userNameLength()}}</span>
+          <span class="value-label">Characters in name</span>
+        </div>
+        <div class="dependency-indicator">
+          <i class="icon icon-link"></i> Depends on: User Profile
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Effects(Side Effects) -->
+
 </div>
