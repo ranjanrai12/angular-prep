@@ -16,10 +16,10 @@ ngOninit() {
 
 `Note:`
 
-- Subject is multicast, means that every subscriber of subject will receive the same value which subject sends
-- Subject is `hot observable`
+- Subject is **multicast**, means that every subscriber of subject will receive the **same value** which subject sends.
+- Subject is **hot observable**
 
-`Cold observable`: The cold observable does not activate `producer` untill there is a subscriber. This is the usually the case when Observable it self produces the data.
+- **Cold observable**: The cold observable does not activate **producer** untill there is a subscriber. This is the usually the case when Observable it self produces the data.
 
 Example:
 
@@ -37,7 +37,7 @@ obs$ = new Observable((observer) => {
 
 The producer produces the value only when a subscriber subscribes to it.
 
-`Hot observable`: In the `hot observable` that emits data regardless there is any subscribers. it can start emitting value right away.This happens when the producer is outside the observable.
+- **Hot observable**: In the `hot observable` that produces values even without **subscribers**. it can start emitting value right away.This happens when the producer is outside the observable.
 
 ```js
  subject$ = new Subject();
@@ -58,12 +58,12 @@ The producer produces the value only when a subscriber subscribes to it.
 
 Difference between Multicast and unicast
 
-- `multicast` -> It create a single instance with producer so that every subscriber will get the same value.
-- `unicast` -> It creates the separate instance with producer so every subscriber will get the different value.
+- **multicast**: It create a single instance with producer so that every subscriber will get the same value.
+- **unicast**: It creates the separate instance with producer so every subscriber will get the different value.
 
 #### What is BehaviourSubject
 
-`BehaviourSubject` requires the initial value and stores the current value and emits to the new `subscriber`.
+**BehaviourSubject** requires the initial value and stores the current value and emits to the new **subscriber**.
 
 ```js
 behaviourSubject$ = new BehaviorSubject('0');
