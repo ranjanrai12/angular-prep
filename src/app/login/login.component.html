@@ -1,15 +1,10 @@
 <div class="login-container">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="loginForm">
     <div class="form-group">
       {{ appService.submitted$ | async }}
       <label for="email">Email</label>
-      <input
-        type="email"
-        id="email"
-        formControlName="email"
-        class="form-control"
-        [ngClass]="{'is-invalid': (appService.submitted$  | async) && loginFormControls?.['email']?.errors}"
-      />
+      <input type="email" appAutoFocus id="email" formControlName="email" class="form-control"
+        [ngClass]="{'is-invalid': (appService.submitted$  | async) && loginFormControls?.['email']?.errors}" />
       <div *ngIf="(appService.submitted$  | async) && loginFormControls?.['email']?.errors" class="invalid-feedback">
         <div *ngIf="loginFormControls?.['email']?.errors?.['required']">Email is required</div>
         <div *ngIf="loginFormControls?.['email']?.errors?.['email']">Email must be a valid email address</div>
@@ -18,23 +13,37 @@
 
     <div class="form-group">
       <label for="password">Password</label>
-      <input
-        type="password"
-        id="password"
-        formControlName="password"
-        class="form-control"
-        [ngClass]="{ 'is-invalid': (appService.submitted$  | async) && loginFormControls?.['password']?.errors }"
-      />
-      <div
-        *ngIf="(appService.submitted$  | async) && loginFormControls?.['password']?.['errors']"
-        class="invalid-feedback"
-      >
+      <input type="password" id="password" formControlName="password" class="form-control"
+        [ngClass]="{ 'is-invalid': (appService.submitted$  | async) && loginFormControls?.['password']?.errors }" />
+      <div *ngIf="(appService.submitted$  | async) && loginFormControls?.['password']?.['errors']"
+        class="invalid-feedback">
         <div *ngIf="loginFormControls?.['password']?.['errors']?.['required']">Password is required</div>
       </div>
     </div>
 
     <div class="form-group">
-      <button type="submit" class="btn btn-primary">Login</button>
+      <button *appPermission="['admin']" type="submit" class="btn btn-primary" appDoubleClick
+        (debounceClick)="onDebounceClick($event)">Login</button>
     </div>
   </form>
 </div>
+
+
+<button appTooltip="This is a clipboard btn" [tooltipPosition]="'right'" appClipboard
+  [appCopyToClipboard]="'https://example.com'">Copy
+  Link</button>
+<div appDraggable>Drag me!</div>
+
+<div *appRepeat="5; let count; let i = index">{{count}} Index Count{{i}}</div>
+<div>{{'RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR' | truncate : 10 | capitalize }}</div>
+
+
+<div>{{1000000 | duration}}</div>
+
+<div [innerHTML]="'Ranjan Kumar' | highlight : 'ranjan'"></div>
+
+<!-- Without bypass (shows raw HTML) -->
+<!-- {{ '<strong>Bold</strong>' }} → Shows as text: "<strong>Bold</strong>" -->
+
+<!-- With bypass (renders HTML) -->
+<div [innerHTML]="'<strong>Bold</strong>' | safehtml"></div> → Shows as: **Bold**

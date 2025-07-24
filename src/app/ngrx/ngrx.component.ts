@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { selectCount } from '../counter/counter/counter.selector';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { decrement, increment, reset } from '../counter/counter/counter-action';
-import { AppHighLightDirective } from '../directives/highlight-directive';
+import { AppHighLightDirective } from '../directives/custom-attribute-directive/highlight-directive';
 import { MyNgIfDirective } from '../directives/my-ng-if.directive';
 import { CustomForOfDirective } from '../directives/my-ng-for.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

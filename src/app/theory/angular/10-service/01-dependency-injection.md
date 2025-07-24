@@ -230,7 +230,7 @@ When the application is loaded, ComponentA will be instantiated first. It expect
 
 So, when ComponentA tries to call this.logger.log('Message from Component A'), it will likely encounter an error, as AnalyticsService may not have a log method.
 
-- `Instance of InjectionToken`: is is commonly use when the value gets vary, and it ensure that the Unique tokens are created.
+- `Instance of InjectionToken`: It ensure that unique tokens are created and is commonly use when the value gets vary. It avoids naming collisions and enable type-safe dependency injection.
 
 ```ts
 import { InjectionToken } from '@angular/core';

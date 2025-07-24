@@ -115,3 +115,35 @@ Use `directives` for `DOM manipulation`, implementing complex interactions, and 
 `Examples` include toggling visibility, dynamically adding event listeners, or creating custom behavior.
 
 ### In your project how may pipes you have created ?
+
+**phoneFormat**: Phone number display with country code like just have work with only egyptian bank.
+
+**timeAgo**: Social media (relative timestamps like "2h ago").
+
+**truncate**: Truncate the long string.
+
+**statusBadge**: color code status label.
+
+**capitalize pipe**: To make first later in capital format.
+
+**values pipe**: to get all the **values** of object in array format and can be use for iteration.
+
+**keys pipe**: to get all the **keys** of object in array format and can be use for iteration.
+
+IN BM Project
+
+**BmNumberFormatPipe**
+**DateTranslatePipe**
+**TranslateDatePipe**
+**BmCurrencyPipe**
+**AccountFilterPipe**
+**FilterPipe**
+**CardFilter**
+**ValueByKeyPipe**
+**FilterListPipe**
+**IpnBulkMapDynamicTranslatePipe**
+**FileDirectionPipe**
+**BmLegacyNumberPipe**
+**BmAcronymNamePipe**
+**TransFormCustomerNamePipe**
+**CcFilterByErrorsPipe**

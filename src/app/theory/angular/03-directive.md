@@ -195,4 +195,55 @@ export class IfAdminDirective {
 <div *appIfAdmin>Admin-only content</div>
 ```
 
-TODO: Need to create more need to practice
+Use case:
+
+**autofocus directive**: To automatically focus input element;
+
+**CopyToClipboard Directive**: To enable one-click copying of text (IDs, links, codes) to the clipboard, enhancing usability in scenarios like sharing references or copying payment details.
+
+**DoubleClick Directive**: To prevent accidental double submissions or trigger secondary actions
+
+**Draggable Directive**: To make DOM elements draggable (e.g., dashboards, Kanban cards) with mouse/touch support, including boundary constraints.
+
+**Highlight Directive**: To dynamically highlight elements (rows, cells) on hover/focus, improving data readability in tables or forms.
+
+**Permission Directive**:To show/hide UI elements based on user roles (e.g., admin-only buttons), enforcing security at the template level.
+
+**Repeat Directive**: To generate repeated DOM elements (like \*ngFor) with added features like trackBy optimization and index offsets.
+
+**Password Strength Meter Directive**: Visualizes password complexity in real-time by analyzing input patterns (length, special chars). Used in registration flows to guide users toward secure credentials
+
+IN BM Project
+
+**BMAllowTypingEventDirective**
+**BmAllowNumbersOnlyDirective**
+**BmCurrencyFormateDirective**
+**DirectionNameEllipsisDirective**
+**IPNBulkPaymentBaseDirective**
+**SpaceReplacerDirective**
+**BmLegacyTooltipDirective**
+**BmLegacyListItemDirective**
+**BmLegacyCustomTemplatesDirective**
+**BmLegacyClickOutsideDirective**
+**BmLegacyPreventEventDirective**
+**BmLegacyAutoHideDirective**
+**BmLegacyFocuableDirective**
+**BmLegacyModalEscapeDirective**
+**BmLegacyMinlengthValidatorDirective**
+**BmLegacyRequiredValidatorDirective**
+**BmLegacyAccordionContentDirective**
+**BmLegacyAccordionTitleDirective**
+**BmLegacyCarouselItemDirective**
+**BmLegacyCheckMarkTempDirective**
+**BmLegacyClearFilterSearchDirective**
+**BmLegacyCommentWrapperDirective**
+**BmLegacyDatatableColTempDirective**
+**BmLegacyDynamicTemplateDirective**
+**BmLegacyInputErrorTemplateDirective**
+**BmLegacyListItemDirective**
+**BmLegacyNoRecordsFoundDirective**
+**BmLegacyPaginationCustomLabelDirective**
+**BmLegacyResultDetailTemplateDirective**
+**BmLegacyStepperFooterDirective**
+**BmLegacyStepperLogoDirective**
+**BmLegacyLoadComponentDirective**

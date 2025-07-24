@@ -5,13 +5,39 @@ import { Router } from '@angular/router';
 import { AppService } from '../app-service.service';
 import { CanComponentDeactivate } from '../guards/unsaved-guard';
 import { Subscription } from 'rxjs';
-import { HttpClientModule } from '@angular/common/http';
+import { DoubleClickDirective } from '../directives/custom-attribute-directive/double-click-directive';
+import { AutoFocusDirective } from '../directives/custom-attribute-directive/auto-focus-directive';
+import { PermissionDirective } from '../directives/custom-structural-directive/permission-directive';
+import { ClipboardDirective } from '../directives/custom-attribute-directive/copy-to-clipboard-directive';
+import { TooltipDirective } from '../directives/custom-attribute-directive/tooltip-directive';
+import { DraggableDirective } from '../directives/custom-attribute-directive/draggable-drictive';
+import { RepeatDirective } from '../directives/custom-structural-directive/repeat-directive';
+import { TruncatePipe } from '../pipes/truncate.pipe';
+import { CapitalizePipe } from '../pipes/capitalize.pipe';
+import { DurationPipe } from '../pipes/duration.pipe';
+import { HighLightPipe } from '../pipes/highlight.pip';
+import { SafeHtmlPipe } from '../pipes/safehtml.pipe';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   providers: [AppService],
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    DoubleClickDirective,
+    AutoFocusDirective,
+    PermissionDirective,
+    ClipboardDirective,
+    TooltipDirective,
+    DraggableDirective,
+    RepeatDirective,
+    TruncatePipe,
+    CapitalizePipe,
+    DurationPipe,
+    HighLightPipe,
+    SafeHtmlPipe
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -55,5 +81,8 @@ export class LoginComponent implements OnInit, CanComponentDeactivate, OnDestroy
 
   get loginFormControls(): any {
     return this.loginForm.controls;
+  }
+  onDebounceClick(event: any) {
+    console.log(event);
   }
 }
