@@ -132,18 +132,18 @@ Use `directives` for `DOM manipulation`, implementing complex interactions, and 
 
 IN BM Project
 
-**BmNumberFormatPipe**
-**DateTranslatePipe**
-**TranslateDatePipe**
-**BmCurrencyPipe**
-**AccountFilterPipe**
-**FilterPipe**
-**CardFilter**
-**ValueByKeyPipe**
-**FilterListPipe**
-**IpnBulkMapDynamicTranslatePipe**
-**FileDirectionPipe**
-**BmLegacyNumberPipe**
-**BmAcronymNamePipe**
-**TransFormCustomerNamePipe**
-**CcFilterByErrorsPipe**
+- **BmNumberFormatPipe**
+- **DateTranslatePipe**
+- **TranslateDatePipe**
+- **BmCurrencyPipe**
+- **AccountFilterPipe**
+- **FilterPipe**
+- **CardFilter**
+- **ValueByKeyPipe**
+- **FilterListPipe**
+- **IpnBulkMapDynamicTranslatePipe**
+- **FileDirectionPipe**
+- **BmLegacyNumberPipe**
+- **BmAcronymNamePipe**
+- **TransFormCustomerNamePipe**
+- **CcFilterByErrorsPipe**

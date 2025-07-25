@@ -215,35 +215,35 @@ Use case:
 
 IN BM Project
 
-**BMAllowTypingEventDirective**
-**BmAllowNumbersOnlyDirective**
-**BmCurrencyFormateDirective**
-**DirectionNameEllipsisDirective**
-**IPNBulkPaymentBaseDirective**
-**SpaceReplacerDirective**
-**BmLegacyTooltipDirective**
-**BmLegacyListItemDirective**
-**BmLegacyCustomTemplatesDirective**
-**BmLegacyClickOutsideDirective**
-**BmLegacyPreventEventDirective**
-**BmLegacyAutoHideDirective**
-**BmLegacyFocuableDirective**
-**BmLegacyModalEscapeDirective**
-**BmLegacyMinlengthValidatorDirective**
-**BmLegacyRequiredValidatorDirective**
-**BmLegacyAccordionContentDirective**
-**BmLegacyAccordionTitleDirective**
-**BmLegacyCarouselItemDirective**
-**BmLegacyCheckMarkTempDirective**
-**BmLegacyClearFilterSearchDirective**
-**BmLegacyCommentWrapperDirective**
-**BmLegacyDatatableColTempDirective**
-**BmLegacyDynamicTemplateDirective**
-**BmLegacyInputErrorTemplateDirective**
-**BmLegacyListItemDirective**
-**BmLegacyNoRecordsFoundDirective**
-**BmLegacyPaginationCustomLabelDirective**
-**BmLegacyResultDetailTemplateDirective**
-**BmLegacyStepperFooterDirective**
-**BmLegacyStepperLogoDirective**
-**BmLegacyLoadComponentDirective**
+- **BMAllowTypingEventDirective**
+- **BmAllowNumbersOnlyDirective**
+- **BmCurrencyFormateDirective**
+- **DirectionNameEllipsisDirective**
+- **IPNBulkPaymentBaseDirective**
+- **SpaceReplacerDirective**
+- **BmLegacyTooltipDirective**
+- **BmLegacyListItemDirective**
+- **BmLegacyCustomTemplatesDirective**
+- **BmLegacyClickOutsideDirective**
+- **BmLegacyPreventEventDirective**
+- **BmLegacyAutoHideDirective**
+- **BmLegacyFocuableDirective**
+- **BmLegacyModalEscapeDirective**
+- **BmLegacyMinlengthValidatorDirective**
+- **BmLegacyRequiredValidatorDirective**
+- **BmLegacyAccordionContentDirective**
+- **BmLegacyAccordionTitleDirective**
+- **BmLegacyCarouselItemDirective**
+- **BmLegacyCheckMarkTempDirective**
+- **BmLegacyClearFilterSearchDirective**
+- **BmLegacyCommentWrapperDirective**
+- **BmLegacyDatatableColTempDirective**
+- **BmLegacyDynamicTemplateDirective**
+- **BmLegacyInputErrorTemplateDirective**
+- **BmLegacyListItemDirective**
+- **BmLegacyNoRecordsFoundDirective**
+- **BmLegacyPaginationCustomLabelDirective**
+- **BmLegacyResultDetailTemplateDirective**
+- **BmLegacyStepperFooterDirective**
+- **BmLegacyStepperLogoDirective**
+- **BmLegacyLoadComponentDirective**

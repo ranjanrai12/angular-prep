@@ -17,6 +17,28 @@ TypeScript is used in Angular because it provides better tooling support, improv
 
 #### What is difference between library and framework ?
 
+Ans: libraries and frameworks lies in the **inversion of control** - who is calling whom and who is in charge of the application flow.
+
+- **Library → You control it.**:
+  - We decide when and where to use it.
+  - We use a calculator (library) when you need to do math.
+  ```ts
+  import { sort } from 'lodash';
+  const sortedList = sort([3, 1, 2]); // You call the library
+  ```
+- **Framework → It controls you**:
+  - It sets rules, and your code fits inside it.
+  ```ts
+  @Component({ template: 'Hello!' })
+  class MyComponent {} // Angular decides when to render this
+  ```
+  |              | Library (e.g., React, Lodash) | Framework (e.g., Angular, Django) |
+  | ------------ | ----------------------------- | --------------------------------- |
+  | **Control**  | You call it when needed       | It calls your code                |
+  | **Size**     | Small, does one thing well    | Big, provides everything          |
+  | **Best For** | Adding features to your code  | Building full apps with rules     |
+  | **Learning** | Easier to start               | Needs more time to learn          |
+
 #### Why we should use Angular ?
 
 Ans: Because it provides -> Full feature framework, typescript support, two way binding, component based architecture, dependency injection, powerful cli, strong community.
