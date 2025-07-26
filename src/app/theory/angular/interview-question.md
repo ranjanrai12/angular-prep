@@ -62,20 +62,55 @@ Cons:
 
 #### What is Server Side rendering ?
 
-In server side rendering involves rendering web pages on the server and sending fully rendered HTML to the client's browser.
+SSR is a technique where the **server generates the full HTML** page and sends it to the browser, instead of relying on JavaScript to render content on the client side (like in SPAs).
+
+**How SSR Works:**
+
+- **User requests a page →** Server fetches data & generates complete HTML.
+
+- **Browser receives a ready-to-display page** (no waiting for JavaScript to load).
+
+- **JavaScript then "hydrates"** the page (makes it interactive).
 
 Benifits:
 
 - improved SEO
 - faster initial page loads
+- SSR pages still show content even if JS is disabled.
 - better support for user with slow internet connection
 
 #### If i want to deploy my angular project to prod what are the things need to do with the project.
 
-- code review and cleanup
-- ng build --prod (tree shaking, minification, uglification)
-- Use https in api call
-- Authentication and authorization
+- **1:Build for Production**
+
+```ts
+ng build --configuration production
+```
+
+This generates optimized files in the **/dist/your-project-name** folder with:
+
+- Minified JS/CSS
+- AOT compilation
+- Tree-shaking (dead code removal)
+- Production environment variables
+
+**2. Code Review & Cleanup**
+
+- **Remove:**
+
+  - console.log() statements
+  - Unused imports/components
+  - Debugger statements
+  - Mock/development API endpoints
+
+- **Run**
+  - `npm run lint  # Checks for code quality issues`
+- **Security Essentials**
+
+  - Never Use `Http` calls
+  - Authentication/Authorization:
+    - Validate JWT tokens on frontend
+    - Secure routes with guards
 
 #### What is CORS ? - `completed`
 
