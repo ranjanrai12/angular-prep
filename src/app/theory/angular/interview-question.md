@@ -328,6 +328,43 @@ https://medium.com/@rakesh.mr.0341/understanding-security-in-angular-application
 
 #### How to handle authentication and authorization in angular ?
 
+Ans:
+
+**1: Authentication**: Authentication is the process of verifying the identity of users.
+
+1. **User Login:**
+
+   - Users log in by providing their username and password on the login page.
+   - The credentials are encrypted (using RSA) before being sent to the backend for security.
+
+2. **Backend Authentication:**
+   - The backend verifies the credentials.
+   - If valid, it returns a session token and user details.
+3. **Token Storage and Usage:**
+
+   - The session token is stored in the frontend (usually in memory or local storage).
+   - For every API request, an HTTP interceptor automatically attaches the token as a Bearer token in the Authorization header.
+
+4. **Route Protection:**
+
+   - Route guards (`AuthGuard`) check if the user is authenticated before allowing access to protected pages.
+   - If the user is not authenticated, they are redirected to the login page.
+   - If the user must change their password (e.g., on first login), they are redirected to a password reset page.
+
+5. **Session Management:**
+
+   - The app monitors for session expiry or invalid tokens (e.g., via 401 Unauthorized responses).
+   - If the session expires, the user is logged out and prompted to log in again.
+
+6. **Additional Security:**
+   - Some flows use reCAPTCHA for bot protection.
+   - Sensitive data is encrypted before transmission.
+
+**2: Autharization**:
+
+- Role based access control with help of router guard
+- Attach token in headers of each api call better to define it in interceptor layer.
+
 #### can we read jwt token ?
 
 Ans: yes we can with the secret key
