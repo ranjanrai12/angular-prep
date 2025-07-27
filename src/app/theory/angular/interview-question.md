@@ -238,6 +238,8 @@ https://medium.com/@hish.abdelshafouk/forroot-vs-forchild-angular-68ad5d39a481
 
 #### What is CDK(component development kit) ?
 
+Ans: It's a library Which helps to build custom UI components with common features.
+
 #### What is control value accessor ?
 
 Ans: it allow us to create custom form controls that can interact with angular reactive forms or template driven form, it allows us to make the bidge between custom component and angular forms.
@@ -259,7 +261,69 @@ Ans: `forwardRef` is a utility function provided by Angular that allows you to r
 
 #### How to handle web security in angular
 
-Ans: `authentication`, `authoriazarion in route`, `avoid direct access to DOM`
+Ans:
+**1. Cross-Site Scripting (XSS) Protection**: Angular automatically sanitizes untrusted content to prevent script injection.
+
+**How It Works**
+
+- **Escapes HTML/JS** in template bindings ({{ }})
+- **Blocks unsafe DOM attributes** (onclick, javascript: URLs)
+- **Sanitizes [innerHTML]** (but avoid where possible)
+
+Manual Sanitization (When Needed)
+
+```ts
+import { DomSanitizer, SecurityContext } from '@angular/platform-browser';
+
+constructor(private sanitizer: DomSanitizer) {}
+
+// Safe HTML (if absolutely required)
+trustedHtml = this.sanitizer.bypassSecurityTrustHtml(userInput);
+
+// Safe URL
+trustedUrl = this.sanitizer.bypassSecurityTrustUrl(userUrl);
+```
+
+**Note**: Only bypass sanitization for fully trusted content.
+
+**2. Cross-Site Request Forgery (CSRF) Protection**
+Angular automatically handles CSRF tokens when properly configured.
+
+```ts
+// Angular (app.module.ts)
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+
+@NgModule({
+  imports: [
+    HttpClientModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN', // Default
+      headerName: 'X-XSRF-TOKEN' // Default
+    })
+  ]
+})
+export class AppModule {}
+```
+
+**3. Content Security Policy (CSP)**
+Restricts sources for scripts, styles, and other resources.
+
+```html
+<meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; 
+               script-src 'self' https://trusted.cdn.com; 
+               style-src 'self' 'unsafe-inline'; 
+               img-src 'self' data:;"
+/>
+```
+
+**4. authentication and authoriazarion in route**
+
+**5. Secure HTTP Communication**
+
+**6. Dependency Security**
+
 https://medium.com/@rakesh.mr.0341/understanding-security-in-angular-applications-best-practices-and-implementation-edc773863d8a
 
 #### How to handle authentication and authorization in angular ?
