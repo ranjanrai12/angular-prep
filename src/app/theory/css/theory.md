@@ -41,7 +41,78 @@ Ans: It defines the stack of the element.
 
 #### What is a CSS Preprocessor ?
 
-Ans: A CSS preprocessor is a scripting language that extends CSS and is compiled into regular CSS syntax.
+Ans: A CSS preprocessor is a scripting language that **extends CSS** with powerful features and is compiled into regular CSS syntax.
+
+**Key Features & Benefits**
+
+- **Variables (Reusable Values)**:
+
+```scss
+// Sass
+$primary-color: #3498db;
+$spacing-unit: 16px;
+
+.button {
+  background: $primary-color;
+  padding: $spacing-unit;
+}
+```
+
+- **2. Nesting (Hierarchical Structure)**
+
+```scss
+// Sass
+nav {
+  ul {
+    margin: 0;
+    li {
+      display: inline-block;
+    }
+  }
+}
+```
+
+- **3. Mixins (Reusable Code Blocks)**
+
+```scss
+// Sass
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  @include flex-center;
+  height: 100vh;
+}
+```
+
+- **4. Functions & Operations**
+
+```scss
+// Sass
+@function double($n) {
+  @return $n * 2;
+}
+
+.container {
+  padding: double(16px); // 32px
+}
+```
+
+- **5. Partials & Imports (Modular CSS)**
+
+```scss
+// _variables.scss (Partial file)
+$font-stack: Helvetica, sans-serif;
+
+// main.scss
+@import 'variables';
+body {
+  font-family: $font-stack;
+}
+```
 
 #### What are CSS Sprites and what are the benefits of it.
 
@@ -72,14 +143,28 @@ https://www.w3schools.com/cssref/tryit.php?filename=trycss_background-attachment
 
 #### What is specificity ?
 
-Ans: It defines which styles on the same element have highest priority
+Ans: when multiple selectors target the same element. Then it decides which styles **win** in conflicts.
 
-Inline styles - Example: <h1 style="color: pink;">
-IDs - Example: #navbar
-Classes, pseudo-classes, attribute selectors - Example: .test, :hover, [href]
-Elements and pseudo-elements - Example: h1, ::before
+**How Specificity Works**
+
+**1. Specificity Hierarchy (From Strongest to Weakest)**
+
+| Selector Type                    | Example                           | Specificity Value |
+| -------------------------------- | --------------------------------- | ----------------- |
+| **Inline styles**                | `style="color:red"`               | `1,0,0,0`         |
+| **ID selectors**                 | `#header`                         | `0,1,0,0`         |
+| **Class/attribute/pseudo-class** | `.btn`, `[type="text"]`, `:hover` | `0,0,1,0`         |
+| **Element/pseudo-element**       | `div`, `::before`                 | `0,0,0,1`         |
+
+**2. Calculation Rules**
+
+- **Count from left to right** (inline → IDs → classes → elements)
+
+- Higher numbers **override** lower ones
+
+- **Equal specificity?** The last rule in the CSS file wins.
 
 #### What is mixin and placeholder ?
 
-Ans: mixins and placeholders both allow you to write reusable chunks of styles.
+Ans: **mixins** and **placeholders** both allow you to write reusable chunks of styles.
 ![alt text](image-1.png)
