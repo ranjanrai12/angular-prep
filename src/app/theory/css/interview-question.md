@@ -6,7 +6,31 @@
 
 #### What are best design pattern ?
 
-- `BEM` (Base element modifier)
+- **`BEM` (Block element modifier)**: create reusable and maintainable code by following a clear naming convention.
+- **Block:** Represents a high-level component (e.g., nav, header).
+- **Element:** A part of a block that performs a specific function (e.g., nav**link, header**title).
+- **Modifier:** A flag on a block or element that changes its appearance or behavior (e.g., **nav\_\_link--active**).
+
+```css
+/* Block */
+.nav {
+}
+/* Element */
+.nav__link {
+}
+/* Modifier */
+.nav__link--active {
+}
+```
+
+- **Utility-First CSS (Tailwind Approach)**
+
+```css
+<button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+  Click Me
+</button>
+```
+
 - `OOCSS`(object oriented CSS)
 - `SMACSS` (scalable and modular architecture)
   - `Base:` Defaults and reset styles.
@@ -14,7 +38,19 @@
   - `Module`: Reusable components.
   - `State`: Styles that show changes in a component.
   - `Theme`: Variations for different themes.
-- `Atomic css`
+- `Atomic css`: **Atomic CSS** is a utility-first approach where each class applies a single style
+
+```css
+.p-4 {
+    padding: 1rem;
+}
+.bg-blue {
+    background-color: blue;
+}
+/* Usage */
+<div class="p-4 bg-blue">Content</div>
+```
+
 - `flex pattern`
 - `grid pattern`
   Ans: https://bytegoblin.io/blog/css-design-patterns-for-web-developers
