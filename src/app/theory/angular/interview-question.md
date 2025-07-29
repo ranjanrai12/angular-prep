@@ -365,6 +365,18 @@ Ans:
 - Role based access control with help of router guard
 - Attach token in headers of each api call better to define it in interceptor layer.
 
+#### How you can optimize the performance of your application ?
+
+- 1. Use Production Build
+- 2. Lazy Loading of Modules
+- 3. OnPush Change Detection Strategy
+- 4. Track By in ngFor.
+- 5. Use Pure Pipes Instead of Methods in Templates
+- 6. Avoid Memory Leaks: Unsubscribe from Observables in ngOnDestroy or use takeUntil, async pipe, or take(1):
+- 7. Minimize Use of Third-Party Libraries
+- 8. Efficient State Management
+- 9. Use Angular DevTools and Lighthouse
+
 #### can we read jwt token ?
 
 Ans: yes we can with the secret key
