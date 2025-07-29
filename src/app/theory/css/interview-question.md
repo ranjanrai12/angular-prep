@@ -93,17 +93,17 @@ Ans: the area of a computer screen or web page that's currently visible to the u
 
 #### How to keep inner element in the center of parent element - `completed using flex`
 
-#### What is block, inline-block and block element ? - `completed`
+#### What is block, inline, inline-block element ? - `completed`
 
 #### What are css attcks ?
 
 #### what are all screen size ?
 
-320px — 480px: Mobile devices
-481px — 768px: iPads, Tablets
-769px — 1024px: Small screens, laptops
-1025px — 1200px: Desktops, large screens
-1201px and more —  Extra large screens, TV
+- **320px — 480px:** Mobile devices
+- **481px — 768px:** iPads, Tablets
+- **769px — 1024px:** Small screens, laptops
+- **1025px — 1200px:** Desktops, large screens
+- **1201px and more:** Extra large screens, TV
 
 https://www.simplilearn.com/tutorials/css-tutorial/css-interview-questions
 
