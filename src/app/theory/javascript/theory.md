@@ -2160,9 +2160,8 @@ Ans: https://medium.com/@vincent.bocquet/dynamic-import-in-javascript-a-simple-g
 #### create a function which does deep copy
 
 ```ts
-function Deep(obj: any) {
-  function Deep(obj: any): any {
-  const isPrimitive = (value: any) =>
+function Deep(obj) {
+  const isPrimitive = (value) =>
     typeof value === 'number' ||
     typeof value === 'string' ||
     typeof value === 'boolean' ||
@@ -2171,8 +2170,7 @@ function Deep(obj: any) {
 
   const isArray = Array.isArray;
 
-  const isObject = (value: any) =>
-    typeof value === 'object' && !isArray(value) && value !== null;
+  const isObject = (value) => typeof value === 'object' && !isArray(value) && value !== null;
 
   if (isPrimitive(obj)) {
     return obj;
@@ -2183,7 +2181,7 @@ function Deep(obj: any) {
   }
 
   if (isObject(obj)) {
-    const clone: any = {};
+    const clone = {};
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         clone[key] = Deep(obj[key]);
@@ -2194,8 +2192,6 @@ function Deep(obj: any) {
 
   // For unsupported types like functions, symbols, etc.
   return obj;
-}
-
 }
 
 var obj = { name: 'ranjan' };
