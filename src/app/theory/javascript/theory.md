@@ -2161,53 +2161,41 @@ Ans: https://medium.com/@vincent.bocquet/dynamic-import-in-javascript-a-simple-g
 
 ```ts
 function Deep(obj: any) {
-  const isNumber = function (value: any) {
-    return typeof value === 'number';
-  };
-  const isString = function (value: any) {
-    return typeof value === 'string';
-  };
-  const isBoolean = function (value: any) {
-    return typeof value === 'boolean';
-  };
-  const isArray = function (value: any) {
-    return Array.isArray(value) && typeof value === 'object';
-  };
+  function Deep(obj: any): any {
+  const isPrimitive = (value: any) =>
+    typeof value === 'number' ||
+    typeof value === 'string' ||
+    typeof value === 'boolean' ||
+    value === null ||
+    value === undefined;
 
-  const isObject = function (value: boolean) {
-    return typeof value === 'object' && !Array.isArray(value) && value !== null;
-  };
+  const isArray = Array.isArray;
 
-  function restOfDataType(value: any) {
-    return isNumber(value) || isString(value) || isString(value);
-  }
+  const isObject = (value: any) =>
+    typeof value === 'object' && !isArray(value) && value !== null;
 
-  if (restOfDataType(obj)) {
+  if (isPrimitive(obj)) {
     return obj;
   }
 
-  function removeComma(item: any) {
-    const cloneRes = item.split(',');
-    cloneRes.pop();
-    return cloneRes.join('');
-  }
-
   if (isArray(obj)) {
-    const cloneArr: any[] = [];
-    obj.forEach((item) => {
-      cloneArr.push(item);
-    });
-    return cloneArr;
+    return obj.map((item) => Deep(item));
   }
 
   if (isObject(obj)) {
-    const keys = Object.keys(obj);
-    const cloneObj = {} as any;
-    keys.forEach((key) => {
-      cloneObj[key] = Deep(obj[key]);
-    });
-    return cloneObj;
+    const clone: any = {};
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        clone[key] = Deep(obj[key]);
+      }
+    }
+    return clone;
   }
+
+  // For unsupported types like functions, symbols, etc.
+  return obj;
+}
+
 }
 
 var obj = { name: 'ranjan' };
