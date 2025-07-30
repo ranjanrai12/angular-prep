@@ -74,72 +74,109 @@ console.log(ob1);
 Ans:
 
 ```js
-function customPromise(executor) {
-  let onResolve = () => {}; // Default to a no-op function
-  let onReject = () => {}; // Default to a no-op function
+function CustomizePromise(executor) {
   let isResolved = false;
   let isRejected = false;
-  let resolveValue;
-  let rejectValue;
+  let resolvedValue = null;
+  let rejectedValue = null;
+  let thenCallbacks = [];
+  let catchCallbacks = [];
 
-  // Then function for handling successful promise execution
   this.then = function (resolveCallback) {
     if (isResolved) {
-      resolveCallback(resolveValue);
+      resolveCallback(resolvedValue);
     } else {
-      onResolve = resolveCallback;
+      thenCallbacks.push(resolveCallback);
     }
-
-    // Returning this to enable chaining of then
-    return this;
+    return this; // for chaining
   };
 
-  // Catch function for handling errors in promise execution
   this.catch = function (rejectCallback) {
     if (isRejected) {
-      rejectCallback(rejectValue);
+      rejectCallback(rejectedValue);
     } else {
-      onReject = rejectCallback;
+      catchCallbacks.push(rejectCallback);
     }
-
-    // Returning this to enable chaining of catch
-    return this;
+    return this; // for chaining
   };
 
-  // Resolver function
   function resolver(data) {
     if (!isResolved && !isRejected) {
       isResolved = true;
-      resolveValue = data;
-      onResolve(data);
+      resolvedValue = data;
+      thenCallbacks.forEach((cb) => cb(data));
     }
   }
 
-  // Rejecter function
-  function rejecter(error) {
+  function rejecter(err) {
     if (!isResolved && !isRejected) {
       isRejected = true;
-      rejectValue = error;
-      onReject(error);
+      rejectedValue = err;
+      catchCallbacks.forEach((cb) => cb(err));
     }
   }
 
-  // Calling the executor function with resolver and rejecter
   try {
     executor(resolver, rejecter);
-  } catch (error) {
-    rejecter(error);
+  } catch (err) {
+    rejecter(err);
   }
 }
+```
 
-// Example usage
-var p1 = new customPromise((resolve, reject) => {
-  resolve('Hello');
-});
+Without Chaning use case
 
-p1.then((res) => {
-  console.log(res); // Output: Hello
-});
+```ts
+function CustomizePromise(executor) {
+  let onResolve = null;
+  let onReject = null;
+  let isResolved = false;
+  let isRejected = false;
+  let resolvedValue = null;
+  let rejectedValue = null;
+
+  this.then = function (callback) {
+    onResolve = callback;
+    if (isResolved) {
+      onResolve(resolvedValue);
+    }
+    return this; // for chaining
+  };
+
+  this.catch = function (callback) {
+    onReject = callback;
+    if (isRejected) {
+      onReject(rejectedValue);
+    }
+    return this; // for chaining
+  };
+
+  function resolve(value) {
+    if (!isResolved && !isRejected) {
+      isResolved = true;
+      resolvedValue = value;
+      if (onResolve) {
+        onResolve(value);
+      }
+    }
+  }
+
+  function reject(error) {
+    if (!isResolved && !isRejected) {
+      isRejected = true;
+      rejectedValue = error;
+      if (onReject) {
+        onReject(error);
+      }
+    }
+  }
+
+  try {
+    executor(resolve, reject);
+  } catch (err) {
+    reject(err);
+  }
+}
 ```
 
 #### polyfill of JSON.stringify
