@@ -21,6 +21,27 @@
   }
   ```
 
+  **Using normal class approach**
+
+  ```ts
+  class SingletonService {
+    private static instance: SingletonService;
+
+    private constructor() {
+      // Private constructor to prevent instantiation.
+    }
+
+    public static getInstance(): SingletonService {
+      if (!SingletonService.instance) {
+        SingletonService.instance = new SingletonService();
+      }
+      return SingletonService.instance;
+    }
+  }
+
+  const singletonInstance = SingletonService.getInstance();
+  ```
+
   **Why Use It?**
 
   - Centralizes state (e.g., authentication status).
@@ -37,12 +58,29 @@
     log(message: string): void;
   }
 
-  @Injectable({ providedIn: 'root' })
-  export class LoggerFactory {
-    createLogger(type: 'console' | 'file'): Logger {
-      return type === 'console' ? new ConsoleLogger() : new FileLogger();
+  class ConsoleLogger implements Logger {
+    log(message: string): void {
+      console.log(message);
     }
   }
+
+  class FileLogger implements Logger {
+    log(message: string): void {
+      // Log to a file.
+    }
+  }
+
+  // Factory method
+  function createLogger(type: 'console' | 'file'): Logger {
+    if (type === 'console') {
+      return new ConsoleLogger();
+    } else if (type === 'file') {
+      return new FileLogger();
+    }
+  }
+
+  const consoleLogger = createLogger('console');
+  consoleLogger.log('Logging to console');
   ```
 
   **Why Use It?**
@@ -57,15 +95,24 @@
   **Use Case:** Costly object initialization (e.g., complex configurations).
 
   ```ts
-  class UserProfile implements Cloneable {
-    constructor(public name: string, public permissions: string[]) {}
+  interface Prototype {
+    clone(): Prototype;
+  }
 
-    clone(): UserProfile {
-      return new UserProfile(this.name, [...this.permissions]);
+  class ConcretePrototype implements Prototype {
+    private property: string;
+
+    constructor(property: string) {
+      this.property = property;
+    }
+
+    clone(): Prototype {
+      return new ConcretePrototype(this.property);
     }
   }
-  const adminProfile = new UserProfile('Admin', ['read', 'write']);
-  const userProfile = adminProfile.clone(); // Deep copy
+
+  const originalObject = new ConcretePrototype('Original');
+  const clonedObject = originalObject.clone();
   ```
 
   **Why Use It?**
@@ -82,22 +129,31 @@
   **Use Case:** Integrating third-party libraries.
 
   ```ts
-  // Old API
+  interface NewLogger {
+    logMessage(message: string): void;
+  }
+
   class OldLogger {
-    logToConsole(msg: string) {
+    log(msg: string): void {
       console.log(msg);
     }
   }
 
-  // New API (Adapter)
-  @Injectable()
-  export class LoggerAdapter implements NewLogger {
-    constructor(private oldLogger: OldLogger) {}
+  class Adapter implements NewLogger {
+    private oldLogger: OldLogger;
 
-    log(message: string) {
-      this.oldLogger.logToConsole(`[ADAPTER] ${message}`);
+    constructor(oldLogger: OldLogger) {
+      this.oldLogger = oldLogger;
+    }
+
+    logMessage(message: string): void {
+      this.oldLogger.log(message);
     }
   }
+
+  const oldLogger = new OldLogger();
+  const loggerAdapter = new Adapter(oldLogger);
+  loggerAdapter.logMessage('Logging with adapter');
   ```
 
   **Why Use It?**
@@ -112,13 +168,42 @@
   **Use Case:** Feature toggles, UI enhancements.
 
   ```ts
-  @Directive({ selector: '[appTooltip]' })
-  export class TooltipDirective {
-    @HostListener('mouseenter') showTooltip() {
-      // Display tooltip logic
+  interface Coffee {
+    cost(): number;
+  }
+
+  class SimpleCoffee implements Coffee {
+    cost(): number {
+      return 5;
     }
   }
-  <button appTooltip="Delete item">Delete</button>;
+
+  class MilkDecorator implements Coffee {
+    private coffee: Coffee;
+
+    constructor(coffee: Coffee) {
+      this.coffee = coffee;
+    }
+
+    cost(): number {
+      return this.coffee.cost() + 2;
+    }
+  }
+
+  class SugarDecorator implements Coffee {
+    private coffee: Coffee;
+
+    constructor(coffee: Coffee) {
+      this.coffee = coffee;
+    }
+
+    cost(): number {
+      return this.coffee.cost() + 1;
+    }
+  }
+
+  const myCoffee = new SugarDecorator(new MilkDecorator(new SimpleCoffee()));
+  console.log(myCoffee.cost()); // Output: 8
   ```
 
   **Why Use It?**
@@ -135,18 +220,33 @@
   **Use Case:** Pagination, custom data loops.
 
   ```ts
-  export class PaginatedList<T> {
-    private data: T[] = [];
+  interface Iterator<T> {
+    next(): T;
+    hasNext(): boolean;
+  }
 
-    getIterator(): Iterator<T> {
-      let index = 0;
-      return {
-        next: () => ({
-          value: this.data[index++],
-          done: index > this.data.length
-        })
-      };
+  class ConcreteIterator<T> implements Iterator<T> {
+    private collection: T[];
+    private index: number = 0;
+
+    constructor(collection: T[]) {
+      this.collection = collection;
     }
+
+    next(): T {
+      return this.collection[this.index++];
+    }
+
+    hasNext(): boolean {
+      return this.index < this.collection.length;
+    }
+  }
+
+  const iterableCollection = [1, 2, 3, 4, 5];
+  const iterator = new ConcreteIterator(iterableCollection);
+
+  while (iterator.hasNext()) {
+    console.log(iterator.next());
   }
   ```
 
@@ -161,34 +261,42 @@
   **Use Case:** UI states (loading/success/error), workflows.
 
   ```ts
-  interface AppState {
-    save(data: string): void;
+  interface State {
+    handleRequest(): void;
   }
 
-  class DraftState implements AppState {
-    save(data: string) {
-      console.log('Saving as draft...');
+  class ConcreteStateA implements State {
+    handleRequest(): void {
+      console.log('Handling request in State A');
     }
   }
 
-  class PublishedState implements AppState {
-    save(data: string) {
-      console.log('Publishing...');
+  class ConcreteStateB implements State {
+    handleRequest(): void {
+      console.log('Handling request in State B');
     }
   }
 
-  @Injectable()
-  export class DocumentService {
-    private state: AppState = new DraftState();
+  class Context {
+    private state: State;
 
-    setState(state: AppState) {
+    constructor(state: State) {
       this.state = state;
     }
 
-    saveDocument(data: string) {
-      this.state.save(data);
+    setState(state: State): void {
+      this.state = state;
+    }
+
+    request(): void {
+      this.state.handleRequest();
     }
   }
+
+  const context = new Context(new ConcreteStateA());
+  context.request(); // Output: Handling request in State A
+  context.setState(new ConcreteStateB());
+  context.request(); // Output: Handling request in State B
   ```
 
   **Why Use It?**
