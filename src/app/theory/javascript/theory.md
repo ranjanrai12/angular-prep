@@ -2126,8 +2126,31 @@ Ans: memoize is a function which is use for performance optimization, by storing
 
 #### What is decorator ?
 
-Ans: A **decorator** function is a special function that modifies or enhances another function, class, method, or property without changing its original code.
+Ans: A **decorator** is just a function that adds extra features to a class, method, property, or parameter — without changing their original code.
 
+- **Example 1:**
+
+```ts
+function MyDecorator(target: any) {
+  console.log('Decorator applied on:', target);
+}
+@MyDecorator
+class MyClass {}
+```
+
+**Example 2:**
+```ts
+function AddCompany(target: any) {
+  target.prototype.company = 'Tata Motors';
+}
+
+@AddCompany
+class Car {}
+
+const c = new Car();
+console.log(c.company); // Tata Motors
+```
+**Example 3:**
 ```ts
 function log(target: any, methodName: string, descriptor: PropertyDescriptor) {
   const originalMethod = descriptor.value;
