@@ -926,3 +926,70 @@ forkJoin([user$, posts$, comments$]).subscribe(([user, posts, comments]) => {
 // Posts: 5
 // Comments: 12
 ```
+
+#### Create Custom Observable and use it
+
+```ts
+type Observer<T> = {
+  next: (value: T) => void;
+  error?: (err: any) => void;
+  complete?: () => void;
+};
+
+class MySubject<T> {
+  private observers: Observer<T>[] = [];
+
+  // Subscribe method
+  subscribe(observer: Observer<T>) {
+    this.observers.push(observer);
+
+    // Return an unsubscribe function
+    return {
+      unsubscribe: () => {
+        this.observers = this.observers.filter(obs => obs !== observer);
+      },
+    };
+  }
+
+  // Emit a value to all subscribers
+  next(value: T) {
+    this.observers.forEach(observer => observer.next(value));
+  }
+
+  // Notify all subscribers of an error
+  error(err: any) {
+    this.observers.forEach(observer => observer.error?.(err));
+  }
+
+  // Notify all subscribers of completion
+  complete() {
+    this.observers.forEach(observer => observer.complete?.());
+    this.observers = []; // Clear subscribers after complete
+  }
+}
+
+```
+- `Using the Custom Subject`
+  ```ts
+    const subject = new MySubject<string>();
+  
+    const sub1 = subject.subscribe({
+      next: val => console.log('Subscriber 1:', val),
+      complete: () => console.log('Subscriber 1 completed'),
+    });
+    
+    const sub2 = subject.subscribe({
+      next: val => console.log('Subscriber 2:', val),
+      complete: () => console.log('Subscriber 2 completed'),
+    });
+    
+    // Emit values
+    subject.next('Hello');
+    subject.next('World');
+    
+    // Complete
+    subject.complete();
+    
+    // Unsubscribe example (optional, but handled above)
+    sub1.unsubscribe();
+  ```
