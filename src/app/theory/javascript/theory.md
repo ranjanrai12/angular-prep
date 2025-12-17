@@ -1815,6 +1815,38 @@ Ans: `Event delegation` is a technique in JavaScript where you add a `single eve
 
 Ans: Accessing the properties and method of another object that is called prototype. prototye is an object which is attached to whatever we create the function, object, array etc.
 
+- **Prototypal Inheritance**: Prototypal inheritance means accessing property and methods from other objects via the prototype chain that is called prototypal inheritance.
+
+```js
+// prototype inheritance example with **class**
+class Animal {
+  constructor(name) {
+    this.name = name; // Name of the animal
+  }
+
+  eat() {
+    console.log(`${this.name} is eating`);
+  }
+}
+
+class Dog extends Animal {
+  constructor(name) {
+    super(name); // Call parent constructor
+  }
+
+  bark() {
+    console.log(`${this.name} is barking`);
+  }
+}
+
+// Create instance
+const myDog = new Dog('Buddy');
+
+myDog.bark(); // Buddy is barking
+myDog.eat();  // Buddy is eating
+
+```
+
 #### What is Memoization ?
 
 Ans: Memoization is a technique used in programming to optimize functions by caching the results of expensive function calls and returning the cached result when the same inputs occur again. This can significantly improve performance for functions that are repeatedly called with the same arguments.
