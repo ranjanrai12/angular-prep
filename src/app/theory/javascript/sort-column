@@ -1,0 +1,52 @@
+### Implement Sort feature on column
+
+
+```ts
+interface User {
+  name: string;
+  age: number;
+  city: string;
+}
+class TableComponent {
+
+  users: User[] = [
+    { name: 'Ranjan', age: 30, city: 'Bangalore' },
+    { name: 'Amit', age: 25, city: 'Pune' },
+    { name: 'Neha', age: 28, city: 'Delhi' }
+  ];
+
+  sortColumn: keyof User | '' = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+
+  sort(column: keyof User) {
+
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+
+    this.users.sort((a, b) => {
+      const valueA = a[column];
+      const valueB = b[column];
+
+      if (typeof valueA === 'number' && typeof valueB === 'number') {
+        return this.sortDirection === 'asc'
+          ? valueA - valueB
+          : valueB - valueA;
+      }
+
+      return this.sortDirection === 'asc'
+        ? valueA.toString().localeCompare(valueB.toString())
+        : valueB.toString().localeCompare(valueA.toString());
+    });
+  }
+}
+var tableInstance = new TableComponent();
+tableInstance.sort('name')
+console.log(tableInstance.users)
+
+tableInstance.sort('name')
+console.log(tableInstance.users)
+```
