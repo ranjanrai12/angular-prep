@@ -873,7 +873,18 @@ combineLatestObs() {
    */
 ```
 
-**withLatestFrom**
+
+**Common Use Case**
+
+```ts
+combineLatest([this.form.get('email').valueChanges, this.form.get('password').valueChanges]).subscribe(
+  ([email, password]) => {
+    this.isValid = email.includes('@') && password.length >= 8;
+  }
+);
+```
+
+#### what is withLatestFrom ?
 
 It emits only when the primary observable emits, but each emission includes the latest values from the secondary observables.
 
@@ -903,15 +914,6 @@ const example = source.pipe(
 const subscribe = example.subscribe(val => console.log(val));
 ```
 
-**Common Use Case**
-
-```ts
-combineLatest([this.form.get('email').valueChanges, this.form.get('password').valueChanges]).subscribe(
-  ([email, password]) => {
-    this.isValid = email.includes('@') && password.length >= 8;
-  }
-);
-```
 
 #### What is Zip ?
 
