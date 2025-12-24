@@ -277,6 +277,12 @@ function handler(string) {
   console.log(titleString);
 }
 handler('hello world');
+
+// With builtin method
+function capitalize(str) {
+   return str.split(' ').map((i) => i.charAt(0).toUpperCase() + i.slice(1)).join(' ')
+}
+capitalize('ranjan rai') // Ranjan Rai
 ```
 
 #### find the second highest item of the array ?
