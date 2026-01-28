@@ -262,6 +262,9 @@ Ans: `forwardRef` is a utility function provided by Angular that allows you to r
 #### How to handle web security in angular
 
 Ans:
+
+https://developer.okta.com/blog/2022/07/21/angular-security-xss
+
 **1. Cross-Site Scripting (XSS) Protection**: Angular automatically sanitizes untrusted content to prevent script injection.
 
 **How It Works**
