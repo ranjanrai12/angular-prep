@@ -1815,6 +1815,7 @@ Ans: `Event delegation` is a technique in JavaScript where you add a `single eve
 
 Ans: Accessing the properties and method of another object that is called prototype. prototye is an object which is attached to whatever we create the function, object, array etc.
 
+- **Prototype Chanin**: When JavaScript cannot find a property in current object, it searches in parent prototype object, then its parent, and so on until `null`.
 - **Prototypal Inheritance**: Prototypal inheritance means accessing property and methods from other objects via the prototype chain that is called prototypal inheritance.
 
 ```js
